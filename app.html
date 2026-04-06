@@ -308,7 +308,7 @@ nav { position:sticky; top:0; z-index:100; padding:16px 40px; display:flex; alig
 // ── CONFIG ── UPDATE THESE ──
 const CONFIG = {
   ANTHROPIC_API_KEY: '', // Leave EMPTY — backend proxy handles this
-  PAYSTACK_PUBLIC_KEY: 'pk_test_904b6d2fe98014f2b715f6e3e55c0d28143c3069', // ← REPLACE WITH YOUR ACTUAL PAYSTACK PUBLIC KEY
+  PAYSTACK_PUBLIC_KEY: 'pk_live_YOUR_PAYSTACK_KEY', // ← REPLACE WITH YOUR ACTUAL PAYSTACK PUBLIC KEY
   REPORT_PRICE_NGN: 1500000, // ₦15,000 in kobo (Paystack uses kobo). Change price here.
   BUSINESS_EMAIL: 'YOUR_EMAIL_HERE', // ← REPLACE WITH YOUR ACTUAL EMAIL
   PROXY_URL: '/api/generate', // Points to your Vercel function — do not change
@@ -337,7 +337,7 @@ Rules:
 - top_missed_keywords: return exactly 3 keywords
 - top_3_gaps: return exactly 3 gaps — make them shocking and specific with real numbers
 - Be brutally honest. Strong language creates urgency.
-- Return ONLY the JSON object.`;
+- Return ONLY the JSON object. Do not write anything before or after the JSON. Do not explain your searches. Output ONLY the raw JSON.`;
 
 // ── FULL REPORT SYSTEM PROMPT ──
 const FULL_PROMPT = `You are Cerebré Intelligence Engine — a world-class digital brand strategist built by Cerebré Media Africa, a 360° digital marketing agency in Nigeria.
@@ -359,7 +359,7 @@ Run AT LEAST 12 web searches before generating:
 Return ONLY valid JSON:
 {"company_name":string,"report_date":string,"prepared_by":"Cerebré Media Africa","overall_score":number,"maturity_stage":string,"executive_summary":{"overview":string,"strengths":string[],"critical_gaps":string[],"headline_numbers":{"revenue_visibility_loss":string,"organic_traffic_missed":string,"biggest_follower_gap":string}},"website_audit":{"url":string,"score":number,"architecture_issues":string[],"speed_issues":string[],"conversion_issues":string[],"ux_score":number},"seo_audit":{"score":number,"domain_authority_estimate":string,"monthly_organic_traffic_estimate":string,"missed_keyword_clusters":[{"keyword":string,"monthly_searches":string,"revenue_relevance":string}],"content_gaps":string[],"backlink_gaps":string[]},"social_media_audit":{"overall_score":number,"platforms":{"linkedin":{"followers":number,"score":number,"issues":string[],"status":string},"instagram":{"followers":number,"score":number,"issues":string[],"status":string},"twitter_x":{"followers":number,"score":number,"issues":string[],"status":string},"youtube":{"subscribers":number,"score":number,"issues":string[],"status":string},"tiktok":{"followers":number,"score":number,"issues":string[],"status":string}},"competitor_benchmarks":[{"name":string,"linkedin":number,"instagram":number,"twitter":number}]},"content_marketing":{"score":number,"content_assets":[{"asset":string,"status":string}],"storytelling_gaps":string[]},"share_of_voice":{"score":number,"company_sov_percent":number,"breakdown":{"search":string,"social":string,"press":string,"news":string},"brand_perception_risks":string[]},"digital_authority":{"score":number,"trust_gaps":string[],"esg_gaps":string[]},"paid_media":{"score":number,"active_campaigns":boolean,"channel_status":[{"channel":string,"status":string,"opportunity":string}],"estimated_traffic_loss":string},"maturity_index":{"overall_score":number,"dimensions":[{"name":string,"score":number,"observation":string}],"stage":string,"stage_description":string},"top_strategic_gaps":[{"rank":number,"title":string,"description":string,"business_risk":string}],"thirty_day_action_plan":{"intro":string,"weeks":[{"week":number,"theme":string,"actions":string[],"cerebré_deliverable":string,"expected_outcome":string}]},"twelve_month_roadmap":{"phase1":{"title":string,"actions":[{"action":string,"timeline":string,"outcome":string}]},"phase2":{"title":string,"actions":[{"action":string,"timeline":string,"outcome":string}]},"phase3":{"title":string,"actions":[{"action":string,"timeline":string,"outcome":string}]},"forecast":string},"cerebré_services_recommended":[{"service":string,"why_needed":string,"expected_roi":string,"timeline":string}]}
 
-Rules: Scores 1-10. All follower counts from web searches. Be specific and brutal. 30-day plan must name Cerebré Media Africa as the delivery partner. Return ONLY JSON.`;
+Rules: Scores 1-10. All follower counts from web searches. Be specific and brutal. 30-day plan must name Cerebré Media Africa as the delivery partner. Return ONLY the raw JSON object. No text before it, no text after it, no explanations.`;
 
 // ── STATE ──
 let teaserData = null;
@@ -392,11 +392,32 @@ async function callAPI(systemPrompt, userMessage) {
     throw new Error(err.error?.message || `API error ${res.status}`);
   }
   const data = await res.json();
-  let text = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+  // Extract only text blocks (ignore tool_use and web_search blocks)
+  let text = data.content
+    .filter(b => b.type === 'text')
+    .map(b => b.text)
+    .join('');
+
+  // Strip markdown code fences
   text = text.replace(/```json\n?/g,'').replace(/```\n?/g,'').trim();
-  const fi = text.indexOf('{'), li = text.lastIndexOf('}');
-  if (fi !== -1 && li !== -1) text = text.slice(fi, li + 1);
-  return JSON.parse(text);
+
+  // Find the outermost JSON object — ignore any text before or after
+  const fi = text.indexOf('{');
+  const li = text.lastIndexOf('}');
+  if (fi !== -1 && li !== -1) {
+    text = text.slice(fi, li + 1);
+  } else {
+    throw new Error('No JSON object found in response');
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch(parseErr) {
+    // Last resort — try to find a valid JSON substring
+    const match = text.match(/\{[\s\S]*\}/);
+    if (match) return JSON.parse(match[0]);
+    throw new Error('Could not parse response. Please try again.');
+  }
 }
 
 // ── GENERATE TEASER ──
