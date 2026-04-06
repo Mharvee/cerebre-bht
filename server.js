@@ -24,8 +24,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// Homepage — serve app.html
+// Homepage — serve landing.html
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'landing.html'));
+});
+
+// App route
+app.get('/app', (req, res) => {
   res.sendFile(path.join(__dirname, 'app.html'));
 });
 
