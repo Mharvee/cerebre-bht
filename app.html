@@ -456,11 +456,11 @@ function generateToken() {
 // ── PAYSTACK PAYMENT ──
 function initiatePayment() {
   // Paystack requires an email — we use a dummy one silently
-  const dummyEmail = 'client_' + Date.now() + '@Cerebre .app';
+  const Email = "triplekalu2@gmail.com";
 
   const handler = PaystackPop.setup({
     key: CONFIG.PAYSTACK_PUBLIC_KEY,
-    email: dummyEmail,
+    email: Email,
     amount: CONFIG.REPORT_PRICE_NGN,
     currency: 'NGN',
     ref: 'CEBRE_' + new Date().getTime() + '_' + Math.floor(Math.random() * 999999),
