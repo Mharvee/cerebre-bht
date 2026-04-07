@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 export const handler = async (event) => {
   // CORS preflight
   if (event.httpMethod === 'OPTIONS') {
