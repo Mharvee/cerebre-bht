@@ -6,12 +6,13 @@ const router = Router();
 // ═══════════════════════════════════════════════════════════════
 //  runAgentLoop — drives the full Anthropic tool-use loop.
 //
-//  Web search flow:
-//    Turn 1 → Claude returns stop_reason="tool_use" + tool_use blocks
-//    Turn 2 → We feed back empty tool_result blocks
-//    Turn N → Claude returns stop_reason="end_turn" + final JSON text
+//  Using anthropic-beta: web-search-2025-03-05
+//  In this mode, Anthropic executes web searches SERVER-SIDE.
+//  Claude returns stop_reason="tool_use" with web_search_tool_result
+//  blocks ALREADY IN the content — we do NOT feed empty tool_result
+//  messages back. We just append the full assistant turn and continue.
 // ═══════════════════════════════════════════════════════════════
-async function runAgentLoop(claudeBody, maxTurns = 12) {
+async function runAgentLoop(claudeBody, maxTurns = 15) {
   const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages';
   const headers = {
     'Content-Type':      'application/json',
@@ -58,6 +59,8 @@ async function runAgentLoop(claudeBody, maxTurns = 12) {
     const textBlocks = content.filter(b => b.type === 'text');
     if (textBlocks.length) lastText = textBlocks.map(b => b.text).join('');
 
+    console.log(`[generate] turn=${turn + 1} stop_reason=${stop_reason} textLen=${lastText.length} contentBlocks=${content.length}`);
+
     // ── Claude is done — return final response ──
     if (stop_reason === 'end_turn' || stop_reason === 'max_tokens') {
       console.log(`[generate] done turn=${turn + 1} stop=${stop_reason} textLen=${lastText.length}`);
@@ -72,27 +75,21 @@ async function runAgentLoop(claudeBody, maxTurns = 12) {
       };
     }
 
-    // ── Tool calls — build continuation ──
+    // ── Tool calls (web search beta) ──
+    // With web-search-2025-03-05, Anthropic executes searches server-side.
+    // The response content already contains web_search_tool_result blocks.
+    // We simply append Claude's full assistant turn and continue.
+    // DO NOT send empty tool_result messages back — that breaks the loop.
     if (stop_reason === 'tool_use') {
       const toolUseBlocks = content.filter(b => b.type === 'tool_use');
-      if (!toolUseBlocks.length) {
-        console.warn('[generate] tool_use stop but no tool_use blocks found');
-        break;
-      }
+      const searchResultBlocks = content.filter(b => b.type === 'web_search_tool_result' || b.type === 'tool_result');
 
-      // Append Claude's assistant turn
+      console.log(`[generate] tool_use: ${toolUseBlocks.length} tool calls, ${searchResultBlocks.length} result blocks`);
+
+      // Append Claude's assistant turn (which includes search results inline)
       messages = [...messages, { role: 'assistant', content }];
 
-      // Acknowledge each tool call — Anthropic executes web_search server-side
-      messages = [...messages, {
-        role:    'user',
-        content: toolUseBlocks.map(b => ({
-          type:        'tool_result',
-          tool_use_id: b.id,
-          content:     '',
-        })),
-      }];
-
+      // Continue — Claude will process the results and keep going
       continue;
     }
 
@@ -101,7 +98,7 @@ async function runAgentLoop(claudeBody, maxTurns = 12) {
   }
 
   // Loop limit — return whatever text was collected
-  console.warn('[generate] agent loop limit reached');
+  console.warn('[generate] agent loop limit reached, returning collected text');
   return {
     content:     [{ type: 'text', text: lastText }],
     stop_reason: 'loop_limit',
