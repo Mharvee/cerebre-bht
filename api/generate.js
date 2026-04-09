@@ -267,7 +267,7 @@ router.post('/', async (req, res) => {
     //   Total per call ≈ $0.05–0.10 depending on cache hit
     const message = await client.messages.create({
       model:      'claude-sonnet-4-5',
-      max_tokens: 16_000,
+      max_tokens: 8000,
       system:     SYSTEM_PROMPT,
       messages:   [{ role: 'user', content: buildPrompt({ company, website, industry, market, competitors, reference }) }],
     });

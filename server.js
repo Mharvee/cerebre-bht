@@ -37,4 +37,8 @@ app.use('/api/generate',    generateRouter);
 app.use('/api/send-report', sendReportRouter);
 app.use('/api/webhook',     webhookRouter);
 
-app.listen(PORT, () => console.log(`✓ Cerebré server running on port ${PORT}`));
+const server = app.listen(PORT, () => console.log(`✓ Cerebré server running on port ${PORT}`));
+
+server.timeout         = 300000;
+server.keepAliveTimeout = 305000;
+server.headersTimeout  = 310000;
