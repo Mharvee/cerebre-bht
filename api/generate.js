@@ -284,10 +284,14 @@ router.post('/', async (req, res) => {
     let cleaned = rawText.replace(/```json\n?/g, '').replace(/```/g, '').trim();
     const fb = cleaned.indexOf('{');
     const lb = cleaned.lastIndexOf('}');
-    if (fb === -1 || lb === -1) throw new Error('No valid JSON object in response');
-    cleaned = cleaned.slice(fb, lb + 1);
+    if (fb === -1 || lb === -1) {
+  console.error('[generate] No JSON braces found. Raw text was:', rawText.slice(0, 500));
+  throw new Error('No valid JSON object in response');
+}
+cleaned = cleaned.slice(fb, lb + 1);
 
-    const parsed = JSON.parse(cleaned);
+console.log('[generate] Attempting JSON parse, length:', cleaned.length);
+const parsed = JSON.parse(cleaned);
 
     console.log(`[generate] ✓ Report for "${company}" | input=${message.usage?.input_tokens} output=${message.usage?.output_tokens}`);
 
@@ -299,7 +303,9 @@ router.post('/', async (req, res) => {
       message: err.message,
       status:  err.status,
       type:    err.type,
+      raw:     err.message,
     });
+    console.error('[generate] full error:', err);
 
     let msg    = 'Service error — please try again.';
     let status = 500;
