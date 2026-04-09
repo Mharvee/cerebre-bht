@@ -4,15 +4,19 @@ import fetch from 'node-fetch';
 const router = Router();
 
 // ═══════════════════════════════════════════════════════════════
-//  runAgentLoop — drives the full Anthropic tool-use loop.
+//  HOW THE WEB SEARCH BETA ACTUALLY WORKS (web-search-2025-03-05)
 //
-//  Using anthropic-beta: web-search-2025-03-05
-//  In this mode, Anthropic executes web searches SERVER-SIDE.
-//  Claude returns stop_reason="tool_use" with web_search_tool_result
-//  blocks ALREADY IN the content — we do NOT feed empty tool_result
-//  messages back. We just append the full assistant turn and continue.
+//  This is a SERVER-SIDE tool. Anthropic runs ALL searches internally
+//  during a SINGLE API call. You do NOT need an agentic loop at all.
+//
+//  One call → Claude searches → Claude writes → stop_reason="end_turn"
+//
+//  The old multi-turn loop was wrong: it accumulated encrypted search
+//  results (each ~30k tokens) across 12 turns = 360k+ wasted tokens,
+//  which left almost no room for Claude to write the actual JSON output.
 // ═══════════════════════════════════════════════════════════════
-async function runAgentLoop(claudeBody, maxTurns = 15) {
+
+async function callClaude(claudeBody) {
   const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages';
   const headers = {
     'Content-Type':      'application/json',
@@ -21,89 +25,50 @@ async function runAgentLoop(claudeBody, maxTurns = 15) {
     'anthropic-beta':    'web-search-2025-03-05',
   };
 
-  let messages  = [...(claudeBody.messages || [])];
-  let lastText  = '';
-  let lastData  = null;
+  const body = {
+    model:      claudeBody.model      || 'claude-sonnet-4-20250514',
+    max_tokens: claudeBody.max_tokens || 5000,
+    system:     claudeBody.system,
+    tools:      claudeBody.tools      || [],
+    messages:   claudeBody.messages   || [],
+  };
 
-  for (let turn = 0; turn < maxTurns; turn++) {
-    const body = {
-      model:      claudeBody.model      || 'claude-sonnet-4-20250514',
-      max_tokens: claudeBody.max_tokens || 5000,
-      system:     claudeBody.system,
-      tools:      claudeBody.tools      || [],
-      messages,
-    };
+  console.log(`[generate] Calling Anthropic API — model=${body.model} max_tokens=${body.max_tokens}`);
 
-    console.log(`[generate] turn=${turn + 1} messages=${messages.length}`);
+  const anthropicRes = await fetch(ANTHROPIC_URL, {
+    method:  'POST',
+    headers,
+    body:    JSON.stringify(body),
+  });
 
-    const anthropicRes = await fetch(ANTHROPIC_URL, {
-      method:  'POST',
-      headers,
-      body:    JSON.stringify(body),
-    });
+  const data = await anthropicRes.json();
 
-    const data = await anthropicRes.json();
-    lastData = data;
-
-    if (!anthropicRes.ok) {
-      console.error('[generate] Anthropic error:', anthropicRes.status, JSON.stringify(data));
-      const err = new Error(data.error?.message || `Anthropic ${anthropicRes.status}`);
-      err.status  = anthropicRes.status;
-      err.apiData = data;
-      throw err;
-    }
-
-    const { stop_reason, content = [] } = data;
-
-    // Collect text blocks from this turn
-    const textBlocks = content.filter(b => b.type === 'text');
-    if (textBlocks.length) lastText = textBlocks.map(b => b.text).join('');
-
-    console.log(`[generate] turn=${turn + 1} stop_reason=${stop_reason} textLen=${lastText.length} contentBlocks=${content.length}`);
-
-    // ── Claude is done — return final response ──
-    if (stop_reason === 'end_turn' || stop_reason === 'max_tokens') {
-      console.log(`[generate] done turn=${turn + 1} stop=${stop_reason} textLen=${lastText.length}`);
-      return {
-        id:          data.id,
-        type:        'message',
-        role:        'assistant',
-        content:     [{ type: 'text', text: lastText }],
-        stop_reason: data.stop_reason,
-        model:       data.model,
-        usage:       data.usage,
-      };
-    }
-
-    // ── Tool calls (web search beta) ──
-    // With web-search-2025-03-05, Anthropic executes searches server-side.
-    // The response content already contains web_search_tool_result blocks.
-    // We simply append Claude's full assistant turn and continue.
-    // DO NOT send empty tool_result messages back — that breaks the loop.
-    if (stop_reason === 'tool_use') {
-      const toolUseBlocks = content.filter(b => b.type === 'tool_use');
-      const searchResultBlocks = content.filter(b => b.type === 'web_search_tool_result' || b.type === 'tool_result');
-
-      console.log(`[generate] tool_use: ${toolUseBlocks.length} tool calls, ${searchResultBlocks.length} result blocks`);
-
-      // Append Claude's assistant turn (which includes search results inline)
-      messages = [...messages, { role: 'assistant', content }];
-
-      // Continue — Claude will process the results and keep going
-      continue;
-    }
-
-    console.warn(`[generate] unexpected stop_reason: ${stop_reason}`);
-    break;
+  if (!anthropicRes.ok) {
+    console.error('[generate] Anthropic error:', anthropicRes.status, JSON.stringify(data));
+    const err = new Error(data.error?.message || `Anthropic ${anthropicRes.status}`);
+    err.status  = anthropicRes.status;
+    err.apiData = data;
+    throw err;
   }
 
-  // Loop limit — return whatever text was collected
-  console.warn('[generate] agent loop limit reached, returning collected text');
+  const { stop_reason, content = [] } = data;
+
+  console.log(`[generate] stop_reason=${stop_reason} blocks=${content.length} output_tokens=${data.usage?.output_tokens}`);
+
+  // Extract all text blocks — web search results are handled internally by Anthropic
+  const textBlocks = content.filter(b => b.type === 'text');
+  const fullText   = textBlocks.map(b => b.text).join('');
+
+  console.log(`[generate] textLen=${fullText.length} preview=${fullText.slice(0, 200)}`);
+
   return {
-    content:     [{ type: 'text', text: lastText }],
-    stop_reason: 'loop_limit',
-    model:       lastData?.model,
-    usage:       lastData?.usage,
+    id:          data.id,
+    type:        'message',
+    role:        'assistant',
+    content:     [{ type: 'text', text: fullText }],
+    stop_reason: data.stop_reason,
+    model:       data.model,
+    usage:       data.usage,
   };
 }
 
@@ -170,7 +135,7 @@ router.post('/', async (req, res) => {
       company:    (claudeBody.messages?.[0]?.content || '').slice(0, 80),
     }));
 
-    const result = await runAgentLoop(claudeBody);
+    const result = await callClaude(claudeBody);
     return res.status(200).json(result);
 
   } catch (err) {
