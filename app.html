@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cerebré Intelligence Engine — Digital Brand Health Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<style>
+
+:root {
+  --ink:       #080C14;
+  --ink2:      #0F1824;
+  --ink3:      #162030;
+  --gold:      #C9922A;
+  --gold2:     #E8B84B;
+  --gold-dim:  rgba(201,146,42,0.12);
+  --smoke:     #B8C0CC;
+  --border:    rgba(255,255,255,0.07);
+  --card:      rgba(255,255,255,0.04);
+  --red:       #E03E3E;
+  --green:     #1DB954;
+  --orange:    #FF8C00;
+  --radius:    12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:#fff;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(8,12,20,.92);backdrop-filter:blur(20px)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-mark{width:32px;height:32px;background:var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink);flex-shrink:0}
+.nav-name{font-size:13px;font-weight:600;letter-spacing:.05em;color:#fff}
+.nav-sub{font-size:10px;color:var(--gold);letter-spacing:.1em}
+.nav-back{color:var(--smoke);font-size:13px;text-decoration:none;transition:color .2s}
+.nav-back:hover{color:#fff}
+
+/* ── INPUT SCREEN ── */
+.input-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 61px);padding:60px 24px;position:relative}
+.glow-bg{position:absolute;width:700px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(201,146,42,.08) 0%,transparent 70%);top:40%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--gold-dim);border:1px solid rgba(201,146,42,.3);border-radius:20px;padding:5px 16px;font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--gold2);text-transform:uppercase;margin-bottom:24px}
+.dot-live{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.input-screen h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,52px);font-weight:700;text-align:center;line-height:1.1;max-width:700px;margin-bottom:12px}
+.input-screen h1 em{font-style:italic;color:var(--gold2)}
+.input-sub{color:var(--smoke);font-size:15px;text-align:center;max-width:500px;margin-bottom:48px;line-height:1.7;font-weight:300}
+.trial-badge{background:rgba(29,185,84,.1);border:1px solid rgba(29,185,84,.25);color:var(--green);border-radius:8px;padding:8px 16px;font-size:13px;margin-bottom:24px;text-align:center}
+.trial-badge.warn{background:rgba(255,140,0,.1);border-color:rgba(255,140,0,.3);color:var(--orange)}
+.trial-badge.empty{background:rgba(224,62,62,.1);border-color:rgba(224,62,62,.3);color:var(--red)}
+
+.form-card{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:20px;padding:36px;width:100%;max-width:640px}
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.input-full{grid-column:1/-1}
+.field label{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.field input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:12px 16px;color:#fff;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
+.field input::placeholder{color:rgba(184,192,204,.35)}
+.field input:focus{border-color:var(--gold);background:rgba(201,146,42,.05)}
+.btn-audit{width:100%;margin-top:24px;background:var(--gold);color:var(--ink);border:none;border-radius:10px;padding:16px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s,transform .1s;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn-audit:hover{background:var(--gold2);transform:translateY(-1px)}
+.btn-audit:disabled{background:#3a3a3a;color:#666;cursor:not-allowed;transform:none}
+.form-note{text-align:center;font-size:12px;color:rgba(184,192,204,.4);margin-top:12px}
+.err-box{background:rgba(224,62,62,.1);border:1px solid rgba(224,62,62,.3);border-radius:10px;padding:14px 18px;font-size:13px;color:var(--red);display:none;margin-top:12px;max-width:640px}
+.err-box.active{display:block}
+
+/* ── EMAIL GATE MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(8,12,20,.92);z-index:500;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(8px)}
+.modal-overlay.active{display:flex}
+.modal-box{background:var(--ink2);border:1px solid rgba(201,146,42,.3);border-radius:20px;padding:40px;width:100%;max-width:480px;text-align:center}
+.modal-icon{font-size:40px;margin-bottom:16px}
+.modal-box h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:10px}
+.modal-box h2 em{font-style:italic;color:var(--gold2)}
+.modal-box p{font-size:14px;color:var(--smoke);line-height:1.7;margin-bottom:24px}
+.modal-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:14px 16px;color:#fff;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;margin-bottom:12px}
+.modal-input:focus{border-color:var(--gold)}
+.modal-btn{width:100%;background:var(--gold);color:var(--ink);border:none;border-radius:8px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.modal-btn:hover{background:var(--gold2)}
+.modal-note{font-size:11px;color:rgba(184,192,204,.4);margin-top:12px}
+
+/* ── LIMIT WALL ── */
+.limit-wall{background:rgba(224,62,62,.08);border:1px solid rgba(224,62,62,.25);border-radius:16px;padding:32px;text-align:center;max-width:640px;margin:0 auto}
+.limit-wall h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:10px}
+.limit-wall p{font-size:14px;color:var(--smoke);line-height:1.7;margin-bottom:24px}
+.btn-upgrade{background:var(--gold);color:var(--ink);border:none;border-radius:10px;padding:14px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.btn-upgrade:hover{background:var(--gold2)}
+
+/* ── LOADING ── */
+.loading-screen{display:none;min-height:calc(100vh - 61px);flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center}
+.loading-screen.active{display:flex}
+.spinner-ring{width:64px;height:64px;border-radius:50%;border:3px solid rgba(255,255,255,.06);border-top-color:var(--gold);animation:spin .9s linear infinite;margin:0 auto 28px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-h{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:8px}
+.loading-sub{font-size:14px;color:var(--smoke);margin-bottom:36px}
+.steps-list{list-style:none;max-width:420px;margin:0 auto;text-align:left}
+.step-li{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;color:rgba(184,192,204,.5)}
+.step-li.done{color:var(--green)}
+.step-li.active{color:#fff;font-weight:500}
+.step-pip{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.1);flex-shrink:0}
+.step-li.done .step-pip{background:var(--green)}
+.step-li.active .step-pip{background:var(--gold);animation:blink 1s ease-in-out infinite}
+
+/* ── REPORT AREA (SCREEN) ── */
+#report-area{display:none}
+#report-area.active{display:block}
+.report-wrap{max-width:920px;margin:0 auto;padding:48px 40px 80px}
+
+/* action bar */
+.action-bar{display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap}
+.btn-action{background:var(--ink2);color:#fff;border:1px solid var(--border);padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:8px;transition:border-color .2s,background .2s}
+.btn-action:hover{border-color:rgba(255,255,255,.2);background:var(--ink3)}
+.btn-action.gold{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.btn-action.gold:hover{background:var(--gold2);border-color:var(--gold2)}
+
+/* report masthead */
+.r-masthead{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:36px;margin-bottom:28px;border-top:3px solid var(--gold)}
+.r-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.r-h1{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:14px;line-height:1.2}
+.r-h1 span{color:var(--gold2)}
+.r-meta{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--smoke)}
+.r-meta strong{color:#fff}
+.r-badge{display:inline-block;background:rgba(224,62,62,.15);border:1px solid rgba(224,62,62,.35);color:var(--red);padding:3px 12px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.1em;margin-top:12px}
+
+/* score hero */
+.score-hero{background:var(--ink2);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:24px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.score-ring{width:100px;height:100px;border-radius:50%;border:5px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;position:relative}
+.score-big{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--gold2);line-height:1}
+.score-denom{font-size:11px;color:var(--smoke)}
+.score-info h2{font-size:18px;font-weight:600;margin-bottom:6px}
+.score-info p{font-size:13px;color:var(--smoke);line-height:1.6;max-width:500px}
+.stage-tag{display:inline-block;background:var(--gold-dim);color:var(--gold2);border:1px solid rgba(201,146,42,.25);border-radius:20px;font-size:11px;font-weight:600;padding:3px 14px;margin-top:10px}
+
+/* metric row */
+.metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.m-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.m-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke);margin-bottom:8px}
+.m-val{font-size:22px;font-weight:700;line-height:1}
+.m-sub{font-size:11px;color:var(--smoke);margin-top:6px}
+
+/* section cards */
+.s-card{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:22px;overflow:hidden}
+.s-head{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.02)}
+.s-title{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.s-score{padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;background:var(--ink2);border:1px solid var(--border)}
+.s-body{padding:22px}
+
+/* platform grid */
+.plat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.plat{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:14px}
+.plat-name{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--smoke);margin-bottom:6px}
+.plat-count{font-size:22px;font-weight:700;line-height:1;margin-bottom:6px}
+.plat-tag{font-size:10px;padding:2px 8px;border-radius:8px;display:inline-block;font-weight:600}
+.tc{background:rgba(224,62,62,.15);color:var(--red)}
+.tg{background:rgba(255,140,0,.15);color:var(--orange)}
+.to{background:rgba(29,185,84,.12);color:var(--green)}
+.tp{background:rgba(100,100,255,.12);color:#8888ff}
+
+/* score bars */
+.bar-row{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--border)}
+.bar-row:last-child{border-bottom:none}
+.bar-lbl{width:210px;font-size:13px;color:var(--smoke);flex-shrink:0}
+.bar-track{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+.bar-num{width:44px;text-align:right;font-size:13px;font-weight:700;flex-shrink:0}
+
+/* kw table */
+.kw-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;gap:12px}
+.kw-row:last-child{border-bottom:none}
+.kw-name{flex:1;color:#fff}
+.kw-vol{color:var(--smoke);min-width:100px;text-align:center}
+.kw-rel{font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(224,62,62,.12);color:var(--red)}
+
+/* gap cards */
+.gap-card{border:1px solid rgba(224,62,62,.2);border-left:3px solid var(--red);border-radius:8px;padding:18px;margin-bottom:14px}
+.gap-card:last-child{margin-bottom:0}
+.gap-num{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:4px}
+.gap-title{font-size:15px;font-weight:600;margin-bottom:8px}
+.gap-body{font-size:13px;color:var(--smoke);line-height:1.7}
+.gap-risk{margin-top:10px;font-size:12px;background:rgba(224,62,62,.07);border-radius:6px;padding:8px 12px;color:rgba(224,62,62,.9)}
+
+/* week blocks */
+.week-block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px}
+.week-b{background:var(--ink2);color:var(--gold2);border:1px solid rgba(201,146,42,.25);display:inline-block;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:12px}
+.week-t{font-size:16px;font-weight:600;margin-bottom:12px}
+.action-li{font-size:13px;padding:7px 0;border-bottom:1px solid var(--border);display:flex;gap:10px;color:var(--smoke);line-height:1.5}
+.action-li:last-of-type{border-bottom:none}
+.action-li .arr{color:var(--gold);font-weight:700;flex-shrink:0}
+.deliv{background:rgba(29,185,84,.06);border:1px solid rgba(29,185,84,.2);border-radius:8px;padding:12px 16px;margin-top:12px;font-size:13px;color:var(--smoke)}
+.deliv strong{color:var(--green)}
+
+/* services table */
+.svc-tbl{width:100%;border-collapse:collapse}
+.svc-tbl th{background:var(--ink2);color:var(--gold2);padding:12px 14px;text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.svc-tbl td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13px;color:var(--smoke);vertical-align:top}
+.svc-tbl tr:last-child td{border-bottom:none}
+.svc-tbl td:first-child{color:#fff;font-weight:500}
+.svc-roi{color:var(--green)}
+
+/* roadmap */
+.phase-block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px}
+.phase-t{font-size:14px;font-weight:600;color:var(--gold2);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.r-row{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;flex-wrap:wrap}
+.r-row:last-child{border-bottom:none}
+.r-time{color:var(--gold);font-weight:600;min-width:80px;flex-shrink:0}
+.r-out{color:var(--smoke);font-size:12px;min-width:120px;text-align:right}
+.forecast-box{background:rgba(29,185,84,.05);border:1px solid rgba(29,185,84,.18);border-radius:10px;padding:18px;font-size:13px;color:var(--smoke);line-height:1.7}
+.forecast-box strong{color:var(--green)}
+
+/* content status */
+.asset-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--smoke)}
+.asset-row:last-child{border-bottom:none}
+.a-tag{padding:2px 10px;border-radius:8px;font-size:11px;font-weight:600}
+.at-p{background:rgba(29,185,84,.1);color:var(--green)}
+.at-x{background:rgba(224,62,62,.1);color:var(--red)}
+.at-m{background:rgba(255,140,0,.1);color:var(--orange)}
+
+/* sov bars */
+.sov-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.sov-row:last-child{border-bottom:none}
+.sov-lbl{width:140px;color:var(--smoke);flex-shrink:0}
+.sov-pct{font-weight:600;min-width:36px}
+.sov-track{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.sov-fill{height:100%;border-radius:3px;background:var(--gold);print-color-adjust:exact;-webkit-print-color-adjust:exact}
+
+/* paywall */
+.paywall-wrap{background:linear-gradient(160deg,rgba(201,146,42,.09) 0%,rgba(8,12,20,.98) 50%);border:1px solid rgba(201,146,42,.3);border-radius:20px;padding:52px 40px;text-align:center;margin-top:32px;position:relative;overflow:hidden}
+.paywall-wrap::before{content:'';position:absolute;width:500px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(201,146,42,.08) 0%,transparent 70%);top:-100px;left:50%;transform:translateX(-50%);pointer-events:none}
+.pw-lock{font-size:52px;margin-bottom:16px}
+.pw-h{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;margin-bottom:12px;line-height:1.2}
+.pw-h em{font-style:italic;color:var(--gold2)}
+.pw-sub{font-size:15px;color:var(--smoke);max-width:500px;margin:0 auto 32px;line-height:1.7;font-weight:300}
+.pw-feats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:540px;margin:0 auto 32px;text-align:left}
+.pw-feat{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--smoke)}
+.pw-feat .tick{color:var(--gold2);flex-shrink:0}
+.pw-price{margin-bottom:28px}
+.pw-amount{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;color:var(--gold2)}
+.pw-per{font-size:14px;color:var(--smoke)}
+.pw-compare{font-size:12px;color:rgba(184,192,204,.4);margin-top:4px}
+.btn-unlock{background:var(--gold);color:var(--ink);border:none;border-radius:10px;padding:18px 52px;font-size:16px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s,transform .15s,box-shadow .2s}
+.btn-unlock:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,146,42,.25)}
+.pw-guarantee{font-size:12px;color:rgba(184,192,204,.35);margin-top:16px}
+
+/* util */
+.val-red{color:var(--red)}
+.val-org{color:var(--orange)}
+.val-gld{color:var(--gold2)}
+.val-grn{color:var(--green)}
+
+@media(max-width:700px){
+  nav{padding:14px 20px}
+  .report-wrap{padding:32px 20px 60px}
+  .metrics-row,.plat-grid{grid-template-columns:1fr}
+  .pw-feats{grid-template-columns:1fr}
+  .score-hero{flex-direction:column;gap:16px}
+  .form-card{padding:24px}
+  .input-grid{grid-template-columns:1fr}
+}
+</style>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  PRINT / PDF STYLES  — transforms dark UI          -->
+<!--  into a premium McKinsey-style consulting report   -->
+<!-- ═══════════════════════════════════════════════════ -->
+<style>
+@media print {
+  /* ── reset dark theme ── */
+  :root{
+    --ink:#fff;--ink2:#fff;--ink3:#fff;
+    --border:#dee2e8;--card:#f8f9fb;--smoke:#4a5568;
+    --gold:#b07d1f;--gold2:#92650f;--gold-dim:rgba(176,125,31,.08);
+    --red:#c53030;--green:#276749;--orange:#c05621;
+  }
+  html,body{background:#fff !important;color:#0D1B2A !important;font-size:11pt}
+  body::before{display:none}
+
+  /* ── hide chrome ── */
+  nav,
+  .action-bar,
+  .input-screen,
+  .loading-screen,
+  .paywall-wrap,
+  .err-box,
+  .modal-overlay{display:none !important}
+
+  /* ── report wrapper ── */
+  #report-area{display:block !important}
+  .report-wrap{max-width:100%;padding:0;margin:0}
+
+  /* ── page setup ── */
+  @page{
+    size:A4 portrait;
+    margin:18mm 18mm 22mm 18mm;
+    @bottom-center{
+      content:"Cerebré Media Africa  ·  Strategic Digital Intelligence  ·  STRICTLY CONFIDENTIAL";
+      font-size:7pt;color:#999;font-family:'DM Sans',sans-serif;
+    }
+    @top-right{content:counter(page);font-size:8pt;color:#999;font-family:'DM Sans',sans-serif}
+  }
+  body{counter-reset:page}
+
+  /* ── masthead ── */
+  .r-masthead{
+    background:#fff !important;
+    border:none !important;
+    border-bottom:3px solid #0D1B2A !important;
+    border-radius:0 !important;
+    padding:0 0 24px !important;
+    margin-bottom:32px !important;
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:end;
+    break-after:avoid;
+  }
+  .r-eyebrow{color:#b07d1f !important;font-size:8pt !important;letter-spacing:.18em}
+  .r-h1{font-size:20pt !important;color:#0D1B2A !important;margin-bottom:10px !important}
+  .r-h1 span{color:#b07d1f !important}
+  .r-meta{font-size:8pt !important;color:#4a5568 !important;gap:16px !important}
+  .r-meta strong{color:#0D1B2A !important}
+  .r-badge{
+    background:#fff !important;
+    border:2px solid #c53030 !important;
+    color:#c53030 !important;
+    font-size:7pt !important;
+    letter-spacing:.16em;
+    padding:4px 14px;
+    border-radius:3px;
+  }
+
+  /* ── print logo (top right of masthead) ── */
+  .r-masthead::after{
+    content:"C";
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:44px;height:44px;
+    background:#0D1B2A;
+    border-radius:6px;
+    font-family:'Playfair Display',serif;
+    font-size:22px;font-weight:700;
+    color:#C9922A;
+    flex-shrink:0;
+    margin-left:24px;
+    margin-bottom:4px;
+  }
+
+  /* ── score hero ── */
+  .score-hero{
+    background:#f8f9fb !important;
+    border:1px solid #dee2e8 !important;
+    border-radius:8px !important;
+    break-inside:avoid;
+    margin-bottom:20px !important;
+  }
+  .score-ring{border-color:#0D1B2A !important}
+  .score-big{color:#0D1B2A !important;font-size:26pt !important}
+  .score-denom{color:#4a5568 !important}
+  .score-info h2{color:#0D1B2A !important;font-size:13pt !important}
+  .score-info p{color:#4a5568 !important;font-size:10pt !important}
+  .stage-tag{background:rgba(176,125,31,.08) !important;color:#92650f !important;border-color:rgba(176,125,31,.3) !important;font-size:8pt !important}
+
+  /* ── metric boxes ── */
+  .metrics-row{break-inside:avoid;margin-bottom:20px !important;gap:10px !important}
+  .m-box{background:#f8f9fb !important;border:1px solid #dee2e8 !important;border-radius:6px !important;padding:14px !important}
+  .m-lbl{color:#4a5568 !important;font-size:7.5pt !important}
+  .m-val{font-size:16pt !important;color:#0D1B2A !important}
+  .m-sub{color:#4a5568 !important;font-size:8pt !important}
+  .val-red{color:#c53030 !important}
+  .val-org{color:#c05621 !important}
+  .val-gld{color:#92650f !important}
+  .val-grn{color:#276749 !important}
+
+  /* ── section cards — page-break aware ── */
+  .s-card{
+    background:#fff !important;
+    border:1px solid #dee2e8 !important;
+    border-radius:8px !important;
+    margin-bottom:18px !important;
+    break-inside:avoid;
+    overflow:visible !important;
+  }
+  /* force certain sections to new page */
+  .s-card.pb{break-before:page}
+
+  .s-head{
+    background:#0D1B2A !important;
+    padding:10px 16px !important;
+    break-after:avoid;
+  }
+  .s-title{color:#fff !important;font-size:9pt !important;letter-spacing:.1em}
+  .s-score{
+    background:rgba(255,255,255,.15) !important;
+    color:#fff !important;
+    border-color:rgba(255,255,255,.2) !important;
+    font-size:9pt !important;
+  }
+  .s-body{padding:16px !important}
+
+  /* ── bar charts ── */
+  .bar-row{padding:8px 0 !important;border-bottom-color:#dee2e8 !important}
+  .bar-lbl{color:#0D1B2A !important;font-size:9.5pt !important;width:190px !important}
+  .bar-track{background:#f0f0f0 !important;height:9px !important}
+  .bar-fill{print-color-adjust:exact !important;-webkit-print-color-adjust:exact !important}
+  .bar-num{color:#0D1B2A !important;font-size:9.5pt !important}
+
+  /* ── platforms ── */
+  .plat{background:#f8f9fb !important;border-color:#dee2e8 !important;padding:12px !important}
+  .plat-name{color:#4a5568 !important}
+  .plat-count{color:#0D1B2A !important;font-size:16pt !important}
+  .tc{background:rgba(197,48,48,.08) !important;color:#c53030 !important}
+  .tg{background:rgba(192,86,33,.08) !important;color:#c05621 !important}
+  .to{background:rgba(39,103,73,.08) !important;color:#276749 !important}
+
+  /* ── keyword table ── */
+  .kw-row{border-bottom-color:#dee2e8 !important;font-size:9.5pt !important}
+  .kw-name{color:#0D1B2A !important}
+  .kw-vol{color:#4a5568 !important}
+  .kw-rel{background:rgba(197,48,48,.08) !important;color:#c53030 !important}
+
+  /* ── gap cards ── */
+  .gap-card{border-color:#dee2e8 !important;border-left-color:#c53030 !important;background:#fefefe !important;break-inside:avoid}
+  .gap-num{color:#c53030 !important}
+  .gap-title{color:#0D1B2A !important;font-size:11pt !important}
+  .gap-body{color:#4a5568 !important;font-size:9.5pt !important}
+  .gap-risk{background:rgba(197,48,48,.06) !important;color:#c53030 !important;font-size:9pt !important}
+
+  /* ── week blocks ── */
+  .week-block{background:#f8f9fb !important;border-color:#dee2e8 !important;break-inside:avoid;padding:16px !important}
+  .week-b{background:#0D1B2A !important;color:#C9922A !important;border-color:transparent !important;font-size:8pt !important}
+  .week-t{color:#0D1B2A !important;font-size:11pt !important}
+  .action-li{color:#4a5568 !important;border-bottom-color:#dee2e8 !important;font-size:9pt !important}
+  .action-li .arr{color:#b07d1f !important}
+  .deliv{background:rgba(39,103,73,.05) !important;border-color:rgba(39,103,73,.2) !important;font-size:9pt !important}
+  .deliv strong{color:#276749 !important}
+
+  /* ── services table ── */
+  .svc-tbl th{background:#0D1B2A !important;color:#C9922A !important;font-size:8pt !important;padding:9px 12px !important}
+  .svc-tbl td{color:#4a5568 !important;border-bottom-color:#dee2e8 !important;font-size:9.5pt !important;padding:9px 12px !important}
+  .svc-tbl td:first-child{color:#0D1B2A !important}
+  .svc-roi{color:#276749 !important}
+
+  /* ── roadmap ── */
+  .phase-block{background:#f8f9fb !important;border-color:#dee2e8 !important;break-inside:avoid;padding:14px !important}
+  .phase-t{color:#0D1B2A !important;border-bottom-color:#dee2e8 !important;font-size:10pt !important}
+  .r-row{border-bottom-color:#dee2e8 !important;font-size:9pt !important}
+  .r-time{color:#b07d1f !important}
+  .r-out{color:#4a5568 !important}
+  .forecast-box{background:rgba(39,103,73,.05) !important;border-color:rgba(39,103,73,.2) !important;color:#4a5568 !important;font-size:9.5pt !important}
+  .forecast-box strong{color:#276749 !important}
+
+  /* ── sov bars ── */
+  .sov-row{border-bottom-color:#dee2e8 !important;font-size:9.5pt !important}
+  .sov-lbl{color:#4a5568 !important}
+  .sov-track{background:#f0f0f0 !important}
+  .sov-fill{print-color-adjust:exact !important;-webkit-print-color-adjust:exact !important}
+
+  /* ── asset rows ── */
+  .asset-row{border-bottom-color:#dee2e8 !important;color:#4a5568 !important;font-size:9.5pt !important}
+  .at-p{background:rgba(39,103,73,.08) !important;color:#276749 !important}
+  .at-x{background:rgba(197,48,48,.08) !important;color:#c53030 !important}
+  .at-m{background:rgba(192,86,33,.08) !important;color:#c05621 !important}
+
+  /* ── report section dividers ── */
+  .print-section-break{break-before:page}
+
+  /* ── verdict/highlight boxes ── */
+  .verdict-box{background:#f8f9fb !important;border-color:#dee2e8 !important;color:#4a5568 !important}
+  .verdict-box strong{color:#0D1B2A !important}
+
+  /* ── benchmark table ── */
+  .bench-tbl th{background:#0D1B2A !important;color:#C9922A !important;font-size:8pt !important}
+  .bench-tbl td{border-bottom-color:#dee2e8 !important;font-size:9.5pt !important;color:#4a5568 !important}
+  .bench-tbl td:first-child{color:#0D1B2A !important;font-weight:600}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="landing.html" class="nav-logo">
+    <div class="nav-mark">C</div>
+    <div>
+      <div class="nav-name">CEREBRÉ MEDIA AFRICA</div>
+      <div class="nav-sub">Intelligence Engine</div>
+    </div>
+  </a>
+  <a href="landing.html" class="nav-back">← Home</a>
+</nav>
+
+<!-- ══ EMAIL GATE MODAL ══ -->
+<div class="modal-overlay" id="email-modal">
+  <div class="modal-box">
+    <div class="modal-icon">📊</div>
+    <h2>Get Your <em>Free</em> Brand Score</h2>
+    <p>Enter your work email to receive your audit results and a summary report directly in your inbox. We'll also send you your full report once payment is confirmed.</p>
+    <input class="modal-input" type="email" id="gate-email" placeholder="yourname@company.com" />
+    <button class="modal-btn" onclick="confirmEmail()">Run My Free Audit →</button>
+    <p class="modal-note">No spam. Unsubscribe any time. We use your email to deliver reports.</p>
+  </div>
+</div>
+
+<!-- ══ INPUT SCREEN ══ -->
+<section class="input-screen" id="input-screen">
+  <div class="glow-bg"></div>
+  <div id="trial-badge" class="trial-badge">✓ 2 free audits remaining on this device</div>
+  <div class="eyebrow"><span class="dot-live"></span>Live Web Intelligence · Claude Sonnet 4</div>
+  <h1>Run Your <em>Free</em><br>Brand Health Audit</h1>
+  <p class="input-sub">Our AI crawls the internet in real time to benchmark your brand against competitors. Ready in 90 seconds.</p>
+  <div class="form-card">
+    <div class="input-grid">
+      <div class="field input-full">
+        <label>Company Name *</label>
+        <input type="text" id="company-name" placeholder="e.g. Dangote Group, Access Bank, MTN Nigeria…"/>
+      </div>
+      <div class="field input-full">
+        <label>Company Website</label>
+        <input type="text" id="company-website" placeholder="https://example.com"/>
+      </div>
+      <div class="field">
+        <label>Industry</label>
+        <input type="text" id="industry" placeholder="FMCG, Finance, Telecom…"/>
+      </div>
+      <div class="field">
+        <label>Primary Market</label>
+        <input type="text" id="market" placeholder="Nigeria, West Africa…"/>
+      </div>
+      <div class="field input-full">
+        <label>Main Competitors (comma-separated)</label>
+        <input type="text" id="competitors" placeholder="e.g. Flour Mills, Olam Group, Nestlé Nigeria"/>
+      </div>
+    </div>
+    <button class="btn-audit" id="audit-btn" onclick="startAudit()">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      Generate My Free Digital Audit
+    </button>
+    <p class="form-note">Free audit · 90 seconds · No card required · Full report ₦15,000</p>
+  </div>
+  <div class="err-box" id="err-box"></div>
+</section>
+
+<!-- ══ LOADING ══ -->
+<section class="loading-screen" id="loading-screen">
+  <div class="spinner-ring"></div>
+  <div class="loading-h">Cerebré Intelligence at Work</div>
+  <div class="loading-sub" id="loading-sub">Scanning your digital presence across the internet…</div>
+  <ul class="steps-list" id="steps-list">
+    <li class="step-li" id="sl1"><span class="step-pip"></span>Searching website and digital profiles…</li>
+    <li class="step-li" id="sl2"><span class="step-pip"></span>Crawling LinkedIn, Instagram, Twitter/X, YouTube…</li>
+    <li class="step-li" id="sl3"><span class="step-pip"></span>Benchmarking against competitors…</li>
+    <li class="step-li" id="sl4"><span class="step-pip"></span>Analysing SEO and keyword gaps…</li>
+    <li class="step-li" id="sl5"><span class="step-pip"></span>Calculating Digital Maturity Score…</li>
+    <li class="step-li" id="sl6"><span class="step-pip"></span>Generating your audit report…</li>
+  </ul>
+</section>
+
+<!-- ══ REPORT AREA ══ -->
+<div id="report-area"></div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  JAVASCRIPT                                         -->
+<!-- ═══════════════════════════════════════════════════ -->
+<script>
+/* ── CONFIG ─────────────────────────────────────────── */
+const CFG = {
+  PROXY_URL:         '/api/generate',     /* backend proxy — never use direct API in prod */
+  SEND_EMAIL_URL:    '/api/send-report',  /* email delivery endpoint                      */
+  PAYSTACK_KEY:      'pk_test_904b6d2fe98014f2b715f6e3e55c0d28143c3069',
+  PRICE_KOBO:        1500000,             /* ₦15,000 in kobo                               */
+  BUSINESS_EMAIL:    'triplekalu2@gmail.com',
+  FREE_AUDIT_LIMIT:  2,                   /* max free audits per device                    */
+  RESET_DAYS:        7,                   /* reset free limit after N days                 */
+};
+
+/* ── ABUSE PREVENTION ────────────────────────────────
+   Multi-layer fingerprint:
+   1. localStorage count (primary, instant)
+   2. Canvas fingerprint hash (survives incognito changes)
+   3. Backend IP check (server-side, in api/generate.js)
+   ─────────────────────────────────────────────────── */
+
+function getFingerprint() {
+  try {
+    const cv = document.createElement('canvas');
+    const ctx = cv.getContext('2d');
+    ctx.textBaseline = 'top';
+    ctx.font = '14px Arial';
+    ctx.fillStyle = '#f60';
+    ctx.fillRect(125, 1, 62, 20);
+    ctx.fillStyle = '#069';
+    ctx.fillText('Cerebré🌍', 2, 15);
+    ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+    ctx.fillText('Cerebré🌍', 4, 17);
+    let hash = 0;
+    const data = cv.toDataURL();
+    for (let i = 0; i < data.length; i++) {
+      hash = ((hash << 5) - hash) + data.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs(hash).toString(36);
+  } catch { return 'default'; }
+}
+
+function getSession() {
+  const raw = localStorage.getItem('cbr_session');
+  if (!raw) return null;
+  try { return JSON.parse(raw); } catch { return null; }
+}
+
+function saveSession(data) {
+  localStorage.setItem('cbr_session', JSON.stringify(data));
+}
+
+function checkAndUpdateLimit() {
+  const fp = getFingerprint();
+  let session = getSession();
+  const now = Date.now();
+
+  if (!session || session.fp !== fp) {
+    /* new device or fingerprint changed — create fresh session */
+    session = { fp, count: 0, email: null, lastReset: now };
+  }
+  /* reset counter after RESET_DAYS */
+  if ((now - session.lastReset) > CFG.RESET_DAYS * 86400000) {
+    session.count = 0;
+    session.lastReset = now;
+  }
+  saveSession(session);
+  return session;
+}
+
+function incrementUsage() {
+  const session = getSession() || { fp: getFingerprint(), count: 0, lastReset: Date.now() };
+  session.count += 1;
+  saveSession(session);
+}
+
+function getRemainingTrials() {
+  const session = checkAndUpdateLimit();
+  return Math.max(0, CFG.FREE_AUDIT_LIMIT - session.count);
+}
+
+/* update trial badge on load */
+function refreshTrialBadge() {
+  const remaining = getRemainingTrials();
+  const badge = document.getElementById('trial-badge');
+  if (remaining >= 2) {
+    badge.textContent = `✓ ${remaining} free audit${remaining === 1 ? '' : 's'} remaining on this device`;
+    badge.className = 'trial-badge';
+  } else if (remaining === 1) {
+    badge.textContent = `⚠ 1 free audit remaining — after this, the full report is ₦15,000`;
+    badge.className = 'trial-badge warn';
+  } else {
+    badge.textContent = `Your free audits are used up on this device`;
+    badge.className = 'trial-badge empty';
+    showLimitWall();
+  }
+}
+
+function showLimitWall() {
+  document.getElementById('audit-btn').style.display = 'none';
+  document.getElementById('form-note-txt') && (document.getElementById('form-note-txt').style.display = 'none');
+  const wall = document.createElement('div');
+  wall.className = 'limit-wall';
+  wall.style.marginTop = '20px';
+  wall.innerHTML = `
+    <h3>🔒 Free Audits Used Up</h3>
+    <p>You've used your ${CFG.FREE_AUDIT_LIMIT} free audits on this device. To run another audit and access the full report — including your 30-day action plan, 12-month roadmap, and Cerebré services proposal — upgrade to the full report.</p>
+    <button class="btn-upgrade" onclick="goToPay()">Get Full Report — ₦15,000 →</button>
+    <p style="font-size:12px;color:rgba(184,192,204,.4);margin-top:12px">Or contact us at ${CFG.BUSINESS_EMAIL} for agency plans</p>
+  `;
+  document.querySelector('.form-card').appendChild(wall);
+}
+
+/* ── EMAIL GATE ─────────────────────────────────────── */
+let userEmail = '';
+let pendingAudit = false;
+
+function startAudit() {
+  const company = document.getElementById('company-name').value.trim();
+  if (!company) { showErr('Please enter a company name.'); return; }
+
+  const session = getSession();
+  const remaining = getRemainingTrials();
+
+  /* check limit */
+  if (remaining <= 0) { showLimitWall(); return; }
+
+  /* show email gate if no email captured yet */
+  if (!session || !session.email) {
+    pendingAudit = true;
+    document.getElementById('email-modal').classList.add('active');
+    setTimeout(() => document.getElementById('gate-email').focus(), 100);
+    return;
+  }
+
+  userEmail = session.email;
+  runTeaser();
+}
+
+function confirmEmail() {
+  const email = document.getElementById('gate-email').value.trim();
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  userEmail = email;
+  const session = getSession() || { fp: getFingerprint(), count: 0, lastReset: Date.now() };
+  session.email = email;
+  saveSession(session);
+  document.getElementById('email-modal').classList.remove('active');
+  if (pendingAudit) { pendingAudit = false; runTeaser(); }
+}
+
+async function callAPI(systemPrompt, userMsg, maxTokens = 5000) {
+  const body = {
+    model:      'claude-sonnet-4-20250514',
+    max_tokens: maxTokens,
+    system:     systemPrompt,
+    tools:      [{ type: 'web_search_20250305', name: 'web_search' }],
+    messages:   [{ role: 'user', content: userMsg }],
+    _meta:      { email: userEmail, fingerprint: getFingerprint() },
+  };
+ 
+  console.log('[callAPI] Sending request to /api/generate …');
+  console.log('[callAPI] model:', body.model, '| max_tokens:', maxTokens);
+ 
+  let res;
+  try {
+    res = await fetch('/api/generate', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(body),
+    });
+  } catch (networkErr) {
+    console.error('[callAPI] Network error (fetch failed):', networkErr);
+    throw new Error('Network error — could not reach the server. Check your internet connection.');
+  }
+ 
+  console.log('[callAPI] Response status:', res.status);
+ 
+  let raw;
+  try {
+    raw = await res.text();   // read as text first so we can log it
+  } catch (readErr) {
+    console.error('[callAPI] Failed to read response body:', readErr);
+    throw new Error('Failed to read server response.');
+  }
+ 
+  console.log('[callAPI] Raw response (first 500 chars):', raw.slice(0, 500));
+ 
+  if (!res.ok) {
+    let errMsg = `Server error ${res.status}`;
+    try {
+      const errJson = JSON.parse(raw);
+      errMsg = errJson.error?.message || errJson.message || errMsg;
+    } catch (_) { /* raw wasn't JSON */ }
+ 
+    console.error('[callAPI] Non-OK response:', res.status, raw.slice(0, 300));
+ 
+    if (res.status === 429) throw new Error('rate_limit');
+    if (res.status === 529 || raw.includes('overloaded')) throw new Error('overloaded');
+    throw new Error(errMsg);
+  }
+ 
+  // Parse the outer server envelope
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch (e) {
+    console.error('[callAPI] Could not parse server envelope as JSON:', raw.slice(0, 300));
+    throw new Error('Server returned invalid JSON envelope.');
+  }
+ 
+  // Extract the text content block(s)
+  const contentBlocks = data.content || [];
+  const textBlocks    = contentBlocks.filter(b => b.type === 'text');
+ 
+  if (!textBlocks.length) {
+    console.error('[callAPI] No text blocks in response. Full data:', JSON.stringify(data).slice(0, 500));
+    throw new Error('AI returned no text content. Please try again.');
+  }
+ 
+  const fullText = textBlocks.map(b => b.text).join('');
+  console.log('[callAPI] Text content length:', fullText.length, '| first 300 chars:', fullText.slice(0, 300));
+ 
+  // ── Robust JSON extraction ────────────────────────────────
+  // Strategy 1: strip markdown fences, find outermost { }
+  let jsonStr = fullText
+    .replace(/^[\s\S]*?```json\s*/i, '')   // remove everything before ```json
+    .replace(/```[\s\S]*$/i, '')            // remove everything after closing ```
+    .trim();
+ 
+  // Strategy 2: if no fences, find first { and last }
+  if (!jsonStr.startsWith('{')) {
+    const fi = fullText.indexOf('{');
+    const li = fullText.lastIndexOf('}');
+    if (fi !== -1 && li !== -1 && li > fi) {
+      jsonStr = fullText.slice(fi, li + 1);
+    } else {
+      console.error('[callAPI] No JSON object found in text. Text was:', fullText.slice(0, 500));
+      throw new Error('AI response did not contain a JSON object. Please try again.');
+    }
+  }
+ 
+  console.log('[callAPI] Extracted JSON length:', jsonStr.length, '| first 200 chars:', jsonStr.slice(0, 200));
+ 
+  try {
+    return JSON.parse(jsonStr);
+  } catch (parseErr) {
+    console.error('[callAPI] JSON.parse failed:', parseErr.message);
+    console.error('[callAPI] JSON string (first 500):', jsonStr.slice(0, 500));
+ 
+    // Strategy 3: try to fix common Claude JSON issues
+    const fixed = jsonStr
+      .replace(/,(\s*[}\]])/g, '$1')   // trailing commas
+      .replace(/(['"])?([a-zA-Z_][a-zA-Z0-9_]*)(['"])?:/g, '"$2":');  // unquoted keys
+ 
+    try {
+      console.log('[callAPI] Trying fixed JSON …');
+      return JSON.parse(fixed);
+    } catch (_) {
+      throw new Error(`AI returned malformed JSON: ${parseErr.message}. Please try again.`);
+    }
+  }
+}
+
+  
+
+/* ── PROMPTS ─────────────────────────────────────────── */
+const TEASER_PROMPT = `You are Cerebré Intelligence Engine — an elite AI brand strategist by Cerebré Media Africa, Nigeria.
+
+Use web search (up to 3 searches) to find key facts about the company, then return ONLY valid JSON — no markdown, no text outside the object:
+
+{"company_name":string,"report_date":string,"overall_score":number,"maturity_stage":string,"executive_summary":{"overview":string,"strengths":string[],"critical_gaps":string[]},"website_audit":{"url":string,"score":number,"top_issues":string[]},"seo_audit":{"score":number,"domain_authority_estimate":string,"monthly_organic_traffic_estimate":string,"top_missed_keywords":[{"keyword":string,"monthly_searches":string,"revenue_relevance":string}]},"social_media_audit":{"overall_score":number,"platforms":{"linkedin":{"followers":number,"score":number,"status":string},"instagram":{"followers":number,"score":number,"status":string},"twitter_x":{"followers":number,"score":number,"status":string},"youtube":{"subscribers":number,"score":number,"status":string},"tiktok":{"followers":number,"score":number,"status":string}},"competitor_benchmarks":[{"name":string,"linkedin":number,"instagram":number,"twitter":number}]},"top_3_gaps":[{"rank":number,"title":string,"description":string,"business_risk":string}]}
+
+Rules: Scores 1–10. Follower counts from live searches only. top_3_gaps must be shocking and specific with real numbers. Return ONLY the JSON.`;
+
+const FULL_PROMPT = `You are Cerebré Intelligence Engine — a world-class digital brand strategist by Cerebré Media Africa, Nigeria.
+
+Use web search (up to 5 searches) to gather current data on the company's website, social media followers, competitors, and recent news, then return ONLY valid JSON:
+{"company_name":string,"report_date":string,"prepared_by":"Cerebré Media Africa","overall_score":number,"maturity_stage":string,"executive_summary":{"overview":string,"strengths":string[],"critical_gaps":string[],"headline_numbers":{"revenue_visibility_loss":string,"organic_traffic_missed":string,"biggest_follower_gap":string}},"website_audit":{"url":string,"score":number,"architecture_issues":string[],"speed_issues":string[],"conversion_issues":string[],"ux_score":number},"seo_audit":{"score":number,"domain_authority_estimate":string,"monthly_organic_traffic_estimate":string,"missed_keyword_clusters":[{"keyword":string,"monthly_searches":string,"revenue_relevance":string}],"content_gaps":string[],"backlink_gaps":string[]},"social_media_audit":{"overall_score":number,"platforms":{"linkedin":{"followers":number,"score":number,"issues":string[],"status":string},"instagram":{"followers":number,"score":number,"issues":string[],"status":string},"twitter_x":{"followers":number,"score":number,"issues":string[],"status":string},"youtube":{"subscribers":number,"score":number,"issues":string[],"status":string},"tiktok":{"followers":number,"score":number,"issues":string[],"status":string}},"competitor_benchmarks":[{"name":string,"linkedin":number,"instagram":number,"twitter":number}]},"content_marketing":{"score":number,"content_assets":[{"asset":string,"status":string}],"storytelling_gaps":string[]},"share_of_voice":{"score":number,"company_sov_percent":number,"breakdown":{"search":string,"social":string,"press":string,"news":string},"brand_perception_risks":string[]},"digital_authority":{"score":number,"trust_gaps":string[],"esg_gaps":string[]},"paid_media":{"score":number,"active_campaigns":boolean,"channel_status":[{"channel":string,"status":string,"opportunity":string}],"estimated_traffic_loss":string},"maturity_index":{"overall_score":number,"dimensions":[{"name":string,"score":number,"observation":string}],"stage":string,"stage_description":string},"top_strategic_gaps":[{"rank":number,"title":string,"description":string,"business_risk":string}],"thirty_day_action_plan":{"intro":string,"weeks":[{"week":number,"theme":string,"actions":string[],"cerebré_deliverable":string,"expected_outcome":string}]},"twelve_month_roadmap":{"phase1":{"title":string,"actions":[{"action":string,"timeline":string,"outcome":string}]},"phase2":{"title":string,"actions":[{"action":string,"timeline":string,"outcome":string}]},"phase3":{"title":string,"actions":[{"action":string,"timeline":string,"outcome":string}]},"forecast":string},"cerebré_services_recommended":[{"service":string,"why_needed":string,"expected_roi":string,"timeline":string}]}
+
+Rules: Scores 1–10. All follower counts from live web searches. Be specific and brutally honest. 30-day plan names Cerebré Media Africa as delivery partner. Return ONLY JSON.`;
+
+/* ── GENERATE TEASER ─────────────────────────────────── */
+let currentCompany = '';
+let teaserData = null;
+
+async function runTeaser() {
+  currentCompany = document.getElementById('company-name').value.trim();
+  const site     = document.getElementById('company-website').value.trim();
+  const industry = document.getElementById('industry').value.trim();
+  const market   = document.getElementById('market').value.trim();
+  const comps    = document.getElementById('competitors').value.trim();
+
+  const msg = `Generate a Digital Brand Health teaser for: ${currentCompany}
+${site ? 'Website: ' + site : ''}${industry ? '\nIndustry: ' + industry : ''}${market ? '\nMarket: ' + market : ''}${comps ? '\nCompetitors: ' + comps : ''}
+Today: ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}`;
+
+  hideErr();
+  showLoading('Analysing your digital presence…');
+  animateSteps(['sl1','sl2','sl3','sl4','sl5','sl6'], 3200);
+
+  try {
+    teaserData = await callAPI(TEASER_PROMPT, msg, 4000);
+    incrementUsage();
+    refreshTrialBadge();
+    /* send free summary email in background */
+    sendFreeEmail(teaserData).catch(e => console.warn('Email send failed (non-critical):', e));
+    renderTeaser(teaserData);
+  } catch(e) {
+    hideLoading();
+    if (e.message === 'rate_limit') {
+      showErr('Too many requests from this device. Please wait a few minutes and try again.');
+    } else {
+      showErr(cleanErr(e.message));
+    }
+  }
+}
+
+/* ── EMAIL SENDING ───────────────────────────────────── */
+async function sendFreeEmail(data) {
+  if (!userEmail || !CFG.SEND_EMAIL_URL) return;
+  await fetch(CFG.SEND_EMAIL_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'free', email: userEmail, data })
+  });
+}
+
+async function sendFullEmail(data, ref) {
+  if (!userEmail || !CFG.SEND_EMAIL_URL) return;
+  await fetch(CFG.SEND_EMAIL_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'full', email: userEmail, data, reference: ref })
+  });
+}
+
+/* ── PAYMENT ─────────────────────────────────────────── */
+function initiatePayment() {
+  if (!userEmail) {
+    const e = prompt('Enter your email to receive your full report:');
+    if (!e || !e.includes('@')) { alert('Valid email required.'); return; }
+    userEmail = e;
+    const s = getSession() || { fp: getFingerprint(), count: 0, lastReset: Date.now() };
+    s.email = e; saveSession(s);
+  }
+  const handler = PaystackPop.setup({
+    key: CFG.PAYSTACK_KEY,
+    email: userEmail,
+    amount: CFG.PRICE_KOBO,
+    currency: 'NGN',
+    ref: 'CBR_' + Date.now() + '_' + Math.floor(Math.random()*999999),
+    metadata: {
+      company: currentCompany,
+      custom_fields:[{ display_name:'Company', variable_name:'company', value: currentCompany }]
+    },
+    callback: r => generateFullReport(r.reference),
+    onClose: () => {}
+  });
+  handler.openIframe();
+}
+
+function goToPay() { initiatePayment(); }
+
+/* ── GENERATE FULL REPORT ────────────────────────────── */
+async function generateFullReport(ref) {
+  document.getElementById('report-area').innerHTML = '';
+  showLoading('Payment confirmed ✓ — Generating your full report…');
+  document.getElementById('loading-sub').textContent = 'Building your 11-section audit. This takes about 60 seconds.';
+
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        company:     currentCompany,
+        website:     document.getElementById('company-website').value.trim(),
+        industry:    document.getElementById('industry').value.trim(),
+        market:      document.getElementById('market').value.trim(),
+        competitors: document.getElementById('competitors').value.trim(),
+        reference:   ref,
+        email:       userEmail,
+      }),
+    });
+
+    const payload = await res.json();
+    if (!res.ok) throw new Error(payload?.error?.message || `Server error ${res.status}`);
+
+    let jt = payload.report || '';
+    jt = jt.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const fb = jt.indexOf('{'), lb = jt.lastIndexOf('}');
+    if (fb !== -1 && lb !== -1) jt = jt.slice(fb, lb + 1);
+    const data = JSON.parse(jt);
+
+    renderFull(data);
+    sendFullEmail(data, ref).catch(e => console.warn('Full email failed:', e));
+  } catch(e) {
+    hideLoading();
+    showErr(`Full report failed: ${cleanErr(e.message)}. Please email ${CFG.BUSINESS_EMAIL} with payment ref: ${ref}`);
+    document.getElementById('input-screen').style.display = 'flex';
+  }
+}
+
+/* ── HELPERS ─────────────────────────────────────────── */
+function sc(s) { return s >= 7 ? '#1DB954' : s >= 4 ? '#FF8C00' : '#E03E3E'; }
+function stCls(s) { return ({critical:'tc',gap:'tg',ok:'to',opportunity:'tp'})[s]||'tg'; }
+
+function animateSteps(ids, ms) {
+  let i = 0;
+  const iv = setInterval(() => {
+    if (i > 0) { const el = document.getElementById(ids[i-1]); if(el) el.className='step-li done'; }
+    if (i < ids.length) { const el = document.getElementById(ids[i]); if(el) el.className='step-li active'; i++; }
+    else clearInterval(iv);
+  }, ms);
+}
+function showLoading(msg) {
+  document.getElementById('input-screen').style.display = 'none';
+  document.getElementById('loading-screen').classList.add('active');
+  document.getElementById('report-area').classList.remove('active');
+  document.getElementById('report-area').innerHTML = '';
+  if(msg) document.getElementById('loading-sub').textContent = msg;
+}
+function hideLoading() {
+  document.getElementById('loading-screen').classList.remove('active');
+  ['sl1','sl2','sl3','sl4','sl5','sl6'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.className='step-li';
+  });
+}
+function showErr(m) {
+  const el = document.getElementById('err-box');
+  el.textContent = m; el.classList.add('active');
+  document.getElementById('input-screen').style.display = 'flex';
+}
+function hideErr() { document.getElementById('err-box').classList.remove('active'); }
+function cleanErr(m) {
+  if(m.includes('quota')||m.includes('billing')) return 'API quota exceeded — check console.anthropic.com/billing';
+  if(m.includes('auth')||m.includes('401')) return 'Authentication error — check API key';
+  if(m.includes('overloaded')||m.includes('529')) return 'AI is busy. Wait 30 seconds and retry.';
+  if(m.includes('rate_limit')) return 'Too many requests. Please wait a few minutes.';
+  return m;
+}
+function newAudit() {
+  document.getElementById('report-area').classList.remove('active');
+  document.getElementById('report-area').innerHTML = '';
+  document.getElementById('input-screen').style.display = 'flex';
+  hideErr(); refreshTrialBadge(); window.scrollTo(0,0);
+}
+
+/* ── RENDER TEASER ───────────────────────────────────── */
+function renderTeaser(d) {
+  hideLoading();
+  document.getElementById('input-screen').style.display = 'none';
+  const area = document.getElementById('report-area');
+  area.classList.add('active');
+  const S = d.social_media_audit||{}, P = S.platforms||{};
+  const bench = S.competitor_benchmarks||[], seo = d.seo_audit||{};
+  const kw = seo.top_missed_keywords||[], gaps = d.top_3_gaps||[];
+  const E = d.executive_summary||{};
+
+  area.innerHTML = `
+<div class="report-wrap">
+  <div class="action-bar">
+    <button class="btn-action" onclick="newAudit()">← New Audit</button>
+  </div>
+
+  <div class="r-masthead">
+    <div class="r-eyebrow">Cerebré Media Africa — Free Taster Audit</div>
+    <div class="r-h1">Digital Brand Health: <span>${d.company_name||currentCompany}</span></div>
+    <div class="r-meta">
+      <span><strong>Date:</strong> ${d.report_date||new Date().toLocaleDateString()}</span>
+      <span><strong>Type:</strong> Free Taster Report</span>
+      <span><strong>Delivered to:</strong> ${userEmail||'—'}</span>
+    </div>
+    <div class="r-badge">CONFIDENTIAL</div>
+  </div>
+
+  <div class="score-hero">
+    <div class="score-ring" style="border-color:${sc(d.overall_score||0)}">
+      <div class="score-big" style="color:${sc(d.overall_score||0)}">${(d.overall_score||0).toFixed(1)}</div>
+      <div class="score-denom">/ 10</div>
+    </div>
+    <div class="score-info">
+      <h2>Overall Digital Health Score</h2>
+      <p>${E.overview||''}</p>
+      <div class="stage-tag">${d.maturity_stage||''}</div>
+    </div>
+  </div>
+
+  <!-- Social -->
+  <div class="s-card">
+    <div class="s-head">
+      <div class="s-title">Social Media Benchmarks</div>
+      <div class="s-score" style="color:${sc(S.overall_score||0)}">${S.overall_score||0}/10</div>
+    </div>
+    <div class="s-body">
+      <div class="plat-grid">
+        ${Object.entries(P).map(([k,p])=>`
+          <div class="plat">
+            <div class="plat-name">${k.replace('_x','').replace('_',' ').toUpperCase()}</div>
+            <div class="plat-count" style="color:${sc(p.score||0)}">${((p.followers||p.subscribers||0)).toLocaleString()}</div>
+            <div class="plat-tag ${stCls(p.status)}">${(p.status||'').toUpperCase()}</div>
+          </div>`).join('')}
+      </div>
+      ${bench.length?`
+        <div style="margin-top:20px">
+          <table class="bench-tbl" style="width:100%;font-size:13px;border-collapse:collapse">
+            <tr>
+              <th style="text-align:left;padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px">Company</th>
+              <th style="padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px;text-align:center">LinkedIn</th>
+              <th style="padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px;text-align:center">Instagram</th>
+              <th style="padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px;text-align:center">Twitter/X</th>
+            </tr>
+            ${bench.map(c=>`<tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:9px;font-weight:500">${c.name}</td>
+              <td style="padding:9px;text-align:center;color:var(--smoke)">${(c.linkedin||0).toLocaleString()}</td>
+              <td style="padding:9px;text-align:center;color:var(--smoke)">${(c.instagram||0).toLocaleString()}</td>
+              <td style="padding:9px;text-align:center;color:var(--smoke)">${(c.twitter||0).toLocaleString()}</td>
+            </tr>`).join('')}
+          </table>
+        </div>`:''
+      }
+    </div>
+  </div>
+
+  <!-- SEO -->
+  <div class="s-card">
+    <div class="s-head">
+      <div class="s-title">SEO & Search Visibility</div>
+      <div class="s-score" style="color:${sc(seo.score||0)}">${seo.score||0}/10</div>
+    </div>
+    <div class="s-body">
+      <div class="metrics-row" style="margin-bottom:18px">
+        <div class="m-box"><div class="m-lbl">Domain Authority</div><div class="m-val ${(seo.score||0)<4?'val-red':'val-gld'}">${seo.domain_authority_estimate||'N/A'}</div></div>
+        <div class="m-box"><div class="m-lbl">Monthly Traffic</div><div class="m-val val-red">${seo.monthly_organic_traffic_estimate||'N/A'}</div></div>
+        <div class="m-box"><div class="m-lbl">SEO Score</div><div class="m-val" style="color:${sc(seo.score||0)}">${seo.score||0}/10</div></div>
+      </div>
+      ${kw.length?kw.map(k=>`<div class="kw-row"><span class="kw-name">${k.keyword}</span><span class="kw-vol">${k.monthly_searches}/mo</span><span class="kw-rel">${k.revenue_relevance}</span></div>`).join(''):''}
+    </div>
+  </div>
+
+  <!-- Top 3 gaps -->
+  <div class="s-card">
+    <div class="s-head">
+      <div class="s-title">Top 3 Critical Gaps</div>
+      <div style="font-size:11px;color:var(--red);font-weight:600">3 of 10 shown</div>
+    </div>
+    <div class="s-body">
+      ${gaps.map(g=>`
+        <div class="gap-card">
+          <div class="gap-num">GAP ${g.rank}</div>
+          <div class="gap-title">${g.title}</div>
+          <div class="gap-body">${g.description}</div>
+          ${g.business_risk?`<div class="gap-risk"><strong>Business Risk:</strong> ${g.business_risk}</div>`:''}
+        </div>`).join('')}
+    </div>
+  </div>
+
+  <!-- PAYWALL -->
+  <div class="paywall-wrap">
+    <div class="pw-lock">🔒</div>
+    <h3 class="pw-h">7 more gaps + your complete <em>30-day growth plan</em></h3>
+    <p class="pw-sub">You've seen the problem. The full report shows you exactly how to fix it — with a week-by-week action plan, 12-month roadmap, and a board-ready Cerebré services proposal. Delivered instantly to ${userEmail||'your inbox'}.</p>
+    <div class="pw-feats">
+      <div class="pw-feat"><span class="tick">✓</span>All 10 strategic gaps with risk ratings</div>
+      <div class="pw-feat"><span class="tick">✓</span>30-day week-by-week action plan</div>
+      <div class="pw-feat"><span class="tick">✓</span>Full content marketing audit</div>
+      <div class="pw-feat"><span class="tick">✓</span>Paid media gap analysis</div>
+      <div class="pw-feat"><span class="tick">✓</span>Digital share of voice breakdown</div>
+      <div class="pw-feat"><span class="tick">✓</span>12-month transformation roadmap</div>
+      <div class="pw-feat"><span class="tick">✓</span>Cerebré services proposal with ROI</div>
+      <div class="pw-feat"><span class="tick">✓</span>Emailed + printable PDF report</div>
+    </div>
+    <div class="pw-price">
+      <div class="pw-amount">₦15,000</div>
+      <div class="pw-per">one-time · instant email delivery</div>
+      <div class="pw-compare">Traditional brand audit: ₦2–5M · 6–8 weeks</div>
+    </div>
+    <button class="btn-unlock" onclick="initiatePayment()">Unlock Full Report — Pay ₦15,000 →</button>
+    <p class="pw-guarantee">🔐 Secure payment via Paystack · Report emailed instantly · 100% satisfaction guarantee</p>
+  </div>
+</div>`;
+}
+
+/* ── RENDER FULL REPORT ──────────────────────────────── */
+function renderFull(d) {
+  hideLoading();
+  document.getElementById('input-screen').style.display = 'none';
+  const area = document.getElementById('report-area');
+  area.classList.add('active');
+
+  const M   = d.maturity_index||{}, dims = M.dimensions||[];
+  const S   = d.social_media_audit||{}, P = S.platforms||{};
+  const bench= S.competitor_benchmarks||[];
+  const gaps = d.top_strategic_gaps||[];
+  const plan = d.thirty_day_action_plan||{}, weeks = plan.weeks||[];
+  const svcs = d.cerebré_services_recommended||[];
+  const road = d.twelve_month_roadmap||{};
+  const seo  = d.seo_audit||{}, kw = seo.missed_keyword_clusters||[];
+  const cont = d.content_marketing||{}, assets = cont.content_assets||[];
+  const paid = d.paid_media||{}, paidCh = paid.channel_status||[];
+  const sov  = d.share_of_voice||{};
+  const E    = d.executive_summary||{}, hl = E.headline_numbers||{};
+
+  area.innerHTML = `
+<div class="report-wrap">
+  <!-- action bar -->
+  <div class="action-bar">
+    <button class="btn-action gold" onclick="window.print()">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+      Download / Print PDF
+    </button>
+    <button class="btn-action" onclick="newAudit()">← New Audit</button>
+    <div style="margin-left:auto;font-size:12px;color:var(--smoke);display:flex;align-items:center;gap:6px">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      Report emailed to ${userEmail}
+    </div>
+  </div>
+
+  <!-- MASTHEAD -->
+  <div class="r-masthead">
+    <div class="r-eyebrow">Cerebré Media Africa — Strategic Digital Intelligence Division</div>
+    <div class="r-h1">Digital Brand Health Tracker: <span>${d.company_name||''}</span></div>
+    <div class="r-meta">
+      <span><strong>Date:</strong> ${d.report_date||new Date().toLocaleDateString()}</span>
+      <span><strong>Prepared by:</strong> Cerebré Media Africa</span>
+      <span><strong>Delivered to:</strong> ${userEmail}</span>
+    </div>
+    <div class="r-badge">STRICTLY CONFIDENTIAL — EXECUTIVE USE ONLY</div>
+  </div>
+
+  <!-- SCORE HERO -->
+  <div class="score-hero">
+    <div class="score-ring" style="border-color:${sc(d.overall_score||0)}">
+      <div class="score-big" style="color:${sc(d.overall_score||0)}">${(d.overall_score||0).toFixed(1)}</div>
+      <div class="score-denom">/ 10</div>
+    </div>
+    <div class="score-info">
+      <h2>Overall Digital Health Score</h2>
+      <p>${E.overview||''}</p>
+      <div class="stage-tag">${M.stage||d.maturity_stage||''}</div>
+    </div>
+  </div>
+
+  <!-- HEADLINE NUMBERS -->
+  <div class="metrics-row">
+    <div class="m-box"><div class="m-lbl">Revenue Visibility Loss</div><div class="m-val val-red">${hl.revenue_visibility_loss||'N/A'}</div><div class="m-sub">Estimated annual</div></div>
+    <div class="m-box"><div class="m-lbl">Organic Traffic Lost</div><div class="m-val val-red">${hl.organic_traffic_missed||'N/A'}</div><div class="m-sub">Monthly estimate</div></div>
+    <div class="m-box"><div class="m-lbl">Biggest Follower Gap</div><div class="m-val val-red">${hl.biggest_follower_gap||'N/A'}</div></div>
+  </div>
+
+  <!-- STRENGTHS & GAPS -->
+  <div class="s-card">
+    <div class="s-head"><div class="s-title">Executive Summary — Strengths & Critical Gaps</div></div>
+    <div class="s-body" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div style="background:rgba(29,185,84,.05);border:1px solid rgba(29,185,84,.15);border-radius:8px;padding:18px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:12px">✓ Strengths Identified</div>
+        ${(E.strengths||[]).map(s=>`<div style="font-size:13px;padding:5px 0;border-bottom:1px solid rgba(29,185,84,.1);color:var(--smoke);display:flex;gap:8px;line-height:1.5"><span style="color:var(--green);flex-shrink:0">•</span>${s}</div>`).join('')}
+      </div>
+      <div style="background:rgba(224,62,62,.05);border:1px solid rgba(224,62,62,.15);border-radius:8px;padding:18px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:12px">✗ Critical Gaps Found</div>
+        ${(E.critical_gaps||[]).map(g=>`<div style="font-size:13px;padding:5px 0;border-bottom:1px solid rgba(224,62,62,.1);color:var(--smoke);display:flex;gap:8px;line-height:1.5"><span style="color:var(--red);flex-shrink:0">•</span>${g}</div>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <!-- MATURITY INDEX — force page break before in print -->
+  <div class="s-card pb">
+    <div class="s-head">
+      <div class="s-title">Digital Maturity Index — 9 Dimensions</div>
+      <div class="s-score" style="color:${sc(M.overall_score||0)}">${(M.overall_score||d.overall_score||0).toFixed(1)}/10</div>
+    </div>
+    <div class="s-body">
+      ${dims.map(dim=>`
+        <div class="bar-row">
+          <div class="bar-lbl">${dim.name}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${(dim.score||0)*10}%;background:${sc(dim.score||0)}"></div></div>
+          <div class="bar-num" style="color:${sc(dim.score||0)}">${dim.score||0}/10</div>
+        </div>`).join('')}
+      <div class="verdict-box" style="margin-top:16px;padding:14px;background:var(--gold-dim);border:1px solid rgba(201,146,42,.2);border-radius:8px;font-size:13px;color:var(--smoke)">
+        <strong style="color:var(--gold2)">Verdict:</strong> ${M.stage_description||''}
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div class="s-card">
+    <div class="s-head">
+      <div class="s-title">Social Media Presence Audit</div>
+      <div class="s-score" style="color:${sc(S.overall_score||0)}">${S.overall_score||0}/10</div>
+    </div>
+    <div class="s-body">
+      <div class="plat-grid">
+        ${Object.entries(P).map(([k,p])=>`
+          <div class="plat">
+            <div class="plat-name">${k.replace('_x','').replace('_',' ').toUpperCase()}</div>
+            <div class="plat-count" style="color:${sc(p.score||0)}">${((p.followers||p.subscribers||0)).toLocaleString()}</div>
+            <div class="plat-tag ${stCls(p.status)}">${(p.status||'').toUpperCase()}</div>
+            <div style="font-size:10px;color:var(--smoke);margin-top:4px">Score: ${p.score||0}/10</div>
+            ${(p.issues||[]).slice(0,1).map(i=>`<div style="font-size:11px;color:rgba(184,192,204,.55);margin-top:4px;line-height:1.4">${i}</div>`).join('')}
+          </div>`).join('')}
+      </div>
+      ${bench.length?`
+        <div style="margin-top:20px">
+          <table class="bench-tbl" style="width:100%;font-size:13px;border-collapse:collapse">
+            <tr><th style="text-align:left;padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px">Competitor</th><th style="padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px;text-align:center">LinkedIn</th><th style="padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px;text-align:center">Instagram</th><th style="padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px;text-align:center">Twitter/X</th></tr>
+            ${bench.map(c=>`<tr style="border-bottom:1px solid var(--border)"><td style="padding:9px;font-weight:500">${c.name}</td><td style="padding:9px;text-align:center;color:var(--smoke)">${(c.linkedin||0).toLocaleString()}</td><td style="padding:9px;text-align:center;color:var(--smoke)">${(c.instagram||0).toLocaleString()}</td><td style="padding:9px;text-align:center;color:var(--smoke)">${(c.twitter||0).toLocaleString()}</td></tr>`).join('')}
+          </table>
+        </div>`:''
+      }
+    </div>
+  </div>
+
+  <!-- SEO -->
+  <div class="s-card">
+    <div class="s-head">
+      <div class="s-title">SEO & Search Visibility</div>
+      <div class="s-score" style="color:${sc(seo.score||0)}">${seo.score||0}/10</div>
+    </div>
+    <div class="s-body">
+      <div class="metrics-row" style="margin-bottom:18px">
+        <div class="m-box"><div class="m-lbl">Domain Authority</div><div class="m-val ${(seo.score||0)<4?'val-red':'val-gld'}">${seo.domain_authority_estimate||'N/A'}</div></div>
+        <div class="m-box"><div class="m-lbl">Monthly Traffic</div><div class="m-val val-red">${seo.monthly_organic_traffic_estimate||'N/A'}</div></div>
+        <div class="m-box"><div class="m-lbl">SEO Score</div><div class="m-val" style="color:${sc(seo.score||0)}">${seo.score||0}/10</div></div>
+      </div>
+      ${kw.length?`<div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke);margin-bottom:12px">Missed Keyword Opportunities</div>${kw.map(k=>`<div class="kw-row"><span class="kw-name">${k.keyword}</span><span class="kw-vol">${k.monthly_searches}/mo</span><span class="kw-rel">${k.revenue_relevance}</span></div>`).join('')}`:''}
+    </div>
+  </div>
+
+  <!-- CONTENT + SOV + AUTH + PAID (combined row) -->
+  <div class="s-card">
+    <div class="s-head">
+      <div class="s-title">Content Marketing Maturity</div>
+      <div class="s-score" style="color:${sc(cont.score||0)}">${cont.score||0}/10</div>
+    </div>
+    <div class="s-body">
+      ${assets.map(a=>`<div class="asset-row"><span>${a.asset}</span><span class="a-tag ${a.status==='present'?'at-p':a.status==='partial'?'at-m':'at-x'}">${(a.status||'').toUpperCase()}</span></div>`).join('')}
+    </div>
+  </div>
+
+  <div class="s-card">
+    <div class="s-head">
+      <div class="s-title">Digital Share of Voice</div>
+      <div class="s-score" style="color:${sc(sov.score||0)}">${sov.score||0}/10</div>
+    </div>
+    <div class="s-body">
+      <div class="metrics-row" style="margin-bottom:18px;grid-template-columns:1fr 1fr 1fr">
+        <div class="m-box"><div class="m-lbl">Your SOV</div><div class="m-val val-red">${sov.company_sov_percent||0}%</div><div class="m-sub">of industry conversation</div></div>
+        <div class="m-box"><div class="m-lbl">Search Visibility</div><div class="m-val" style="font-size:16px">${(sov.breakdown||{}).search||'N/A'}</div></div>
+        <div class="m-box"><div class="m-lbl">Social Engagement</div><div class="m-val" style="font-size:16px">${(sov.breakdown||{}).social||'N/A'}</div></div>
+      </div>
+      ${(sov.brand_perception_risks||[]).map(r=>`<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--smoke)"><span style="color:var(--red);flex-shrink:0">→</span>${r}</div>`).join('')}
+    </div>
+  </div>
+
+  <div class="s-card">
+    <div class="s-head">
+      <div class="s-title">Paid Media Visibility</div>
+      <div class="s-score" style="color:${sc(paid.score||0)}">${paid.score||0}/10</div>
+    </div>
+    <div class="s-body">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <span style="font-size:14px;font-weight:500">Active Paid Campaigns:</span>
+        <span style="padding:4px 14px;border-radius:10px;font-size:11px;font-weight:700;${paid.active_campaigns?'background:rgba(29,185,84,.12);color:var(--green)':'background:rgba(224,62,62,.12);color:var(--red)'}">
+          ${paid.active_campaigns?'DETECTED':'NONE DETECTED'}
+        </span>
+      </div>
+      ${paidCh.map(c=>`<div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;flex-wrap:wrap"><span style="font-weight:500;min-width:180px">${c.channel}</span><span style="color:var(--smoke)">${c.status}</span><span style="color:var(--gold2);margin-left:auto">${c.opportunity}</span></div>`).join('')}
+    </div>
+  </div>
+
+  <!-- TOP 10 GAPS -->
+  <div class="s-card pb">
+    <div class="s-head"><div class="s-title">Top 10 Strategic Gaps — Ranked by Business Impact</div></div>
+    <div class="s-body">
+      ${gaps.map(g=>`
+        <div class="gap-card">
+          <div class="gap-num">GAP ${g.rank}</div>
+          <div class="gap-title">${g.title}</div>
+          <div class="gap-body">${g.description}</div>
+          ${g.business_risk?`<div class="gap-risk"><strong>Business Risk:</strong> ${g.business_risk}</div>`:''}
+        </div>`).join('')}
+    </div>
+  </div>
+
+  <!-- 30-DAY PLAN -->
+  <div class="s-card pb">
+    <div class="s-head" style="background:linear-gradient(135deg,#0d1b2a,rgba(201,146,42,.3));border-bottom-color:rgba(201,146,42,.25)">
+      <div class="s-title" style="color:var(--gold2)">30-Day Cerebré Media Africa Quick Win Programme</div>
+    </div>
+    <div class="s-body">
+      <div style="padding:14px;background:var(--gold-dim);border:1px solid rgba(201,146,42,.2);border-radius:8px;font-size:13px;color:var(--smoke);margin-bottom:18px">
+        <strong style="color:var(--gold2)">What this means:</strong> ${plan.intro||''}
+      </div>
+      ${weeks.map(w=>`
+        <div class="week-block">
+          <div class="week-b">WEEK ${w.week}</div>
+          <div class="week-t">${w.theme}</div>
+          ${(w.actions||[]).map(a=>`<div class="action-li"><span class="arr">→</span>${a}</div>`).join('')}
+          <div class="deliv"><strong>Cerebré Deliverable:</strong> ${w.cerebré_deliverable}</div>
+          <div style="margin-top:10px;font-size:12px;color:var(--smoke)"><strong style="color:#fff">Expected Outcome:</strong> ${w.expected_outcome}</div>
+        </div>`).join('')}
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="s-card">
+    <div class="s-head"><div class="s-title">Cerebré Media Africa — Recommended Services</div></div>
+    <div class="s-body" style="padding:0">
+      <table class="svc-tbl">
+        <thead><tr><th>Service</th><th>Why It's Needed</th><th>Expected ROI</th><th>Timeline</th></tr></thead>
+        <tbody>${svcs.map(s=>`<tr><td>${s.service}</td><td>${s.why_needed}</td><td class="svc-roi">${s.expected_roi}</td><td>${s.timeline}</td></tr>`).join('')}</tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="s-card pb">
+    <div class="s-head"><div class="s-title">12-Month Digital Transformation Roadmap</div></div>
+    <div class="s-body">
+      ${['phase1','phase2','phase3'].map(ph=>{
+        const p = road[ph]||{};
+        return `<div class="phase-block"><div class="phase-t">${p.title||ph}</div>${(p.actions||[]).map(a=>`<div class="r-row"><span class="r-time">${a.timeline||''}</span><span style="flex:1">${a.action}</span><span class="r-out">${a.outcome||''}</span></div>`).join('')}</div>`;
+      }).join('')}
+      <div class="forecast-box"><strong>12-Month Forecast:</strong> ${road.forecast||''}</div>
+    </div>
+  </div>
+
+  <!-- FOOTER note -->
+  <div style="margin-top:32px;padding:24px;border-top:1px solid var(--border);font-size:12px;color:rgba(184,192,204,.4);line-height:1.8;text-align:center">
+    <strong style="color:var(--gold2)">Cerebré Media Africa</strong> · Strategic Digital Intelligence Division · cerebre.africa<br>
+    This report was generated by the Cerebré Intelligence Engine using live internet data as of ${d.report_date||new Date().toLocaleDateString()}.<br>
+    Revenue and traffic figures are directional estimates based on industry benchmarks. <strong style="color:var(--red)">STRICTLY CONFIDENTIAL.</strong>
+  </div>
+</div>`;
+}
+
+/* ── INIT ─────────────────────────────────────────────── */
+checkAndUpdateLimit();
+refreshTrialBadge();
+</script>
+</body>
+</html>
