@@ -928,6 +928,8 @@ function goToPay() { initiatePayment(); }
 
 /* ── GENERATE FULL REPORT ────────────────────────────── */
 async function generateFullReport(ref) {
+  if (!currentCompany) currentCompany = document.getElementById('company-name').value.trim();
+  if (!currentCompany) { showErr('Please enter a company name before paying.'); return; }
   document.getElementById('report-area').innerHTML = '';
   showLoading('Payment confirmed ✓ — Generating your full report…');
   document.getElementById('loading-sub').textContent = 'Building your 11-section audit. This takes about 60 seconds.';
