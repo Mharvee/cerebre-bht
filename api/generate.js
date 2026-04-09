@@ -267,7 +267,7 @@ router.post('/', async (req, res) => {
     //   Total per call ≈ $0.05–0.10 depending on cache hit
     const message = await client.messages.create({
       model:      'claude-sonnet-4-5',
-      max_tokens: 8000,
+      max_tokens: 12000,
       system:     SYSTEM_PROMPT,
       messages:   [{ role: 'user', content: buildPrompt({ company, website, industry, market, competitors, reference }) }],
     });
@@ -291,7 +291,14 @@ router.post('/', async (req, res) => {
 cleaned = cleaned.slice(fb, lb + 1);
 
 console.log('[generate] Attempting JSON parse, length:', cleaned.length);
-const parsed = JSON.parse(cleaned);
+let parsed;
+try {
+  parsed = JSON.parse(cleaned);
+} catch(parseErr) {
+  // Try to recover truncated JSON by finding the last complete top-level field
+  console.error('[generate] JSON truncated at:', parseErr.message);
+  throw new Error('Report was too large and got cut off. Try again — it usually works on retry.');
+}
 
     console.log(`[generate] ✓ Report for "${company}" | input=${message.usage?.input_tokens} output=${message.usage?.output_tokens}`);
 
