@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 
 // ── Static files & pages ──
 app.use(express.static(__dirname));
-app.get('/',    (req, res) => res.sendFile(path.join(__dirname, 'landing.html')));
+app.get('/',    (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 app.get('/app', (req, res) => res.sendFile(path.join(__dirname, 'app.html')));
 
 // ── API routes ──
