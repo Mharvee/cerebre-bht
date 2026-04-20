@@ -1,8 +1,11 @@
 import { Router } from 'express';
 import Anthropic from '@anthropic-ai/sdk';
 
-const router  = Router();
-const client  = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY || '' });
+console.log('[generate] API key present:', !!process.env.ANTHROPIC_API_KEY);
+console.log('[generate] API key prefix:', process.env.ANTHROPIC_API_KEY?.slice(0, 10));
+
+const router = Router();
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY || '' });
 
 // ── Sanitise ──────────────────────────────────────────────────────────────────
 function sanitize(str, maxLen = 300) {
@@ -10,182 +13,128 @@ function sanitize(str, maxLen = 300) {
   return String(str).replace(/[<>]/g, '').slice(0, maxLen).trim();
 }
 
-// ── SYSTEM PROMPT (cached by Anthropic — billed once per hour) ────────────────
-// The detailed JSON schema lives here, not in the user message, so it is only
-// counted once in the cache read rather than re-sent on every call.
-const SYSTEM_PROMPT = `You are Cerebré Intelligence Engine — a world-class digital brand strategist with deep expertise in African markets, particularly Nigeria and West Africa.
+// ── FULL REPORT SYSTEM PROMPT ─────────────────────────────────────────────────
+const SYSTEM_PROMPT = `You are Cerebré Intelligence Engine — a world-class digital brand strategist for African markets.
 
-You MUST respond with ONLY valid JSON — no markdown, no code fences, no preamble, no explanation. Pure JSON only.
+Respond with ONLY valid JSON — no markdown, no fences, no preamble. Pure JSON only.
 
-Output this EXACT schema, fully populated with realistic, specific, research-quality data for the given company. Use your training knowledge to produce accurate estimates — be specific and brutally honest about gaps. Most Nigerian companies score 2–5/10 across digital dimensions.
+Output this schema fully populated with realistic, specific data:
 
 {
   "company_name": "string",
-  "report_date": "string — use EXACTLY the Report Date provided in the user message",
+  "report_date": "string",
   "prepared_by": "Cerebré Media Africa",
-  "overall_score": "number (1 decimal, out of 10)",
+  "overall_score": number,
   "maturity_stage": "string",
 
   "executive_summary": {
-    "overview": "string (3–4 sentences, sharp executive summary)",
-    "strengths": ["string x5"],
-    "critical_gaps": ["string x5"],
+    "overview": "string (3 sentences)",
+    "strengths": ["x4"],
+    "critical_gaps": ["x4"],
     "headline_numbers": {
-      "revenue_visibility_loss": "string e.g. ₦2.4B+",
-      "organic_traffic_missed": "string e.g. ~180,000/mo",
-      "biggest_follower_gap": "string e.g. 2.1M vs 340K on LinkedIn"
-    },
-    "maturity_verdict": "string (2–3 sentences)"
+      "revenue_visibility_loss": "string e.g. ₦1.2B+",
+      "organic_traffic_missed": "string e.g. ~90,000/mo",
+      "biggest_follower_gap": "string"
+    }
   },
 
-  "website_ux_audit": {
-    "score": "number",
+  "website_audit": {
+    "score": number,
     "url": "string",
-    "overview": "string",
-    "architecture_issues": ["string x4"],
-    "performance_issues": ["string x4"],
-    "conversion_issues": ["string x4"],
-    "competitor2_name": "string",
-    "competitor3_name": "string",
-    "competitor_comparison": [
-      { "feature": "string", "company": "string", "dangote": "string", "competitor2": "string", "competitor3": "string" }
-    ],
-    "ux_score_verdict": "string",
-    "ux_opportunity": "string"
+    "top_issues": ["x4"]
   },
 
   "seo_audit": {
-    "score": "number",
+    "score": number,
     "domain_authority_estimate": "string",
-    "competitor_da_benchmark": "string",
     "monthly_organic_traffic_estimate": "string",
-    "competitor_traffic_benchmark": "string",
-    "indexed_pages_estimate": "string",
-    "ranking_keywords_estimate": "string",
     "missed_keyword_clusters": [
-      { "keyword": "string", "monthly_searches": "string", "current_ranking": "string", "revenue_relevance": "High|Medium|Low" }
-    ],
-    "content_backlink_gaps": ["string x5"],
-    "seo_score_verdict": "string",
-    "missed_opportunity_statement": "string"
+      { "keyword": "string", "monthly_searches": "string", "revenue_relevance": "High|Medium|Low" }
+    ]
   },
 
   "social_media_audit": {
-    "overall_score": "number",
-    "overview": "string",
+    "overall_score": number,
     "platforms": {
-      "linkedin":  { "followers": "number", "score": "number", "status": "ok|gap|critical|opportunity", "posting_frequency": "string", "issues": ["string x3"] },
-      "instagram": { "followers": "number", "score": "number", "status": "ok|gap|critical|opportunity", "posting_frequency": "string", "issues": ["string x3"] },
-      "twitter_x": { "followers": "number", "score": "number", "status": "ok|gap|critical|opportunity", "posting_frequency": "string", "issues": ["string x3"] },
-      "facebook":  { "followers": "number", "score": "number", "status": "ok|gap|critical|opportunity", "posting_frequency": "string", "issues": ["string x3"] },
-      "youtube":   { "subscribers": "number", "score": "number", "status": "ok|gap|critical|opportunity", "posting_frequency": "string", "issues": ["string x3"] },
-      "tiktok":    { "followers": "number", "score": "number", "status": "ok|gap|critical|opportunity", "posting_frequency": "string", "issues": ["string x3"] }
+      "linkedin":  { "followers": number, "score": number, "status": "ok|gap|critical|opportunity", "top_issue": "string" },
+      "instagram": { "followers": number, "score": number, "status": "ok|gap|critical|opportunity", "top_issue": "string" },
+      "twitter_x": { "followers": number, "score": number, "status": "ok|gap|critical|opportunity", "top_issue": "string" },
+      "facebook":  { "followers": number, "score": number, "status": "ok|gap|critical|opportunity", "top_issue": "string" },
+      "youtube":   { "subscribers": number, "score": number, "status": "ok|gap|critical|opportunity", "top_issue": "string" },
+      "tiktok":    { "followers": number, "score": number, "status": "ok|gap|critical|opportunity", "top_issue": "string" }
     },
     "competitor_benchmarks": [
-      { "platform": "string", "company": "number", "competitor1": "number", "competitor2": "number", "competitor3": "number", "c1_name": "string", "c2_name": "string", "c3_name": "string" }
-    ],
-    "social_maturity_verdict": "string"
+      { "name": "string", "linkedin": number, "instagram": number, "twitter": number }
+    ]
   },
 
   "content_marketing": {
-    "score": "number",
-    "overview": "string",
+    "score": number,
     "content_assets": [
-      { "asset": "string", "status": "present|partial|absent", "detail": "string" }
-    ],
-    "untapped_storytelling_assets": ["string x5"],
-    "content_maturity_verdict": "string"
+      { "asset": "string", "status": "present|partial|absent" }
+    ]
   },
 
-  "digital_share_of_voice": {
-    "overview": "string",
-    "sov_table": [
-      { "category": "string", "company_pct": "string", "competitor1_pct": "string", "competitor2_pct": "string", "competitor3_pct": "string", "c1": "string", "c2": "string", "c3": "string" }
-    ],
-    "sov_verdict": "string",
-    "brand_perception_risks": ["string x4"]
-  },
-
-  "digital_authority_trust": {
-    "score": "number",
-    "backlink_profile": "string",
-    "primary_backlink_sources": ["string x4"],
-    "missing_authority_sources": ["string x4"],
-    "wikipedia_status": "string",
-    "business_intelligence_profiles": "string",
-    "esg_transparency": {
-      "overview": "string",
-      "esg_assets_present": ["string x3"],
-      "esg_gaps": ["string x3"]
-    },
-    "authority_verdict": "string"
+  "share_of_voice": {
+    "score": number,
+    "company_sov_percent": number,
+    "breakdown": { "search": "string", "social": "string" },
+    "brand_perception_risks": ["x3"]
   },
 
   "paid_media": {
-    "score": "number",
-    "active_campaigns": "boolean",
-    "overview": "string",
+    "score": number,
+    "active_campaigns": boolean,
     "channel_status": [
-      { "channel": "string", "company_status": "string", "top_competitor_status": "string", "opportunity": "string" }
-    ],
-    "estimated_traffic_loss": ["string x3"],
-    "paid_media_verdict": "string"
+      { "channel": "string", "status": "string", "opportunity": "string" }
+    ]
   },
 
   "maturity_index": {
-    "overall_score": "number",
+    "overall_score": number,
     "stage": "string",
     "stage_description": "string",
     "dimensions": [
-      { "name": "string", "score": "number", "comment": "string" }
-    ],
-    "maturity_stages": [
-      { "stage": "Stage 1", "label": "Digital Absent",   "description": "string" },
-      { "stage": "Stage 2", "label": "Foundational",     "description": "string" },
-      { "stage": "Stage 3", "label": "Developing",       "description": "string" },
-      { "stage": "Stage 4", "label": "Competitive",      "description": "string" },
-      { "stage": "Stage 5", "label": "Digital Leader",   "description": "string" }
+      { "name": "string", "score": number, "observation": "string" }
     ]
   },
 
   "top_strategic_gaps": [
-    { "rank": "number", "title": "string", "description": "string (2–3 sentences)", "business_risk": "string" }
+    { "rank": number, "title": "string", "description": "string", "business_risk": "string" }
   ],
 
+  "thirty_day_action_plan": {
+    "intro": "string",
+    "weeks": [
+      { "week": number, "theme": "string", "actions": ["x3"], "cerebré_deliverable": "string", "expected_outcome": "string" }
+    ]
+  },
+
   "twelve_month_roadmap": {
-    "phase1": {
-      "title": "Phase 1 — Foundation & Quick Wins (Months 1–3)",
-      "priority": "string",
-      "actions": [
-        { "timeline": "Month 1", "action": "string", "outcome": "string" }
-      ]
-    },
-    "phase2": {
-      "title": "Phase 2 — Acceleration (Months 4–8)",
-      "priority": "string",
-      "actions": [
-        { "timeline": "Month 4–5", "action": "string", "outcome": "string" }
-      ]
-    },
-    "phase3": {
-      "title": "Phase 3 — Authority & Leadership (Months 9–12)",
-      "priority": "string",
-      "actions": [
-        { "timeline": "Month 9–10", "action": "string", "outcome": "string" }
-      ]
-    },
-    "forecast": "string (projected outcomes after 12 months)"
-  }
+    "phase1": { "title": "string", "actions": [{ "timeline": "string", "action": "string", "outcome": "string" }] },
+    "phase2": { "title": "string", "actions": [{ "timeline": "string", "action": "string", "outcome": "string" }] },
+    "phase3": { "title": "string", "actions": [{ "timeline": "string", "action": "string", "outcome": "string" }] },
+    "forecast": "string"
+  },
+
+  "cerebré_services_recommended": [
+    { "service": "string", "why_needed": "string", "expected_roi": "string", "timeline": "string" }
+  ]
 }
 
 Rules:
-- Scores are 1–10 (one decimal)
-- Populate EVERY field — nothing null or empty
-- Include 10 strategic gaps (rank 1–10) and 4–5 roadmap actions per phase
-- Use ₦ currency and Nigerian market context throughout
-- Return ONLY the JSON object — nothing else`;
+- Scores 1–10 (one decimal)
+- 6 strategic gaps minimum (rank 1–6)
+- 3 roadmap actions per phase
+- 4 weeks in thirty_day_action_plan
+- 5 cerebré_services_recommended
+- ₦ currency throughout
+- Return ONLY the JSON object`;
 
-// ── User prompt builder ───────────────────────────────────────────────────────
+// ── TEASER SYSTEM PROMPT ──────────────────────────────────────────────────────
+const TEASER_SYSTEM_PROMPT = `You are Cerebré Intelligence Engine. Respond with ONLY valid JSON — no markdown, no preamble, no explanation.`;
+
+// ── User prompt builder (full report) ────────────────────────────────────────
 function buildPrompt({ company, website, industry, market, competitors, reference }) {
   const competitorList = competitors
     ? competitors.split(',').map(c => c.trim()).filter(Boolean)
@@ -206,16 +155,83 @@ Report Date: ${today}
 ${reference ? `Payment Ref: ${reference}` : ''}
 
 Instructions:
-- Use your knowledge of this company and Nigerian market to produce realistic, specific data
-- Populate EVERY field in the schema — do not leave anything null or empty
-- Include 10 strategic gaps (rank 1–10) and 4–5 roadmap actions per phase
+- Use your knowledge of this company and the Nigerian market to produce realistic, specific data
+- Populate EVERY field — do not leave anything null or empty
+- 6 strategic gaps, 3 roadmap actions per phase, 4 weeks in action plan, 5 services
 - Output ONLY valid JSON, nothing else`;
 }
 
-// ── Rate limiting (in-memory, optional Redis layer in checkRateLimit.js) ──────
+// ── Teaser prompt builder ─────────────────────────────────────────────────────
+function buildTeaserPrompt({ company, website, industry, market, competitors }) {
+  const competitorList = competitors
+    ? competitors.split(',').map(c => c.trim()).filter(Boolean)
+    : ['top 3 Nigerian competitors in this sector'];
+
+  const today = new Date().toLocaleDateString('en-GB', {
+    day: 'numeric', month: 'long', year: 'numeric',
+  });
+
+  return `Generate a FREE TEASER brand audit for:
+Company: ${company}
+Website: ${website || 'infer from company name'}
+Industry: ${industry || 'infer from company name'}
+Market: ${market || 'Nigeria'}
+Competitors: ${competitorList.join(', ')}
+Date: ${today}
+
+Return ONLY this exact JSON structure — no other text:
+{
+  "company_name": "string",
+  "report_date": "string",
+  "overall_score": number,
+  "maturity_stage": "string",
+  "executive_summary": {
+    "overview": "string (2–3 sentences)",
+    "strengths": ["s1", "s2", "s3"],
+    "critical_gaps": ["g1", "g2", "g3"]
+  },
+  "website_audit": {
+    "url": "string",
+    "score": number,
+    "top_issues": ["i1", "i2", "i3"]
+  },
+  "seo_audit": {
+    "score": number,
+    "domain_authority_estimate": "string",
+    "monthly_organic_traffic_estimate": "string",
+    "top_missed_keywords": [
+      { "keyword": "string", "monthly_searches": "string", "revenue_relevance": "string" },
+      { "keyword": "string", "monthly_searches": "string", "revenue_relevance": "string" },
+      { "keyword": "string", "monthly_searches": "string", "revenue_relevance": "string" }
+    ]
+  },
+  "social_media_audit": {
+    "overall_score": number,
+    "platforms": {
+      "linkedin":  { "followers": number, "score": number, "status": "string" },
+      "instagram": { "followers": number, "score": number, "status": "string" },
+      "twitter_x": { "followers": number, "score": number, "status": "string" },
+      "youtube":   { "subscribers": number, "score": number, "status": "string" },
+      "tiktok":    { "followers": number, "score": number, "status": "string" }
+    },
+    "competitor_benchmarks": [
+      { "name": "string", "linkedin": number, "instagram": number, "twitter": number },
+      { "name": "string", "linkedin": number, "instagram": number, "twitter": number },
+      { "name": "string", "linkedin": number, "instagram": number, "twitter": number }
+    ]
+  },
+  "top_3_gaps": [
+    { "rank": 1, "title": "string", "description": "string", "business_risk": "string" },
+    { "rank": 2, "title": "string", "description": "string", "business_risk": "string" },
+    { "rank": 3, "title": "string", "description": "string", "business_risk": "string" }
+  ]
+}`;
+}
+
+// ── Rate limiting ─────────────────────────────────────────────────────────────
 const requestLog = new Map();
-const RATE_LIMIT  = 10;
-const WINDOW_MS   = 60 * 60 * 1000;
+const RATE_LIMIT = 10;
+const WINDOW_MS  = 60 * 60 * 1000;
 
 function checkRateLimit(ip) {
   const now   = Date.now();
@@ -226,7 +242,16 @@ function checkRateLimit(ip) {
   return entry.count <= RATE_LIMIT;
 }
 
-// ── POST /api/generate  (called after Paystack webhook confirms payment) ──────
+// ── JSON extractor helper ─────────────────────────────────────────────────────
+function extractJSON(text) {
+  let cleaned = text.replace(/```json\n?/g, '').replace(/```/g, '').trim();
+  const fb = cleaned.indexOf('{');
+  const lb = cleaned.lastIndexOf('}');
+  if (fb === -1 || lb === -1) throw new Error('No JSON object found in response');
+  return JSON.parse(cleaned.slice(fb, lb + 1));
+}
+
+// ── POST /api/generate ────────────────────────────────────────────────────────
 router.post('/', async (req, res) => {
   const ip = (req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown')
     .split(',')[0].trim();
@@ -235,39 +260,52 @@ router.post('/', async (req, res) => {
     return res.status(429).json({ error: { message: 'Too many requests. Please wait before trying again.' } });
   }
 
-  // Accept both flat body (new approach) and nested claudeBody envelope (old approach)
-  const body     = req.body || {};
-  const company  = sanitize(body.company || body.company_name);
-  const website  = sanitize(body.website, 500);
-  const industry = sanitize(body.industry);
-  const market   = sanitize(body.market);
+  const body        = req.body || {};
+  const company     = sanitize(body.company || body.company_name);
+  const website     = sanitize(body.website, 500);
+  const industry    = sanitize(body.industry);
+  const market      = sanitize(body.market);
   const competitors = sanitize(body.competitors, 500);
   const reference   = sanitize(body.reference || body.payment_reference, 100);
   const email       = sanitize(body.email, 200);
+  const type        = body.type || 'full';
 
   if (!company) {
     return res.status(400).json({ error: { message: 'Company name is required.' } });
   }
 
-  console.log(JSON.stringify({
-    t: new Date().toISOString(),
-    ip, email, company, reference,
-    type: 'FULL_REPORT',
-  }));
+  // ── TEASER PATH (free audit — cheap, fast) ────────────────────────────────
+  if (type === 'teaser') {
+    console.log(JSON.stringify({ t: new Date().toISOString(), ip, email, company, type: 'TEASER' }));
+    try {
+      const msg = await client.messages.create({
+        model:      'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system:     TEASER_SYSTEM_PROMPT,
+        messages:   [{ role: 'user', content: buildTeaserPrompt({ company, website, industry, market, competitors }) }],
+      });
 
-  // Extend response timeout to 5 min for long generation
+      const rawText = msg.content.filter(b => b.type === 'text').map(b => b.text).join('').trim();
+      if (!rawText) throw new Error('Empty response from API');
+
+      const parsed = extractJSON(rawText);
+      console.log(`[teaser] ✓ "${company}" | ${msg.usage?.input_tokens}in ${msg.usage?.output_tokens}out | ~$${((msg.usage?.input_tokens * 3 + msg.usage?.output_tokens * 15) / 1_000_000).toFixed(4)}`);
+      return res.status(200).json(parsed);
+
+    } catch (err) {
+      console.error('[teaser] error:', err.message);
+      return res.status(500).json({ error: { message: 'Teaser generation failed — please try again.' } });
+    }
+  }
+
+  // ── FULL REPORT PATH (paid) ───────────────────────────────────────────────
+  console.log(JSON.stringify({ t: new Date().toISOString(), ip, email, company, reference, type: 'FULL_REPORT' }));
   res.setTimeout(300_000);
 
   try {
-    // ── Single API call — no web search, no agentic loop ──────────────────────
-    // Cost breakdown at claude-sonnet-4-5 pricing ($3/M input, $15/M output):
-    //   System prompt  ~1,800 tokens  ← cached after first call (~$0.003 cold, ~$0.0003 warm)
-    //   User prompt    ~  200 tokens  → ~$0.0006
-    //   Output JSON    ~3,000 tokens  → ~$0.045
-    //   Total per call ≈ $0.05–0.10 depending on cache hit
     const message = await client.messages.create({
-      model:      'claude-sonnet-4-5',
-      max_tokens: 12000,
+      model:      'claude-sonnet-4-20250514',
+      max_tokens: 6000,
       system:     SYSTEM_PROMPT,
       messages:   [{ role: 'user', content: buildPrompt({ company, website, industry, market, competitors, reference }) }],
     });
@@ -280,39 +318,19 @@ router.post('/', async (req, res) => {
 
     if (!rawText) throw new Error('Empty response from Anthropic API');
 
-    // Extract JSON from response (strip any accidental fences)
-    let cleaned = rawText.replace(/```json\n?/g, '').replace(/```/g, '').trim();
-    const fb = cleaned.indexOf('{');
-    const lb = cleaned.lastIndexOf('}');
-    if (fb === -1 || lb === -1) {
-  console.error('[generate] No JSON braces found. Raw text was:', rawText.slice(0, 500));
-  throw new Error('No valid JSON object in response');
-}
-cleaned = cleaned.slice(fb, lb + 1);
+    let parsed;
+    try {
+      parsed = extractJSON(rawText);
+    } catch (parseErr) {
+      console.error('[generate] JSON parse failed:', parseErr.message);
+      throw new Error('Report was too large and got cut off. Try again — it usually works on retry.');
+    }
 
-console.log('[generate] Attempting JSON parse, length:', cleaned.length);
-let parsed;
-try {
-  parsed = JSON.parse(cleaned);
-} catch(parseErr) {
-  // Try to recover truncated JSON by finding the last complete top-level field
-  console.error('[generate] JSON truncated at:', parseErr.message);
-  throw new Error('Report was too large and got cut off. Try again — it usually works on retry.');
-}
-
-    console.log(`[generate] ✓ Report for "${company}" | input=${message.usage?.input_tokens} output=${message.usage?.output_tokens}`);
-
-    // Return in the same envelope the frontend expects
+    console.log(`[generate] ✓ "${company}" | ${message.usage?.input_tokens}in ${message.usage?.output_tokens}out | ~$${((message.usage?.input_tokens * 3 + message.usage?.output_tokens * 15) / 1_000_000).toFixed(4)}`);
     return res.status(200).json({ report: JSON.stringify(parsed, null, 2) });
 
   } catch (err) {
-    console.error('[generate] error:', {
-      message: err.message,
-      status:  err.status,
-      type:    err.type,
-      raw:     err.message,
-    });
-    console.error('[generate] full error:', err);
+    console.error('[generate] error:', err.message);
 
     let msg    = 'Service error — please try again.';
     let status = 500;
@@ -323,8 +341,8 @@ try {
       msg = 'Anthropic API quota exceeded.'; status = 402;
     } else if (err.status === 429) {
       msg = 'API rate limit hit — please retry in 60 seconds.'; status = 429;
-    } else if (err.message?.includes('JSON')) {
-      msg = 'Failed to parse AI response — please try again.';
+    } else if (err.message?.includes('JSON') || err.message?.includes('cut off')) {
+      msg = err.message;
     }
 
     return res.status(status).json({ error: { message: msg } });
