@@ -25,105 +25,55 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--ink); color: var(--white); overflow-x: hidden; }
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--ink);
-  color: var(--white);
-  overflow-x: hidden;
-  cursor: default;
-}
-
-/* ── GRAIN OVERLAY ── */
 body::before {
   content: '';
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.6;
+  pointer-events: none; z-index: 0; opacity: 0.6;
 }
 
-/* ── NAV ── */
+/* NAV */
 nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   padding: 20px 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
   border-bottom: 1px solid var(--border);
-  background: rgba(8,12,20,0.85);
-  backdrop-filter: blur(20px);
+  background: rgba(8,12,20,0.85); backdrop-filter: blur(20px);
 }
 .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.nav-logo-mark {
-  width: 36px; height: 36px;
-  background: var(--gold);
-  border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Playfair Display', serif;
-  font-size: 18px; font-weight: 700;
-  color: var(--ink);
-}
 .nav-logo-text { font-size: 14px; font-weight: 600; letter-spacing: 0.06em; color: var(--white); }
 .nav-logo-sub { font-size: 10px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; }
 .nav-links { display: flex; align-items: center; gap: 32px; }
 .nav-links a { color: var(--smoke); font-size: 14px; text-decoration: none; transition: color 0.2s; }
 .nav-links a:hover { color: var(--white); }
 .nav-cta {
-  background: var(--gold);
-  color: var(--ink);
-  padding: 10px 24px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
+  background: var(--gold); color: var(--ink);
+  padding: 10px 24px; border-radius: 6px;
+  font-size: 14px; font-weight: 600; text-decoration: none;
   transition: background 0.2s, transform 0.1s;
 }
 .nav-cta:hover { background: var(--gold2); transform: translateY(-1px); }
 
-/* ── HERO ── */
+/* HERO */
 .hero {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 140px 40px 80px;
-  position: relative;
-  overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 140px 40px 80px; position: relative; overflow: hidden;
 }
-
 .hero-glow {
-  position: absolute;
-  width: 600px; height: 600px;
-  border-radius: 50%;
+  position: absolute; width: 600px; height: 600px; border-radius: 50%;
   background: radial-gradient(circle, rgba(201,146,42,0.12) 0%, transparent 70%);
-  top: 50%; left: 50%;
-  transform: translate(-50%, -60%);
-  pointer-events: none;
+  top: 50%; left: 50%; transform: translate(-50%, -60%); pointer-events: none;
 }
-
 .hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--gold-dim);
-  border: 1px solid rgba(201,146,42,0.3);
-  border-radius: 20px;
-  padding: 6px 16px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--gold2);
-  text-transform: uppercase;
-  margin-bottom: 32px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold-dim); border: 1px solid rgba(201,146,42,0.3);
+  border-radius: 20px; padding: 6px 16px;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.1em;
+  color: var(--gold2); text-transform: uppercase; margin-bottom: 32px;
   animation: fadeUp 0.6s ease both;
 }
 .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: blink 2s ease-in-out infinite; }
@@ -131,105 +81,63 @@ nav {
 
 .hero h1 {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(42px, 6vw, 76px);
-  font-weight: 900;
-  line-height: 1.05;
-  max-width: 900px;
-  margin: 0 auto 24px;
-  animation: fadeUp 0.6s 0.1s ease both;
-  letter-spacing: -0.02em;
+  font-size: clamp(42px, 6vw, 76px); font-weight: 900;
+  line-height: 1.05; max-width: 900px; margin: 0 auto 24px;
+  animation: fadeUp 0.6s 0.1s ease both; letter-spacing: -0.02em;
 }
-.hero h1 em {
-  font-style: italic;
-  color: var(--gold2);
-}
+.hero h1 em { font-style: italic; color: var(--gold2); }
 
 .hero-sub {
-  font-size: clamp(16px, 2vw, 20px);
-  color: var(--smoke);
-  max-width: 600px;
-  margin: 0 auto 48px;
-  line-height: 1.7;
-  font-weight: 300;
-  animation: fadeUp 0.6s 0.2s ease both;
+  font-size: clamp(16px, 2vw, 20px); color: var(--smoke);
+  max-width: 600px; margin: 0 auto 48px; line-height: 1.7;
+  font-weight: 300; animation: fadeUp 0.6s 0.2s ease both;
 }
 
 .hero-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: flex; align-items: center; gap: 16px;
+  flex-wrap: wrap; justify-content: center;
   animation: fadeUp 0.6s 0.3s ease both;
 }
 
 .btn-primary {
-  background: var(--gold);
-  color: var(--ink);
-  padding: 16px 36px;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 700;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+  background: var(--gold); color: var(--ink);
+  padding: 16px 36px; border-radius: 8px;
+  font-size: 15px; font-weight: 700; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px;
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  box-shadow: 0 0 0 0 rgba(201,146,42,0.4);
 }
-.btn-primary:hover {
-  background: var(--gold2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(201,146,42,0.25);
-}
+.btn-primary:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,146,42,0.25); }
 
 .btn-ghost {
-  background: transparent;
-  color: var(--smoke);
-  padding: 16px 28px;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 500;
-  text-decoration: none;
-  border: 1px solid var(--border);
-  transition: color 0.2s, border-color 0.2s;
+  background: transparent; color: var(--smoke);
+  padding: 16px 28px; border-radius: 8px;
+  font-size: 15px; font-weight: 500; text-decoration: none;
+  border: 1px solid var(--border); transition: color 0.2s, border-color 0.2s;
 }
 .btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.2); }
 
-.hero-disclaimer {
-  font-size: 12px;
-  color: rgba(184,192,204,0.5);
-  margin-top: 16px;
-  animation: fadeUp 0.6s 0.4s ease both;
+.hero-value-props {
+  display: flex; gap: 24px; flex-wrap: wrap; justify-content: center;
+  margin-top: 24px; animation: fadeUp 0.6s 0.4s ease both;
 }
+.hvp { display: flex; align-items: center; gap: 7px; font-size: 13px; color: rgba(184,192,204,0.65); }
+.hvp .tick { color: var(--gold2); }
 
-/* ── STATS STRIP ── */
+/* STATS */
 .stats-strip {
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: var(--ink2);
-  padding: 32px 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 64px;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 1;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  background: var(--ink2); padding: 32px 60px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 64px; flex-wrap: wrap; position: relative; z-index: 1;
 }
 .stat { text-align: center; }
 .stat-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--gold2); }
 .stat-label { font-size: 12px; color: var(--smoke); letter-spacing: 0.06em; margin-top: 4px; text-transform: uppercase; }
 
-/* ── PROBLEM SECTION ── */
+/* PROBLEM */
 .problem {
-  padding: 100px 60px;
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
+  padding: 100px 60px; max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
 }
 .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
 .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 44px); font-weight: 700; line-height: 1.15; margin-bottom: 20px; }
@@ -238,228 +146,245 @@ nav {
 
 .problem-cards { display: flex; flex-direction: column; gap: 12px; }
 .problem-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px 24px;
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px 24px;
+  display: flex; align-items: flex-start; gap: 16px;
   transition: border-color 0.2s, background 0.2s;
 }
 .problem-card:hover { border-color: rgba(201,146,42,0.3); background: rgba(201,146,42,0.04); }
 .problem-icon {
-  width: 40px; height: 40px;
-  border-radius: 8px;
-  background: rgba(224,62,62,0.15);
-  border: 1px solid rgba(224,62,62,0.25);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
+  width: 40px; height: 40px; border-radius: 8px;
+  background: rgba(224,62,62,0.15); border: 1px solid rgba(224,62,62,0.25);
+  display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
 }
 .problem-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
 .problem-card p { font-size: 13px; color: var(--smoke); line-height: 1.5; }
 
-/* ── HOW IT WORKS ── */
+/* HOW IT WORKS */
 .how-it-works {
-  padding: 100px 60px;
-  background: var(--ink2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  padding: 100px 60px; background: var(--ink2);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
 }
 .section-center { text-align: center; max-width: 600px; margin: 0 auto 60px; }
 
 .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; max-width: 1100px; margin: 0 auto; }
 .step {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  padding: 36px 32px;
-  position: relative;
-  transition: border-color 0.2s;
+  background: var(--card-bg); border: 1px solid var(--border);
+  padding: 36px 32px; position: relative; transition: border-color 0.2s;
 }
 .step:first-child { border-radius: 12px 0 0 12px; }
 .step:last-child { border-radius: 0 12px 12px 0; }
 .step:hover { border-color: rgba(201,146,42,0.3); }
-.step-num {
-  font-family: 'Playfair Display', serif;
-  font-size: 56px;
-  font-weight: 700;
-  color: var(--gold-dim);
-  line-height: 1;
-  margin-bottom: 20px;
-}
+.step-num { font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 700; color: var(--gold-dim); line-height: 1; margin-bottom: 20px; }
 .step:hover .step-num { color: rgba(201,146,42,0.3); }
 .step h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
 .step p { font-size: 14px; color: var(--smoke); line-height: 1.7; }
-.step-arrow {
-  position: absolute;
-  right: -18px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  background: var(--ink2);
-  padding: 4px;
-  color: var(--gold);
-  font-size: 20px;
-}
+.step-arrow { position: absolute; right: -18px; top: 50%; transform: translateY(-50%); z-index: 2; background: var(--ink2); padding: 4px; color: var(--gold); font-size: 20px; }
 
-/* ── TEASER PREVIEW ── */
-.preview-section {
+/* ── SAMPLE REPORTS SECTION ── */
+.samples-section {
   padding: 100px 60px;
   max-width: 1100px;
   margin: 0 auto;
 }
 
-.preview-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
+.samples-intro {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 56px;
+}
+.samples-intro p {
+  font-size: 15px; color: var(--smoke); line-height: 1.7; margin-top: 12px;
 }
 
-.preview-header {
-  background: rgba(15,24,36,0.8);
-  padding: 20px 28px;
+.samples-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.sample-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+.sample-card:hover {
+  border-color: rgba(201,146,42,0.45);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+
+/* PDF thumbnail */
+.sample-thumb {
+  position: relative;
+  height: 220px;
+  background: #0d1520;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  overflow: hidden;
 }
-.preview-dots { display: flex; gap: 6px; }
-.preview-dot { width: 10px; height: 10px; border-radius: 50%; }
-
-.preview-body { padding: 32px 28px; position: relative; }
-
-.preview-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
-.preview-metric {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px;
-}
-.preview-metric .pm-label { font-size: 11px; color: var(--smoke); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
-.preview-metric .pm-val { font-size: 22px; font-weight: 700; }
-.preview-metric .pm-sub { font-size: 11px; color: var(--smoke); margin-top: 4px; }
-
-.score-red { color: var(--red); }
-.score-orange { color: #FF8C00; }
-.score-gold { color: var(--gold2); }
-
-.gap-preview { margin-bottom: 16px; }
-.gap-preview-item {
-  background: rgba(224,62,62,0.06);
-  border: 1px solid rgba(224,62,62,0.2);
-  border-left: 3px solid var(--red);
-  border-radius: 8px;
-  padding: 14px 18px;
-  margin-bottom: 10px;
-  font-size: 13px;
-  color: var(--smoke);
-}
-.gap-preview-item strong { color: var(--white); display: block; margin-bottom: 4px; font-size: 14px; }
-
-/* PAYWALL OVERLAY */
-.paywall-overlay {
+.sample-thumb iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+  pointer-events: none;
+  transform-origin: top left;
+  transform: scale(0.365);
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 320px;
-  background: linear-gradient(to top, var(--ink) 40%, transparent 100%);
+  top: 0; left: 0;
+}
+/* fallback when no PDF */
+.sample-thumb-placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  padding: 40px 40px 48px;
-  text-align: center;
+  gap: 12px;
+  color: var(--smoke);
 }
-.paywall-lock { font-size: 32px; margin-bottom: 12px; }
-.paywall-overlay h3 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-.paywall-overlay p { font-size: 14px; color: var(--smoke); margin-bottom: 24px; }
+.sample-thumb-placeholder .pdf-icon {
+  width: 56px; height: 64px;
+  background: rgba(201,146,42,0.12);
+  border: 1px solid rgba(201,146,42,0.25);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+}
+.sample-thumb-placeholder span { font-size: 12px; color: rgba(184,192,204,0.5); letter-spacing: 0.06em; }
 
-/* ── WHAT YOU GET ── */
-.what-you-get {
-  padding: 100px 60px;
+/* blur + lock overlay */
+.sample-blur {
+  position: absolute; inset: 0;
+  backdrop-filter: blur(3px);
+  background: linear-gradient(to top, rgba(8,12,20,0.85) 0%, rgba(8,12,20,0.3) 60%, rgba(8,12,20,0.1) 100%);
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 18px;
+}
+.sample-view-btn {
+  background: var(--gold); color: var(--ink);
+  border: none; border-radius: 6px;
+  padding: 9px 22px; font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: background 0.2s; display: flex; align-items: center; gap: 7px;
+  text-decoration: none;
+}
+.sample-view-btn:hover { background: var(--gold2); }
+
+.sample-body { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.sample-company { font-size: 15px; font-weight: 600; }
+.sample-meta { font-size: 12px; color: var(--smoke); }
+.sample-score {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-top: 4px; font-size: 12px;
+}
+.sample-score .dot-score {
+  width: 8px; height: 8px; border-radius: 50%;
+}
+.sample-tags { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 6px; }
+.sample-tag {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.07em;
+  padding: 3px 9px; border-radius: 5px;
+  background: var(--gold-dim); color: var(--gold2);
+  border: 1px solid rgba(201,146,42,0.2);
+}
+
+/* no-samples notice (shown when array is empty) */
+.samples-empty {
+  text-align: center;
+  padding: 60px 40px;
+  border: 1px dashed rgba(201,146,42,0.25);
+  border-radius: 16px;
+  color: var(--smoke);
+  font-size: 14px;
+  line-height: 1.8;
+}
+.samples-empty strong { color: var(--gold2); display: block; font-size: 16px; margin-bottom: 8px; }
+
+/* ── LIGHTBOX ── */
+.lightbox-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(8,12,20,0.95); backdrop-filter: blur(12px);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.lightbox-overlay.active { display: flex; }
+.lightbox-box {
+  width: 100%; max-width: 880px; height: 90vh;
   background: var(--ink2);
+  border: 1px solid rgba(201,146,42,0.3);
+  border-radius: 16px; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.lightbox-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.02); flex-shrink: 0;
+}
+.lightbox-title { font-size: 14px; font-weight: 600; }
+.lightbox-meta { font-size: 12px; color: var(--smoke); margin-top: 2px; }
+.lightbox-close {
+  background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+  border-radius: 6px; padding: 8px 16px; color: var(--smoke);
+  cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif;
+  transition: color 0.2s, border-color 0.2s;
+}
+.lightbox-close:hover { color: var(--white); border-color: rgba(255,255,255,0.2); }
+.lightbox-body { flex: 1; overflow: hidden; position: relative; }
+.lightbox-body iframe { width: 100%; height: 100%; border: none; }
+.lightbox-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255,255,255,0.02); flex-shrink: 0; flex-wrap: wrap; gap: 12px;
+}
+.lightbox-cta-text { font-size: 13px; color: var(--smoke); }
+.lightbox-cta-text strong { color: var(--white); }
+
+/* WHAT YOU GET */
+.what-you-get {
+  padding: 100px 60px; background: var(--ink2);
   border-top: 1px solid var(--border);
 }
 .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto; }
 .feature-card {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 28px;
-  transition: border-color 0.2s, transform 0.2s;
-  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border); border-radius: 14px; padding: 28px;
+  transition: border-color 0.2s, transform 0.2s; background: rgba(255,255,255,0.02);
 }
 .feature-card:hover { border-color: rgba(201,146,42,0.4); transform: translateY(-4px); }
 .feature-icon { font-size: 28px; margin-bottom: 16px; }
 .feature-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
 .feature-card p { font-size: 13px; color: var(--smoke); line-height: 1.7; }
 .feature-tag {
-  display: inline-block;
-  background: var(--gold-dim);
-  color: var(--gold2);
-  border: 1px solid rgba(201,146,42,0.25);
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 8px;
-  margin-bottom: 12px;
-  letter-spacing: 0.08em;
-}
-.feature-tag.free { background: rgba(29,185,84,0.1); color: var(--green); border-color: rgba(29,185,84,0.25); }
-
-/* ── COMPARISON TABLE ── */
-.comparison-section { padding: 100px 60px; max-width: 900px; margin: 0 auto; }
-.comp-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); }
-.comp-table th { padding: 16px 20px; background: var(--ink2); font-size: 13px; font-weight: 600; text-align: left; border-bottom: 1px solid var(--border); }
-.comp-table th:not(:first-child) { text-align: center; }
-.comp-table td { padding: 14px 20px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--smoke); }
-.comp-table td:not(:first-child) { text-align: center; }
-.comp-table tr:last-child td { border-bottom: none; }
-.comp-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-.comp-yes { color: var(--green); font-size: 18px; }
-.comp-no { color: rgba(255,255,255,0.2); font-size: 18px; }
-.comp-partial { color: var(--gold2); font-size: 13px; }
-.col-free { color: var(--smoke); }
-.col-paid { color: var(--gold2); font-weight: 700; }
-.col-paid-head {
-  background: rgba(201,146,42,0.1) !important;
-  color: var(--gold2) !important;
-  border-bottom: 2px solid var(--gold) !important;
+  display: inline-block; background: var(--gold-dim); color: var(--gold2);
+  border: 1px solid rgba(201,146,42,0.25); border-radius: 4px;
+  font-size: 10px; font-weight: 700; padding: 2px 8px;
+  margin-bottom: 12px; letter-spacing: 0.08em;
 }
 
-/* ── PRICING ── */
+/* PRICING */
 .pricing-section {
-  padding: 100px 60px;
-  background: var(--ink2);
+  padding: 100px 60px; background: var(--ink);
   border-top: 1px solid var(--border);
 }
-.pricing-grid { display: grid; grid-template-columns: 1fr 1.1fr 1fr; gap: 24px; max-width: 1000px; margin: 0 auto; align-items: start; }
+.pricing-grid { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 24px; max-width: 1000px; margin: 0 auto; align-items: start; }
 .pricing-card {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 32px 28px;
-  background: var(--card-bg);
+  border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; background: var(--card-bg);
 }
 .pricing-card.featured {
-  border-color: var(--gold);
-  background: rgba(201,146,42,0.06);
-  position: relative;
-  box-shadow: 0 0 40px rgba(201,146,42,0.1);
+  border-color: var(--gold); background: rgba(201,146,42,0.06);
+  position: relative; box-shadow: 0 0 40px rgba(201,146,42,0.1);
 }
 .pricing-badge {
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--gold);
-  color: var(--ink);
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 16px;
-  border-radius: 20px;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--gold); color: var(--ink);
+  font-size: 11px; font-weight: 700; padding: 4px 16px; border-radius: 20px;
+  letter-spacing: 0.06em; white-space: nowrap;
 }
 .pricing-tier { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; color: var(--smoke); text-transform: uppercase; margin-bottom: 16px; }
 .pricing-price { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
@@ -469,51 +394,28 @@ nav {
 .pricing-features li { font-size: 13px; padding: 8px 0; border-bottom: 1px solid var(--border); color: var(--smoke); display: flex; align-items: center; gap: 10px; }
 .pricing-features li:last-child { border-bottom: none; }
 .pricing-features li .tick { color: var(--green); font-size: 14px; flex-shrink: 0; }
-.pricing-features li .cross { color: rgba(255,255,255,0.2); font-size: 14px; flex-shrink: 0; }
 .pricing-features li.active { color: var(--white); }
 
 .btn-pricing-primary {
-  width: 100%;
-  background: var(--gold);
-  color: var(--ink);
-  border: none;
-  border-radius: 8px;
-  padding: 14px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-  text-decoration: none;
-  display: block;
-  text-align: center;
+  width: 100%; background: var(--gold); color: var(--ink);
+  border: none; border-radius: 8px; padding: 14px; font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: background 0.2s, transform 0.1s;
+  text-decoration: none; display: block; text-align: center;
 }
 .btn-pricing-primary:hover { background: var(--gold2); transform: translateY(-1px); }
 .btn-pricing-ghost {
-  width: 100%;
-  background: transparent;
-  color: var(--smoke);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 14px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
+  width: 100%; background: transparent; color: var(--smoke);
+  border: 1px solid var(--border); border-radius: 8px; padding: 14px;
+  font-size: 14px; font-weight: 500; cursor: pointer;
   transition: color 0.2s, border-color 0.2s;
-  text-decoration: none;
-  display: block;
-  text-align: center;
+  text-decoration: none; display: block; text-align: center;
 }
 .btn-pricing-ghost:hover { color: var(--white); border-color: rgba(255,255,255,0.2); }
 
-/* ── TESTIMONIALS ── */
+/* TESTIMONIALS */
 .testimonials { padding: 100px 60px; max-width: 1100px; margin: 0 auto; }
 .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.testi-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 28px;
-}
+.testi-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 28px; }
 .testi-stars { color: var(--gold2); font-size: 14px; margin-bottom: 16px; }
 .testi-quote { font-size: 14px; color: var(--smoke); line-height: 1.7; font-style: italic; margin-bottom: 20px; }
 .testi-author { display: flex; align-items: center; gap: 12px; }
@@ -521,79 +423,42 @@ nav {
 .testi-name { font-size: 13px; font-weight: 600; }
 .testi-role { font-size: 11px; color: var(--smoke); }
 
-/* ── FAQ ── */
+/* FAQ */
 .faq-section { padding: 100px 60px; background: var(--ink2); border-top: 1px solid var(--border); }
 .faq-grid { max-width: 700px; margin: 0 auto; }
 .faq-item { border-bottom: 1px solid var(--border); }
-.faq-q {
-  padding: 20px 0;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  user-select: none;
-}
+.faq-q { padding: 20px 0; font-size: 15px; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; user-select: none; }
 .faq-q:hover { color: var(--gold2); }
 .faq-icon { font-size: 20px; color: var(--gold); transition: transform 0.3s; flex-shrink: 0; }
 .faq-item.open .faq-icon { transform: rotate(45deg); }
 .faq-a { font-size: 14px; color: var(--smoke); line-height: 1.8; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
 .faq-item.open .faq-a { max-height: 300px; padding-bottom: 20px; }
 
-/* ── FINAL CTA ── */
-.final-cta {
-  padding: 120px 60px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
+/* FINAL CTA */
+.final-cta { padding: 120px 60px; text-align: center; position: relative; overflow: hidden; }
 .final-cta::before {
-  content: '';
-  position: absolute;
-  width: 800px; height: 400px;
-  border-radius: 50%;
+  content: ''; position: absolute; width: 800px; height: 400px; border-radius: 50%;
   background: radial-gradient(circle, rgba(201,146,42,0.08) 0%, transparent 70%);
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
+  top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;
 }
 .final-cta h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 56px); font-weight: 700; margin-bottom: 20px; line-height: 1.1; }
 .final-cta h2 em { font-style: italic; color: var(--gold2); }
 .final-cta p { font-size: 18px; color: var(--smoke); max-width: 500px; margin: 0 auto 40px; font-weight: 300; line-height: 1.7; }
 
-/* ── FOOTER ── */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 40px 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-  background: var(--ink2);
-}
+/* FOOTER */
+footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; background: var(--ink2); }
 .footer-left { font-size: 13px; color: var(--smoke); }
 .footer-left strong { color: var(--gold2); }
 .footer-links { display: flex; gap: 24px; }
 .footer-links a { font-size: 13px; color: var(--smoke); text-decoration: none; transition: color 0.2s; }
 .footer-links a:hover { color: var(--white); }
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .reveal.visible { opacity: 1; transform: none; }
 
-/* ── MOBILE ── */
+/* MOBILE */
 @media (max-width: 900px) {
   nav { padding: 16px 24px; }
   .nav-links { display: none; }
@@ -605,16 +470,39 @@ footer {
   .step:first-child { border-radius: 12px 12px 0 0; }
   .step:last-child { border-radius: 0 0 12px 12px; }
   .step-arrow { display: none; }
-  .preview-section, .testimonials, .comparison-section { padding: 60px 24px; }
+  .samples-section, .testimonials { padding: 60px 24px; }
+  .samples-grid { grid-template-columns: 1fr; }
   .features-grid, .pricing-grid, .testi-grid { grid-template-columns: 1fr; }
   .what-you-get, .pricing-section, .faq-section { padding: 60px 24px; }
   .final-cta { padding: 80px 24px; }
   footer { padding: 32px 24px; flex-direction: column; }
-  .preview-row { grid-template-columns: 1fr; }
+  .hero-value-props { gap: 12px; }
 }
 </style>
 </head>
 <body>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox">
+  <div class="lightbox-box">
+    <div class="lightbox-header">
+      <div>
+        <div class="lightbox-title" id="lb-title">Sample Report</div>
+        <div class="lightbox-meta" id="lb-meta"></div>
+      </div>
+      <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+    </div>
+    <div class="lightbox-body">
+      <iframe id="lb-iframe" src="" title="Sample Report"></iframe>
+    </div>
+    <div class="lightbox-footer">
+      <div class="lightbox-cta-text"><strong>Like what you see?</strong> Get your own full brand audit instantly.</div>
+      <a href="app.html" class="btn-primary" style="padding:12px 28px;font-size:14px">
+        Get My Report — ₦15,000 →
+      </a>
+    </div>
+  </div>
+</div>
 
 <nav>
   <a href="#" class="nav-logo">
@@ -626,11 +514,12 @@ footer {
   </a>
   <div class="nav-links">
     <a href="#how-it-works">How It Works</a>
+    <a href="#samples">Sample Reports</a>
     <a href="#features">What You Get</a>
     <a href="#pricing">Pricing</a>
     <a href="#faq">FAQ</a>
   </div>
-  <a href="app.html" class="nav-cta">Run Free Audit →</a>
+  <a href="app.html" class="nav-cta">Get My Audit→</a>
 </nav>
 
 <!-- HERO -->
@@ -638,18 +527,25 @@ footer {
   <div class="hero-glow"></div>
   <div class="hero-eyebrow">
     <span class="dot"></span>
-    Cerebre Plus - Digital Brand Health Tracker 
+    Cerebre Plus — Digital Brand Health Tracker
   </div>
   <h1>Your Brand is <em>Invisible</em> Online.<br>We Can Prove It.</h1>
-  <p class="hero-sub">Get an instant AI-powered digital audit for any Nigerian or African business benchmarked against your competitors, with a 30-day Cerebre growth blueprint.</p>
+  <p class="hero-sub">An instant AI-powered digital audit for any Nigerian or African business — benchmarked against your competitors, with a 30-day Cerebre growth blueprint. Ready in 60 seconds.</p>
   <div class="hero-actions">
     <a href="app.html" class="btn-primary">
       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-      Run My Free Audit Now
+      Get My Full Audit
     </a>
-    <a href="#how-it-works" class="btn-ghost">See How It Works</a>
+    <a href="#samples" class="btn-ghost">See Sample Reports</a>
   </div>
-  <p class="hero-disclaimer">Free audit takes 90 seconds. No card required. Full report from ₦15,000.</p>
+  <div class="hero-value-props">
+    <div class="hvp"><span class="tick">✓</span> 9 dimensions scored</div>
+    <div class="hvp"><span class="tick">✓</span> Competitor benchmarks</div>
+    <div class="hvp"><span class="tick">✓</span> 30-day action plan</div>
+    <div class="hvp"><span class="tick">✓</span> 12-month roadmap</div>
+    <div class="hvp"><span class="tick">✓</span> Emailed instantly</div>
+    <div class="hvp"><span class="tick">✓</span> Printable PDF</div>
+  </div>
 </section>
 
 <!-- STATS -->
@@ -678,38 +574,26 @@ footer {
     <div class="section-eyebrow">The Problem</div>
     <h2 class="section-title">Your offline empire is <em>invisible</em> on Google.</h2>
     <div class="section-body">
-      <p>Nigeria's most powerful companies brands touching millions of consumers every single day are losing the digital battle to competitors running basic social media accounts.</p>
+      <p>Nigeria's most powerful companies — brands touching millions of consumers every single day — are losing the digital battle to competitors running basic social media accounts.</p>
       <p>The gap between your real-world scale and your digital presence is costing you distributors, investors, talent, and market share. Every day you wait, competitors compound their lead.</p>
     </div>
   </div>
   <div class="problem-cards reveal" style="transition-delay:0.15s">
     <div class="problem-card">
       <div class="problem-icon">🔍</div>
-      <div>
-        <h4>You don't know your score</h4>
-        <p>Most brands have never been objectively benchmarked against competitors. You're flying blind.</p>
-      </div>
+      <div><h4>You don't know your score</h4><p>Most brands have never been objectively benchmarked against competitors. You're flying blind.</p></div>
     </div>
     <div class="problem-card">
       <div class="problem-icon">📉</div>
-      <div>
-        <h4>Traditional agencies charge ₦5M+ for audits</h4>
-        <p>And deliver 90-page PDFs you'll never read, 8 weeks after you needed the data.</p>
-      </div>
+      <div><h4>Traditional agencies charge ₦5M+ for audits</h4><p>And deliver 90-page PDFs you'll never read, 8 weeks after you needed the data.</p></div>
     </div>
     <div class="problem-card">
       <div class="problem-icon">🏃</div>
-      <div>
-        <h4>Competitors are pulling ahead digitally</h4>
-        <p>Dangote commands 50x more digital share of voice than comparable brands — with comparable offline scale.</p>
-      </div>
+      <div><h4>Competitors are pulling ahead digitally</h4><p>Dangote commands 50x more digital share of voice than comparable brands — with comparable offline scale.</p></div>
     </div>
     <div class="problem-card">
       <div class="problem-icon">💡</div>
-      <div>
-        <h4>No clear action plan</h4>
-        <p>You know you need to "do more digital" but nobody tells you exactly what to do in the next 30 days.</p>
-      </div>
+      <div><h4>No clear action plan</h4><p>You know you need to "do more digital" but nobody tells you exactly what to do in the next 30 days.</p></div>
     </div>
   </div>
 </section>
@@ -718,185 +602,102 @@ footer {
 <section class="how-it-works" id="how-it-works">
   <div class="section-center reveal">
     <div class="section-eyebrow">How It Works</div>
-    <h2 class="section-title">From zero to full brand intelligence in 90 seconds</h2>
+    <h2 class="section-title">From zero to full brand intelligence in 60 seconds</h2>
   </div>
   <div class="steps-grid">
     <div class="step reveal">
       <div class="step-num">01</div>
       <h3>Enter your company</h3>
-      <p>Type in your company name, website, industry, and main competitors. That's all we need to start.</p>
+      <p>Type in your company name, website, industry, and main competitors. Pay securely via Paystack — that's all we need.</p>
       <div class="step-arrow">→</div>
     </div>
     <div class="step reveal" style="transition-delay:0.1s">
       <div class="step-num">02</div>
-      <h3>We crawl the internet</h3>
-      <p>Our AI runs 12+ live web searches  checking your social media, Google ranking, paid media, SEO, backlinks, and more in real time.</p>
+      <h3>AI analyses everything</h3>
+      <p>Our engine checks your social media, Google ranking, paid media, SEO, backlinks, share of voice and more — benchmarked against competitors in real time.</p>
       <div class="step-arrow">→</div>
     </div>
     <div class="step reveal" style="transition-delay:0.2s">
       <div class="step-num">03</div>
       <h3>Get your full report</h3>
-      <p>A 9-dimension scored report, competitor benchmarks, top 10 gaps, and a 30-day Cerebre action plan ready to present to your board.</p>
+      <p>A 9-dimension scored report, competitor benchmarks, top 10 strategic gaps, and a 30-day Cerebre action plan — emailed instantly and ready to present to your board.</p>
     </div>
   </div>
 </section>
 
-<!-- TEASER PREVIEW -->
-<section class="preview-section" id="features">
-  <div class="section-center reveal">
-    <div class="section-eyebrow">Live Preview</div>
-    <h2 class="section-title">Here's what your<br>free audit reveals</h2>
-    <p style="color:var(--smoke);font-size:15px;margin-top:12px">The free report gives you enough data to understand the scale of the problem. The full report tells you exactly how to fix it.</p>
+<!-- ── SAMPLE REPORTS ── -->
+<section class="samples-section" id="samples">
+  <div class="samples-intro reveal">
+    <div class="section-eyebrow">Sample Reports</div>
+    <h2 class="section-title">See exactly what you're getting</h2>
+    <p>These are real reports generated by the Cerebre Intelligence Engine. Click any to preview the full document before you buy.</p>
   </div>
 
-  <div class="preview-card reveal" style="transition-delay:0.1s">
-    <div class="preview-header">
-      <div class="preview-dots">
-        <div class="preview-dot" style="background:#E03E3E"></div>
-        <div class="preview-dot" style="background:#FF8C00"></div>
-        <div class="preview-dot" style="background:#1DB954"></div>
-      </div>
-      <div style="font-size:12px;color:var(--smoke);letter-spacing:0.06em">SAMPLE — TGI GROUP DIGITAL AUDIT</div>
-      <div style="font-size:11px;color:rgba(184,192,204,0.4)">CONFIDENTIAL</div>
-    </div>
-    <div class="preview-body">
-      <div class="preview-row">
-        <div class="preview-metric">
-          <div class="pm-label">Overall Digital Score</div>
-          <div class="pm-val score-red">3.1 / 10</div>
-          <div class="pm-sub">Stage 2 — Foundational</div>
-        </div>
-        <div class="preview-metric">
-          <div class="pm-label">Instagram Followers</div>
-          <div class="pm-val score-red">1,234</div>
-          <div class="pm-sub">vs Dangote's 269,000</div>
-        </div>
-        <div class="preview-metric">
-          <div class="pm-label">SEO Score</div>
-          <div class="pm-val score-red">3 / 10</div>
-          <div class="pm-sub">~1,500 monthly visits</div>
-        </div>
-      </div>
-
-      <div class="gap-preview">
-        <div class="gap-preview-item">
-          <strong>GAP 1 — Instagram: Catastrophic Content-Audience Mismatch</strong>
-          1,234 followers across 460 posts. A company serving millions of daily consumers gaining 2.7 followers per post. Competitor gap: 218x.
-        </div>
-        <div class="gap-preview-item">
-          <strong>GAP 2 — Zero Blog / Content Programme</strong>
-          Keywords like "best cooking oil Nigeria" (8,000–15,000 searches/month) are driving customers to competitors. TGI is not ranking for a single category term.
-        </div>
-        <div class="gap-preview-item">
-          <strong>GAP 3 — No Investor Relations Infrastructure</strong>
-          International PE firms and ESG investors cannot verify TGI's credentials without contacting the company directly. No IR portal. No annual report online.
-        </div>
-      </div>
-
-      <!-- PAYWALL OVERLAY -->
-      <div class="paywall-overlay">
-        <div class="paywall-lock">🔒</div>
-        <h3>7 more critical gaps + your 30-day fix</h3>
-        <p>The full report includes your complete action plan, 12-month roadmap, Cerebre service recommendations, and everything your board needs to make a decision.</p>
-        <a href="app.html#pricing" class="btn-primary">Unlock Full Report — from ₦15,000</a>
-      </div>
-    </div>
-  </div>
+  <div id="samples-container"></div>
 </section>
 
 <!-- WHAT YOU GET -->
-<section class="what-you-get">
+<section class="what-you-get" id="features">
   <div class="section-center reveal">
     <div class="section-eyebrow">Report Contents</div>
     <h2 class="section-title">9 dimensions. One definitive verdict.</h2>
   </div>
-  <div class="features-grid" style="max-width:1100px;margin:0 auto">
+  <div class="features-grid">
     <div class="feature-card reveal">
-      <div class="feature-tag free">FREE</div>
+      <div class="feature-tag">INCLUDED</div>
       <div class="feature-icon">🌐</div>
       <h3>Website & UX Audit</h3>
       <p>Architecture, load speed, conversion pathways, and UX benchmarking against your top 3 competitors.</p>
     </div>
     <div class="feature-card reveal" style="transition-delay:0.05s">
-      <div class="feature-tag free">FREE</div>
+      <div class="feature-tag">INCLUDED</div>
       <div class="feature-icon">📊</div>
       <h3>Social Media Scores</h3>
       <p>Platform-by-platform follower analysis and engagement benchmarks across LinkedIn, Instagram, X, YouTube and TikTok.</p>
     </div>
     <div class="feature-card reveal" style="transition-delay:0.1s">
-      <div class="feature-tag free">FREE</div>
+      <div class="feature-tag">INCLUDED</div>
       <div class="feature-icon">🔍</div>
-      <h3>SEO Health Score</h3>
-      <p>Domain authority estimate, organic traffic, and your top 5 missed keyword opportunities with revenue relevance ratings.</p>
+      <h3>Full SEO Analysis</h3>
+      <p>Domain authority estimate, organic traffic, and all missed keyword opportunities with revenue relevance ratings.</p>
     </div>
     <div class="feature-card reveal" style="transition-delay:0.15s">
-      <div class="feature-tag">FULL REPORT</div>
+      <div class="feature-tag">INCLUDED</div>
       <div class="feature-icon">🏆</div>
       <h3>Top 10 Strategic Gaps</h3>
-      <p>Every gap ranked by business impact and revenue cost with a specific business risk assessment for each.</p>
+      <p>Every gap ranked by business impact and revenue cost, with a specific risk assessment for each one.</p>
     </div>
     <div class="feature-card reveal" style="transition-delay:0.2s">
-      <div class="feature-tag">FULL REPORT</div>
+      <div class="feature-tag">INCLUDED</div>
       <div class="feature-icon">📅</div>
-      <h3>30-Day Cerebre Action Plan</h3>
-      <p>Week-by-week quick wins, with specific Cerebre Media Africa deliverables, timelines, and expected outcomes for each action.</p>
+      <h3>30-Day Action Plan</h3>
+      <p>Week-by-week quick wins with specific Cerebre deliverables, timelines, and expected outcomes for each action.</p>
     </div>
     <div class="feature-card reveal" style="transition-delay:0.25s">
-      <div class="feature-tag">FULL REPORT</div>
+      <div class="feature-tag">INCLUDED</div>
       <div class="feature-icon">🚀</div>
       <h3>12-Month Roadmap</h3>
       <p>A 3-phase transformation plan from Foundational to Digitally Competitive with projected outcomes and investment forecast.</p>
     </div>
     <div class="feature-card reveal" style="transition-delay:0.3s">
-      <div class="feature-tag">FULL REPORT</div>
+      <div class="feature-tag">INCLUDED</div>
       <div class="feature-icon">💼</div>
       <h3>Cerebre Services Proposal</h3>
-      <p>6–8 specific services mapped to your exact gaps with ROI projections and timelines. Ready to present to your board.</p>
+      <p>6–8 specific services mapped to your exact gaps with ROI projections and timelines — ready to present to your board.</p>
     </div>
     <div class="feature-card reveal" style="transition-delay:0.35s">
-      <div class="feature-tag">FULL REPORT</div>
+      <div class="feature-tag">INCLUDED</div>
       <div class="feature-icon">📢</div>
       <h3>Digital Share of Voice</h3>
       <p>Your exact % of online conversations vs competitors in search, social, press, and news coverage with brand perception risks.</p>
     </div>
     <div class="feature-card reveal" style="transition-delay:0.4s">
-      <div class="feature-tag">FULL REPORT</div>
+      <div class="feature-tag">INCLUDED</div>
       <div class="feature-icon">🔐</div>
       <h3>Paid Media Analysis</h3>
-      <p>What competitors are spending on Google, LinkedIn, and Meta and how much traffic you're losing to their campaigns daily.</p>
+      <p>What competitors are spending on Google, LinkedIn, and Meta — and how much traffic you're losing to their campaigns daily.</p>
     </div>
   </div>
-</section>
-
-<!-- COMPARISON TABLE -->
-<section class="comparison-section reveal">
-  <div class="section-center" style="margin-bottom:40px">
-    <div class="section-eyebrow">Free vs Full</div>
-    <h2 class="section-title">What's included at each level</h2>
-  </div>
-  <table class="comp-table">
-    <thead>
-      <tr>
-        <th>Feature</th>
-        <th class="col-free">Free Audit</th>
-        <th class="col-paid-head">Full Report</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Overall digital health score</td><td><span class="comp-yes">✓</span></td><td><span class="comp-yes">✓</span></td></tr>
-      <tr><td>Social media follower counts + scores</td><td><span class="comp-yes">✓</span></td><td><span class="comp-yes">✓</span></td></tr>
-      <tr><td>SEO score + top missed keywords</td><td><span class="comp-partial">3 keywords</span></td><td><span class="comp-yes">✓ Full list</span></td></tr>
-      <tr><td>Competitor social benchmarks</td><td><span class="comp-yes">✓</span></td><td><span class="comp-yes">✓</span></td></tr>
-      <tr><td>Top strategic gaps</td><td><span class="comp-partial">3 of 10</span></td><td><span class="comp-yes">✓ All 10</span></td></tr>
-      <tr><td>Content marketing audit</td><td><span class="comp-no">✗</span></td><td><span class="comp-yes">✓</span></td></tr>
-      <tr><td>Paid media analysis</td><td><span class="comp-no">✗</span></td><td><span class="comp-yes">✓</span></td></tr>
-      <tr><td>Digital share of voice</td><td><span class="comp-no">✗</span></td><td><span class="comp-yes">✓</span></td></tr>
-      <tr><td>30-day action plan</td><td><span class="comp-no">✗</span></td><td><span class="comp-yes">✓ Week by week</span></td></tr>
-      <tr><td>12-month roadmap</td><td><span class="comp-no">✗</span></td><td><span class="comp-yes">✓</span></td></tr>
-      <tr><td>Cerebre services proposal</td><td><span class="comp-no">✗</span></td><td><span class="comp-yes">✓ With ROI</span></td></tr>
-      <tr><td>PDF download</td><td><span class="comp-no">✗</span></td><td><span class="comp-yes">✓</span></td></tr>
-    </tbody>
-  </table>
 </section>
 
 <!-- PRICING -->
@@ -904,42 +705,25 @@ footer {
   <div class="section-center reveal">
     <div class="section-eyebrow">Pricing</div>
     <h2 class="section-title">Less than one hour of<br>agency consulting fees</h2>
-    <p style="color:var(--smoke);font-size:15px;margin-top:12px">Traditional brand audits cost ₦2–5M and take 6–8 weeks. We deliver in 90 seconds.</p>
+    <p style="color:var(--smoke);font-size:15px;margin-top:12px">Traditional brand audits cost ₦2–5M and take 6–8 weeks. We deliver in 60 seconds.</p>
   </div>
   <div class="pricing-grid">
-    <div class="pricing-card reveal">
-      <div class="pricing-tier">Free Taster</div>
-      <div class="pricing-price">₦0</div>
-      <div class="pricing-desc">Get enough data to understand how serious the problem is.</div>
-      <ul class="pricing-features">
-        <li class="active"><span class="tick">✓</span> Overall digital score</li>
-        <li class="active"><span class="tick">✓</span> Social media benchmarks</li>
-        <li class="active"><span class="tick">✓</span> SEO score</li>
-        <li class="active"><span class="tick">✓</span> 3 critical gaps revealed</li>
-        <li><span class="cross">✗</span> Action plan</li>
-        <li><span class="cross">✗</span> Full gap analysis</li>
-        <li><span class="cross">✗</span> Roadmap</li>
-      </ul>
-      <a href="app.html" class="btn-pricing-ghost">Start Free Audit</a>
-    </div>
 
-    <div class="pricing-card featured reveal" style="transition-delay:0.1s">
-      <div class="pricing-badge">MOST POPULAR</div>
-      <div class="pricing-tier">Full Report</div>
+    <div class="pricing-card reveal">
+      <div class="pricing-tier">Single Report</div>
       <div class="pricing-price">₦15,000 <span>/ report</span></div>
-      <div class="pricing-desc">Everything you need to walk into the boardroom with a strategy.</div>
+      <div class="pricing-desc">One company. One complete audit. Delivered to your inbox instantly.</div>
       <ul class="pricing-features">
-        <li class="active"><span class="tick">✓</span> Everything in Free</li>
+        <li class="active"><span class="tick">✓</span> Overall digital health score</li>
+        <li class="active"><span class="tick">✓</span> Social media benchmarks</li>
+        <li class="active"><span class="tick">✓</span> Full SEO analysis</li>
         <li class="active"><span class="tick">✓</span> All 10 strategic gaps</li>
         <li class="active"><span class="tick">✓</span> 30-day action plan</li>
         <li class="active"><span class="tick">✓</span> 12-month roadmap</li>
-        <li class="active"><span class="tick">✓</span> Paid media analysis</li>
-        <li class="active"><span class="tick">✓</span> Cerebre services proposal</li>
         <li class="active"><span class="tick">✓</span> PDF download</li>
       </ul>
-      <a href="app.html?plan=single" class="btn-pricing-primary">Get Full Report →</a>
+      <a href="app.html" class="btn-pricing-primary">Get Full Report →</a>
     </div>
-
     <div class="pricing-card reveal" style="transition-delay:0.2s">
       <div class="pricing-tier">Agency Bundle</div>
       <div class="pricing-price">₦120,000 <span>/ 10 reports</span></div>
@@ -967,13 +751,10 @@ footer {
   <div class="testi-grid">
     <div class="testi-card reveal">
       <div class="testi-stars">★★★★★</div>
-      <div class="testi-quote">"We knew our digital presence was weak, but seeing the numbers  1,234 Instagram followers against a competitor with 269,000 that was the wake-up call our CEO needed. Presented this report at our board meeting the same afternoon."</div>
+      <div class="testi-quote">"We knew our digital presence was weak, but seeing the numbers — 1,234 Instagram followers against a competitor with 269,000 — that was the wake-up call our CEO needed. Presented this report at our board meeting the same afternoon."</div>
       <div class="testi-author">
         <div class="testi-avatar">AO</div>
-        <div>
-          <div class="testi-name">Adebayo O.</div>
-          <div class="testi-role">CMO, FMCG Conglomerate, Lagos</div>
-        </div>
+        <div><div class="testi-name">Adebayo O.</div><div class="testi-role">CMO, FMCG Conglomerate, Lagos</div></div>
       </div>
     </div>
     <div class="testi-card reveal" style="transition-delay:0.1s">
@@ -981,10 +762,7 @@ footer {
       <div class="testi-quote">"The 30-day action plan was specific enough that I handed it directly to our digital team with clear instructions. We gained 8,000 Instagram followers in the first 6 weeks just by implementing weeks 1 and 2."</div>
       <div class="testi-author">
         <div class="testi-avatar">FK</div>
-        <div>
-          <div class="testi-name">Fatima K.</div>
-          <div class="testi-role">Head of Marketing, Manufacturing Group, Abuja</div>
-        </div>
+        <div><div class="testi-name">Fatima K.</div><div class="testi-role">Head of Marketing, Manufacturing Group, Abuja</div></div>
       </div>
     </div>
     <div class="testi-card reveal" style="transition-delay:0.2s">
@@ -992,10 +770,7 @@ footer {
       <div class="testi-quote">"Traditional agencies quoted us ₦4M for a brand audit that would take 8 weeks. Cerebre delivered a more comprehensive report in 90 seconds for ₦15,000. The SEO gap analysis alone was worth 10x the price."</div>
       <div class="testi-author">
         <div class="testi-avatar">EM</div>
-        <div>
-          <div class="testi-name">Emeka M.</div>
-          <div class="testi-role">CEO, Digital Agency, Port Harcourt</div>
-        </div>
+        <div><div class="testi-name">Emeka M.</div><div class="testi-role">CEO, Digital Agency, Port Harcourt</div></div>
       </div>
     </div>
   </div>
@@ -1010,11 +785,11 @@ footer {
   <div class="faq-grid">
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">How does the AI get the data? <span class="faq-icon">+</span></div>
-      <div class="faq-a">Our engine leverages Anthropic’s LLM API to run live web searches before generating your report. It checks your social media profiles, website, Google rankings, competitor pages, press mentions, and paid media activity in real time  so every report reflects the internet as it exists today, not cached data.</div>
+      <div class="faq-a">Our engine leverages Anthropic's Claude API to analyse your digital presence across social media profiles, website, Google rankings, competitor pages, press mentions, and paid media activity — producing a comprehensive report calibrated to Nigerian and African market benchmarks.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">How accurate is the data? <span class="faq-icon">+</span></div>
-      <div class="faq-a">Social media follower counts and website data are pulled directly from live searches. SEO estimates, domain authority, and traffic figures are directional estimates based on industry benchmarks and public data similar to tools like SEMrush or Moz. We label every estimate clearly in the report.</div>
+      <div class="faq-a">Social media data and website figures are pulled from live analysis. SEO estimates, domain authority, and traffic figures are directional estimates based on industry benchmarks — similar to tools like SEMrush or Moz. Every estimate is clearly labelled in the report.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">Can I audit any company, not just mine? <span class="faq-icon">+</span></div>
@@ -1022,19 +797,19 @@ footer {
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">What payment methods do you accept? <span class="faq-icon">+</span></div>
-      <div class="faq-a">We accept cards (Visa, Mastercard), bank transfers, and Paystack for Nigerian naira payments. All transactions are secure and processed by Paystack.</div>
+      <div class="faq-a">We accept cards (Visa, Mastercard), bank transfers, and USSD via Paystack. All transactions are secure and processed in Nigerian naira.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">How long does the full report take? <span class="faq-icon">+</span></div>
-      <div class="faq-a">The AI runs 12+ web searches before writing the report this takes 60–120 seconds. A loading screen walks you through each step in real time. The full report is typically ready within 2 minutes of submission.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">How long does the report take? <span class="faq-icon">+</span></div>
+      <div class="faq-a">The AI generates your complete report in 30–90 seconds after payment. A loading screen shows you every step in real time. The report is emailed to you immediately upon completion.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Can I implement the recommendations myself, or do I need Cerebre? <span class="faq-icon">+</span></div>
-      <div class="faq-a">The 30-day action plan is written so your internal team can execute it. The Cerebre services section explains what we can do for you if you'd prefer experts to handle it but it's entirely optional. Many clients use the report as their internal brief.</div>
+      <div class="faq-q" onclick="toggleFaq(this)">Can I implement the recommendations myself? <span class="faq-icon">+</span></div>
+      <div class="faq-a">The 30-day action plan is written so your internal team can execute it. The Cerebre services section explains what we can handle for you — but it's entirely optional. Many clients use the report as their internal brief.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">Is the report confidential? <span class="faq-icon">+</span></div>
-      <div class="faq-a">Every report is marked Strictly Confidential Executive Use Only. We do not store or share your report data. The full report is generated in your browser session and is not retained on our servers after delivery.</div>
+      <div class="faq-a">Every report is marked Strictly Confidential — Executive Use Only. We do not store or share your report data. It is delivered directly to your email and is not retained on our servers after delivery.</div>
     </div>
   </div>
 </section>
@@ -1044,9 +819,10 @@ footer {
   <h2>Your competitors are<br>pulling ahead <em>right now.</em></h2>
   <p>Every day without a digital strategy is a day your competitors are capturing your distributors, your talent, and your customers.</p>
   <a href="app.html" class="btn-primary" style="font-size:16px;padding:18px 48px">
-    Run My Free Audit
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+    Get My Full Audit — ₦15,000
   </a>
-  <p style="font-size:13px;color:rgba(184,192,204,0.4);margin-top:16px">Free audit. No card required. Full report from ₦15,000.</p>
+  <p style="font-size:13px;color:rgba(184,192,204,0.4);margin-top:16px">Secure payment via Paystack · Delivered in 60 seconds · 100% satisfaction guarantee</p>
 </section>
 
 <footer>
@@ -1055,22 +831,127 @@ footer {
     Strategic Digital Intelligence Division.
   </div>
   <div class="footer-links">
-    <a href="app.html">Run Audit</a>
+    <a href="app.html">Get Audit</a>
+    <a href="#samples">Samples</a>
     <a href="#pricing">Pricing</a>
     <a href="mailto:hello@cerebre.africa">Contact</a>
-    <a href="#">Privacy</a>
   </div>
 </footer>
 
 <script>
-// Reveal on scroll
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-}, { threshold: 0.1 });
-reveals.forEach(r => observer.observe(r));
+/* ════════════════════════════════════════════
+   SAMPLE REPORTS CONFIGURATION
+   ─────────────────────────────────────────────
+   Add your PDF files here. Each object needs:
+     file    — path to your PDF (relative to this page)
+     company — company name shown on the card
+     industry— short industry label
+     score   — overall digital score (number)
+     tags    — array of up to 3 short tags
+   
+   Example:
+   { file: 'samples/dangote-audit.pdf', company: 'Dangote Group', industry: 'Conglomerate · Nigeria', score: 6.2, tags: ['FMCG', 'Manufacturing', 'Pan-African'] }
 
-// FAQ toggle
+   To add a new sample, just copy one of the objects
+   below and fill in the details.
+════════════════════════════════════════════ */
+const SAMPLE_REPORTS = [
+  // ── ADD YOUR PDFs HERE ─────────────────────────────────
+  // { file: 'samples/report-1.pdf', company: 'Company Name', industry: 'Industry · Country', score: 5.4, tags: ['Tag1', 'Tag2'] },
+  // { file: 'samples/report-2.pdf', company: 'Company Name', industry: 'Industry · Nigeria',  score: 3.1, tags: ['FMCG', 'B2C'] },
+  // ──────────────────────────────────────────────────────
+];
+
+/* Score colour helper */
+function scoreColor(s) { return s >= 7 ? '#1DB954' : s >= 4 ? '#FF8C00' : '#E03E3E'; }
+function scoreLabel(s) { return s >= 7 ? 'Strong' : s >= 4 ? 'Developing' : 'Critical'; }
+
+/* Render samples grid */
+function renderSamples() {
+  const container = document.getElementById('samples-container');
+
+  if (SAMPLE_REPORTS.length === 0) {
+    container.innerHTML = `
+      <div class="samples-empty reveal">
+        <strong>Sample reports coming soon</strong>
+        Want a preview before you buy? Email us at <a href="mailto:hello@cerebre.africa" style="color:var(--gold2)">hello@cerebre.africa</a> and we'll send one directly.
+      </div>`;
+    return;
+  }
+
+  const grid = document.createElement('div');
+  grid.className = 'samples-grid';
+
+  SAMPLE_REPORTS.forEach((report, i) => {
+    const delay = (i % 3) * 0.1;
+    const col   = scoreColor(report.score);
+    const lbl   = scoreLabel(report.score);
+
+    const card = document.createElement('div');
+    card.className = 'sample-card reveal';
+    card.style.transitionDelay = delay + 's';
+
+    card.innerHTML = `
+      <div class="sample-thumb">
+        <iframe src="${report.file}#toolbar=0&navpanes=0&scrollbar=0" loading="lazy"></iframe>
+        <div class="sample-blur">
+          <button class="sample-view-btn" onclick="openLightbox(${i})">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            View Full Sample
+          </button>
+        </div>
+      </div>
+      <div class="sample-body">
+        <div class="sample-company">${report.company}</div>
+        <div class="sample-meta">${report.industry}</div>
+        <div class="sample-score">
+          <div class="dot-score" style="background:${col}"></div>
+          <span style="color:${col};font-weight:600">${report.score}/10</span>
+          <span style="color:var(--smoke);font-size:11px">— ${lbl}</span>
+        </div>
+        <div class="sample-tags">
+          ${(report.tags || []).map(t => `<span class="sample-tag">${t}</span>`).join('')}
+        </div>
+      </div>`;
+
+    grid.appendChild(card);
+  });
+
+  container.appendChild(grid);
+
+  // Re-observe new reveal elements
+  grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+/* Lightbox */
+function openLightbox(index) {
+  const r = SAMPLE_REPORTS[index];
+  document.getElementById('lb-title').textContent = r.company + ' — Digital Brand Health Audit';
+  document.getElementById('lb-meta').textContent  = r.industry + ' · Score: ' + r.score + '/10';
+  document.getElementById('lb-iframe').src = r.file;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.getElementById('lb-iframe').src = '';
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+/* Scroll reveal */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+
+/* FAQ toggle */
 function toggleFaq(el) {
   const item = el.parentElement;
   const wasOpen = item.classList.contains('open');
@@ -1078,36 +959,32 @@ function toggleFaq(el) {
   if (!wasOpen) item.classList.add('open');
 }
 
-// Animate stat numbers
-function animateCount(el, target, suffix='') {
-  const duration = 1800;
-  const start = performance.now();
+/* Stat counter */
+function animateCount(el, target, suffix) {
+  const duration = 1800; const start = performance.now();
   const isFloat = target % 1 !== 0;
-  const update = (now) => {
+  const update = now => {
     const p = Math.min((now - start) / duration, 1);
     const ease = 1 - Math.pow(1 - p, 3);
-    const val = isFloat ? (target * ease).toFixed(1) : Math.round(target * ease);
-    el.textContent = val + suffix;
+    el.textContent = (isFloat ? (target * ease).toFixed(1) : Math.round(target * ease)) + suffix;
     if (p < 1) requestAnimationFrame(update);
   };
   requestAnimationFrame(update);
 }
-
-const statNums = document.querySelectorAll('.stat-num');
 const statObs = new IntersectionObserver((entries) => {
   entries.forEach(e => {
-    if (e.isIntersecting) {
-      const el = e.target;
-      const text = el.textContent;
-      if (text.includes('3.1')) animateCount(el, 3.1);
-      else if (text.includes('180K')) { animateCount(el, 180, 'K'); }
-      else if (text.includes('$2–4M')) return;
-      else if (text.includes('9')) animateCount(el, 9);
-      statObs.unobserve(el);
-    }
+    if (!e.isIntersecting) return;
+    const el = e.target, text = el.textContent;
+    if (text.includes('3.1'))  animateCount(el, 3.1, '');
+    else if (text.includes('180K')) animateCount(el, 180, 'K');
+    else if (text.includes('9'))    animateCount(el, 9, '');
+    statObs.unobserve(el);
   });
 }, { threshold: 0.5 });
-statNums.forEach(n => statObs.observe(n));
+document.querySelectorAll('.stat-num').forEach(n => statObs.observe(n));
+
+/* Init */
+renderSamples();
 </script>
 </body>
 </html>

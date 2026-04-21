@@ -28,18 +28,27 @@ app.use((req, res, next) => {
   next();
 });
 
-// ── Static files & pages ──
-app.use(express.static(__dirname));
-app.get('/',    (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-app.get('/app', (req, res) => res.sendFile(path.join(__dirname, 'app.html')));
-
-// ── API routes ──
+// ── API routes — MUST come before static middleware ──
 app.use('/api/generate',    generateRouter);
 app.use('/api/send-report', sendReportRouter);
 app.use('/api/webhook',     webhookRouter);
 
-const server = app.listen(PORT, () => console.log(`✓ Cerebré server running on port ${PORT}`));
+// ── Named pages ──
+app.get('/',    (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+app.get('/app', (req, res) => res.sendFile(path.join(__dirname, 'app.html')));
 
-server.timeout         = 300000;
+// ── Static files — after API routes so /api/* is never intercepted ──
+app.use(express.static(__dirname, {
+  // Never serve the api/ folder as static files
+  setHeaders: (res, filePath) => {
+    if (filePath.includes(path.join(__dirname, 'api'))) {
+      res.status(404).end();
+    }
+  },
+}));
+
+const server = app.listen(PORT, () => console.log(`✓ Cerebre server running on port ${PORT}`));
+
+server.timeout          = 300000;
 server.keepAliveTimeout = 305000;
-server.headersTimeout  = 310000;
+server.headersTimeout   = 310000;

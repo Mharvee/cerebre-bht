@@ -48,9 +48,9 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .input-screen h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,52px);font-weight:700;text-align:center;line-height:1.1;max-width:700px;margin-bottom:12px}
 .input-screen h1 em{font-style:italic;color:var(--gold2)}
 .input-sub{color:var(--smoke);font-size:15px;text-align:center;max-width:500px;margin-bottom:48px;line-height:1.7;font-weight:300}
-.trial-badge{background:rgba(29,185,84,.1);border:1px solid rgba(29,185,84,.25);color:var(--green);border-radius:8px;padding:8px 16px;font-size:13px;margin-bottom:24px;text-align:center}
-.trial-badge.warn{background:rgba(255,140,0,.1);border-color:rgba(255,140,0,.3);color:var(--orange)}
-.trial-badge.empty{background:rgba(224,62,62,.1);border-color:rgba(224,62,62,.3);color:var(--red)}
+.value-strip{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;margin-bottom:36px}
+.vs-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--smoke)}
+.vs-item .tick{color:var(--gold2);font-weight:700}
 .form-card{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:20px;padding:36px;width:100%;max-width:640px}
 .input-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .input-full{grid-column:1/-1}
@@ -58,33 +58,16 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .field input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:12px 16px;color:#fff;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
 .field input::placeholder{color:rgba(184,192,204,.35)}
 .field input:focus{border-color:var(--gold);background:rgba(201,146,42,.05)}
-.btn-audit{width:100%;margin-top:24px;background:var(--gold);color:var(--ink);border:none;border-radius:10px;padding:16px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s,transform .1s;display:flex;align-items:center;justify-content:center;gap:10px}
+.price-box{background:var(--gold-dim);border:1px solid rgba(201,146,42,.25);border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;margin-top:20px;flex-wrap:wrap;gap:10px}
+.price-left .price-amount{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--gold2);line-height:1}
+.price-left .price-label{font-size:12px;color:var(--smoke);margin-top:2px}
+.price-right{font-size:12px;color:rgba(184,192,204,.5);text-align:right;line-height:1.6}
+.btn-audit{width:100%;margin-top:16px;background:var(--gold);color:var(--ink);border:none;border-radius:10px;padding:16px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s,transform .1s;display:flex;align-items:center;justify-content:center;gap:10px}
 .btn-audit:hover{background:var(--gold2);transform:translateY(-1px)}
 .btn-audit:disabled{background:#3a3a3a;color:#666;cursor:not-allowed;transform:none}
 .form-note{text-align:center;font-size:12px;color:rgba(184,192,204,.4);margin-top:12px}
 .err-box{background:rgba(224,62,62,.1);border:1px solid rgba(224,62,62,.3);border-radius:10px;padding:14px 18px;font-size:13px;color:var(--red);display:none;margin-top:12px;max-width:640px}
 .err-box.active{display:block}
-
-/* EMAIL GATE MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(8,12,20,.92);z-index:500;display:none;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(8px)}
-.modal-overlay.active{display:flex}
-.modal-box{background:var(--ink2);border:1px solid rgba(201,146,42,.3);border-radius:20px;padding:40px;width:100%;max-width:480px;text-align:center}
-.modal-icon{font-size:40px;margin-bottom:16px}
-.modal-box h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:10px}
-.modal-box h2 em{font-style:italic;color:var(--gold2)}
-.modal-box p{font-size:14px;color:var(--smoke);line-height:1.7;margin-bottom:24px}
-.modal-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:14px 16px;color:#fff;font-size:15px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;margin-bottom:12px}
-.modal-input:focus{border-color:var(--gold)}
-.modal-btn{width:100%;background:var(--gold);color:var(--ink);border:none;border-radius:8px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
-.modal-btn:hover{background:var(--gold2)}
-.modal-note{font-size:11px;color:rgba(184,192,204,.4);margin-top:12px}
-
-/* LIMIT WALL */
-.limit-wall{background:rgba(224,62,62,.08);border:1px solid rgba(224,62,62,.25);border-radius:16px;padding:32px;text-align:center;max-width:640px;margin:0 auto}
-.limit-wall h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:10px}
-.limit-wall p{font-size:14px;color:var(--smoke);line-height:1.7;margin-bottom:24px}
-.btn-upgrade{background:var(--gold);color:var(--ink);border:none;border-radius:10px;padding:14px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
-.btn-upgrade:hover{background:var(--gold2)}
 
 /* LOADING */
 .loading-screen{display:none;min-height:calc(100vh - 61px);flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center}
@@ -101,13 +84,11 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .step-li.done .step-pip{background:var(--green)}
 .step-li.active .step-pip{background:var(--gold);animation:blink 1s ease-in-out infinite}
 
-/* REPORT AREA */
+/* REPORT — SCREEN */
 #report-area{display:none}
 #report-area.active{display:block}
-.report-wrap{max-width:920px;margin:0 auto;padding:48px 40px 80px}
-
-/* action bar */
-.action-bar{display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap}
+.report-wrap{max-width:960px;margin:0 auto;padding:48px 40px 80px}
+.action-bar{display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap;align-items:center}
 .btn-action{background:var(--ink2);color:#fff;border:1px solid var(--border);padding:10px 20px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:8px;transition:border-color .2s,background .2s}
 .btn-action:hover{border-color:rgba(255,255,255,.2);background:var(--ink3)}
 .btn-action.gold{background:var(--gold);color:var(--ink);border-color:var(--gold)}
@@ -128,14 +109,14 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .score-big{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--gold2);line-height:1}
 .score-denom{font-size:11px;color:var(--smoke)}
 .score-info h2{font-size:18px;font-weight:600;margin-bottom:6px}
-.score-info p{font-size:13px;color:var(--smoke);line-height:1.6;max-width:500px}
+.score-info p{font-size:13px;color:var(--smoke);line-height:1.6;max-width:560px}
 .stage-tag{display:inline-block;background:var(--gold-dim);color:var(--gold2);border:1px solid rgba(201,146,42,.25);border-radius:20px;font-size:11px;font-weight:600;padding:3px 14px;margin-top:10px}
 
 /* metric row */
 .metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
 .m-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
 .m-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke);margin-bottom:8px}
-.m-val{font-size:22px;font-weight:700;line-height:1}
+.m-val{font-size:20px;font-weight:700;line-height:1.2}
 .m-sub{font-size:11px;color:var(--smoke);margin-top:6px}
 
 /* section cards */
@@ -145,12 +126,22 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .s-score{padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;background:var(--ink2);border:1px solid var(--border)}
 .s-body{padding:22px}
 
+/* two-col layout for strengths/gaps */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.col-grn{background:rgba(29,185,84,.05);border:1px solid rgba(29,185,84,.15);border-radius:8px;padding:18px}
+.col-red{background:rgba(224,62,62,.05);border:1px solid rgba(224,62,62,.15);border-radius:8px;padding:18px}
+.col-head{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.col-item{font-size:13px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--smoke);display:flex;gap:8px;line-height:1.5}
+.col-item:last-child{border-bottom:none}
+
 /* platform grid */
 .plat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .plat{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:14px}
 .plat-name{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--smoke);margin-bottom:6px}
-.plat-count{font-size:22px;font-weight:700;line-height:1;margin-bottom:6px}
+.plat-count{font-size:20px;font-weight:700;line-height:1;margin-bottom:6px}
 .plat-tag{font-size:10px;padding:2px 8px;border-radius:8px;display:inline-block;font-weight:600}
+.plat-issues{margin-top:8px}
+.plat-issue{font-size:11px;color:rgba(184,192,204,.55);line-height:1.4;padding:2px 0}
 .tc{background:rgba(224,62,62,.15);color:var(--red)}
 .tg{background:rgba(255,140,0,.15);color:var(--orange)}
 .to{background:rgba(29,185,84,.12);color:var(--green)}
@@ -159,219 +150,356 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 /* bar rows */
 .bar-row{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--border)}
 .bar-row:last-child{border-bottom:none}
-.bar-lbl{width:210px;font-size:13px;color:var(--smoke);flex-shrink:0}
+.bar-lbl{width:200px;font-size:13px;color:var(--smoke);flex-shrink:0}
 .bar-track{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px;print-color-adjust:exact;-webkit-print-color-adjust:exact}
-.bar-num{width:44px;text-align:right;font-size:13px;font-weight:700;flex-shrink:0}
+.bar-fill{height:100%;border-radius:4px}
+.bar-num{width:50px;text-align:right;font-size:13px;font-weight:700;flex-shrink:0}
+.bar-comment{font-size:11px;color:rgba(184,192,204,.4);margin-top:2px}
 
-/* kw table */
-.kw-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;gap:12px}
+/* tables */
+.data-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.data-tbl th{background:var(--ink2);color:var(--gold2);padding:10px 14px;text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.data-tbl td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--smoke);vertical-align:top}
+.data-tbl tr:last-child td{border-bottom:none}
+.data-tbl td:first-child{color:#fff;font-weight:500}
+
+/* keyword rows */
+.kw-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;gap:12px;flex-wrap:wrap}
 .kw-row:last-child{border-bottom:none}
-.kw-name{flex:1;color:#fff}
-.kw-vol{color:var(--smoke);min-width:100px;text-align:center}
-.kw-rel{font-size:11px;padding:2px 8px;border-radius:6px;background:rgba(224,62,62,.12);color:var(--red)}
+.kw-name{flex:1;color:#fff;min-width:160px}
+.kw-vol{color:var(--smoke);min-width:90px}
+.kw-rank{color:var(--smoke);min-width:90px}
+.kw-rel{font-size:11px;padding:2px 8px;border-radius:6px}
+.rel-high{background:rgba(224,62,62,.12);color:var(--red)}
+.rel-med{background:rgba(255,140,0,.12);color:var(--orange)}
+.rel-low{background:rgba(184,192,204,.1);color:var(--smoke)}
 
 /* gap cards */
-.gap-card{border:1px solid rgba(224,62,62,.2);border-left:3px solid var(--red);border-radius:8px;padding:18px;margin-bottom:14px}
+.gap-card{border:1px solid rgba(224,62,62,.2);border-left:3px solid var(--red);border-radius:8px;padding:16px;margin-bottom:12px}
 .gap-card:last-child{margin-bottom:0}
 .gap-num{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:4px}
 .gap-title{font-size:15px;font-weight:600;margin-bottom:8px}
 .gap-body{font-size:13px;color:var(--smoke);line-height:1.7}
 .gap-risk{margin-top:10px;font-size:12px;background:rgba(224,62,62,.07);border-radius:6px;padding:8px 12px;color:rgba(224,62,62,.9)}
 
-/* week blocks */
-.week-block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px}
-.week-b{background:var(--ink2);color:var(--gold2);border:1px solid rgba(201,146,42,.25);display:inline-block;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:12px}
-.week-t{font-size:16px;font-weight:600;margin-bottom:12px}
-.action-li{font-size:13px;padding:7px 0;border-bottom:1px solid var(--border);display:flex;gap:10px;color:var(--smoke);line-height:1.5}
-.action-li:last-of-type{border-bottom:none}
-.action-li .arr{color:var(--gold);font-weight:700;flex-shrink:0}
-.deliv{background:rgba(29,185,84,.06);border:1px solid rgba(29,185,84,.2);border-radius:8px;padding:12px 16px;margin-top:12px;font-size:13px;color:var(--smoke)}
-.deliv strong{color:var(--green)}
-
-/* services table */
-.svc-tbl{width:100%;border-collapse:collapse}
-.svc-tbl th{background:var(--ink2);color:var(--gold2);padding:12px 14px;text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border)}
-.svc-tbl td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13px;color:var(--smoke);vertical-align:top}
-.svc-tbl tr:last-child td{border-bottom:none}
-.svc-tbl td:first-child{color:#fff;font-weight:500}
-.svc-roi{color:var(--green)}
-
 /* roadmap */
-.phase-block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:14px}
+.phase-block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px}
 .phase-t{font-size:14px;font-weight:600;color:var(--gold2);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
-.r-row{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;flex-wrap:wrap}
+.phase-priority{font-size:11px;color:var(--smoke);margin-top:4px;font-weight:400}
+.r-row{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;flex-wrap:wrap;align-items:flex-start}
 .r-row:last-child{border-bottom:none}
-.r-time{color:var(--gold);font-weight:600;min-width:80px;flex-shrink:0}
-.r-out{color:var(--smoke);font-size:12px;min-width:120px;text-align:right}
-.forecast-box{background:rgba(29,185,84,.05);border:1px solid rgba(29,185,84,.18);border-radius:10px;padding:18px;font-size:13px;color:var(--smoke);line-height:1.7}
+.r-time{color:var(--gold);font-weight:600;min-width:90px;flex-shrink:0;font-size:12px}
+.r-action{flex:1;color:#fff}
+.r-out{color:var(--smoke);font-size:12px;min-width:160px;font-style:italic}
+.forecast-box{background:rgba(29,185,84,.05);border:1px solid rgba(29,185,84,.18);border-radius:10px;padding:18px;font-size:13px;color:var(--smoke);line-height:1.7;margin-top:16px}
 .forecast-box strong{color:var(--green)}
 
-/* content status */
-.asset-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--smoke)}
+/* content assets */
+.asset-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;gap:12px}
 .asset-row:last-child{border-bottom:none}
-.a-tag{padding:2px 10px;border-radius:8px;font-size:11px;font-weight:600}
+.asset-name{color:#fff;flex:1}
+.asset-detail{color:var(--smoke);font-size:12px;flex:2}
+.a-tag{padding:2px 10px;border-radius:8px;font-size:11px;font-weight:600;flex-shrink:0}
 .at-p{background:rgba(29,185,84,.1);color:var(--green)}
 .at-x{background:rgba(224,62,62,.1);color:var(--red)}
 .at-m{background:rgba(255,140,0,.1);color:var(--orange)}
 
-/* paywall */
-.paywall-wrap{background:linear-gradient(160deg,rgba(201,146,42,.09) 0%,rgba(8,12,20,.98) 50%);border:1px solid rgba(201,146,42,.3);border-radius:20px;padding:52px 40px;text-align:center;margin-top:32px;position:relative;overflow:hidden}
-.paywall-wrap::before{content:'';position:absolute;width:500px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(201,146,42,.08) 0%,transparent 70%);top:-100px;left:50%;transform:translateX(-50%);pointer-events:none}
-.pw-lock{font-size:52px;margin-bottom:16px}
-.pw-h{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;margin-bottom:12px;line-height:1.2}
-.pw-h em{font-style:italic;color:var(--gold2)}
-.pw-sub{font-size:15px;color:var(--smoke);max-width:500px;margin:0 auto 32px;line-height:1.7;font-weight:300}
-.pw-feats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:540px;margin:0 auto 32px;text-align:left}
-.pw-feat{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--smoke)}
-.pw-feat .tick{color:var(--gold2);flex-shrink:0}
-.pw-price{margin-bottom:28px}
-.pw-amount{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;color:var(--gold2)}
-.pw-per{font-size:14px;color:var(--smoke)}
-.pw-compare{font-size:12px;color:rgba(184,192,204,.4);margin-top:4px}
-.btn-unlock{background:var(--gold);color:var(--ink);border:none;border-radius:10px;padding:18px 52px;font-size:16px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s,transform .15s,box-shadow .2s}
-.btn-unlock:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,146,42,.25)}
-.pw-guarantee{font-size:12px;color:rgba(184,192,204,.35);margin-top:16px}
+/* SOV table */
+.sov-row{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;align-items:center;flex-wrap:wrap}
+.sov-row:last-child{border-bottom:none}
+.sov-cat{min-width:160px;color:#fff;font-weight:500}
+.sov-pct{min-width:70px;font-weight:700}
+
+/* paid media */
+.paid-row{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);font-size:13px;flex-wrap:wrap;align-items:flex-start}
+.paid-row:last-child{border-bottom:none}
+.paid-ch{min-width:160px;color:#fff;font-weight:500}
+.paid-status{flex:1;color:var(--smoke)}
+.paid-opp{color:var(--gold2);font-size:12px;min-width:160px}
+
+/* verdict boxes */
+.verdict-box{margin-top:16px;padding:14px;background:var(--gold-dim);border:1px solid rgba(201,146,42,.2);border-radius:8px;font-size:13px;color:var(--smoke);line-height:1.7}
+.verdict-box strong{color:var(--gold2)}
+
+/* list bullets */
+.bullet-list{margin:0;padding:0;list-style:none}
+.bullet-list li{font-size:13px;padding:5px 0;border-bottom:1px solid var(--border);color:var(--smoke);display:flex;gap:8px;line-height:1.5}
+.bullet-list li:last-child{border-bottom:none}
+.bullet-list li .arr{color:var(--gold);flex-shrink:0}
 
 /* util */
 .val-red{color:var(--red)}
 .val-org{color:var(--orange)}
 .val-gld{color:var(--gold2)}
 .val-grn{color:var(--green)}
+.mt12{margin-top:12px}
+.mt16{margin-top:16px}
+.label-sm{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke);margin-bottom:10px}
 
 @media(max-width:700px){
   nav{padding:14px 20px}
   .report-wrap{padding:32px 20px 60px}
-  .metrics-row,.plat-grid{grid-template-columns:1fr}
-  .pw-feats{grid-template-columns:1fr}
+  .metrics-row,.plat-grid,.two-col{grid-template-columns:1fr}
   .score-hero{flex-direction:column;gap:16px}
   .form-card{padding:24px}
   .input-grid{grid-template-columns:1fr}
+  .value-strip{gap:12px}
+  .price-box{flex-direction:column;align-items:flex-start}
 }
 </style>
 
+<!-- ═══════════════════════════════════════════════════════════
+     PRINT CSS — clean A4 professional layout
+═══════════════════════════════════════════════════════════ -->
 <style>
 @media print {
+  /* ── Reset colours for white paper ── */
   :root{
-    --ink:#fff;--ink2:#fff;--ink3:#fff;
-    --border:#dee2e8;--card:#f8f9fb;--smoke:#4a5568;
-    --gold:#b07d1f;--gold2:#92650f;--gold-dim:rgba(176,125,31,.08);
-    --red:#c53030;--green:#276749;--orange:#c05621;
+    --ink:#fff;--ink2:#f4f5f7;--ink3:#eef0f3;
+    --border:#d1d5db;--card:#f9fafb;--smoke:#374151;
+    --gold:#8B5E1A;--gold2:#6B4610;--gold-dim:rgba(139,94,26,.07);
+    --red:#B91C1C;--green:#166534;--orange:#92400E;
   }
-  html,body{background:#fff !important;color:#0D1B2A !important;font-size:11pt}
-  body::before{display:none}
-  nav,.action-bar,.input-screen,.loading-screen,.paywall-wrap,.err-box,.modal-overlay{display:none !important}
-  #report-area{display:block !important}
-  .report-wrap{max-width:100%;padding:0;margin:0}
-  @page{size:A4 portrait;margin:18mm 18mm 22mm 18mm;@bottom-center{content:"Cerebré Media Africa  ·  Strategic Digital Intelligence  ·  STRICTLY CONFIDENTIAL";font-size:7pt;color:#999;font-family:'DM Sans',sans-serif;}@top-right{content:counter(page);font-size:8pt;color:#999}}
-  body{counter-reset:page}
-  .r-masthead{background:#fff !important;border:none !important;border-bottom:3px solid #0D1B2A !important;border-radius:0 !important;padding:0 0 24px !important;margin-bottom:32px !important;display:grid;grid-template-columns:1fr auto;align-items:end;break-after:avoid}
-  .r-eyebrow{color:#b07d1f !important;font-size:8pt !important}
-  .r-h1{font-size:20pt !important;color:#0D1B2A !important;margin-bottom:10px !important}
-  .r-h1 span{color:#b07d1f !important}
-  .r-meta{font-size:8pt !important;color:#4a5568 !important}
-  .r-meta strong{color:#0D1B2A !important}
-  .r-badge{background:#fff !important;border:2px solid #c53030 !important;color:#c53030 !important;font-size:7pt !important;padding:4px 14px;border-radius:3px}
-  .r-masthead::after{content:"C";display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:#0D1B2A;border-radius:6px;font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#C9922A;flex-shrink:0;margin-left:24px}
-  .score-hero{background:#f8f9fb !important;border:1px solid #dee2e8 !important;border-radius:8px !important;break-inside:avoid;margin-bottom:20px !important}
-  .score-ring{border-color:#0D1B2A !important}
-  .score-big{color:#0D1B2A !important;font-size:26pt !important}
-  .score-denom,.score-info p{color:#4a5568 !important}
-  .score-info h2{color:#0D1B2A !important;font-size:13pt !important}
-  .stage-tag{background:rgba(176,125,31,.08) !important;color:#92650f !important;border-color:rgba(176,125,31,.3) !important;font-size:8pt !important}
-  .metrics-row{break-inside:avoid;margin-bottom:20px !important;gap:10px !important}
-  .m-box{background:#f8f9fb !important;border:1px solid #dee2e8 !important;border-radius:6px !important;padding:14px !important}
-  .m-lbl{color:#4a5568 !important;font-size:7.5pt !important}
-  .m-val{font-size:16pt !important;color:#0D1B2A !important}
-  .m-sub{color:#4a5568 !important;font-size:8pt !important}
-  .val-red{color:#c53030 !important}.val-org{color:#c05621 !important}.val-gld{color:#92650f !important}.val-grn{color:#276749 !important}
-  .s-card{background:#fff !important;border:1px solid #dee2e8 !important;border-radius:8px !important;margin-bottom:18px !important;break-inside:avoid;overflow:visible !important}
-  .s-card.pb{break-before:page}
-  .s-head{background:#0D1B2A !important;padding:10px 16px !important;break-after:avoid}
-  .s-title{color:#fff !important;font-size:9pt !important}
-  .s-score{background:rgba(255,255,255,.15) !important;color:#fff !important;border-color:rgba(255,255,255,.2) !important;font-size:9pt !important}
-  .s-body{padding:16px !important}
-  .bar-row{padding:8px 0 !important;border-bottom-color:#dee2e8 !important}
-  .bar-lbl{color:#0D1B2A !important;font-size:9.5pt !important;width:190px !important}
-  .bar-track{background:#f0f0f0 !important;height:9px !important}
-  .bar-fill{print-color-adjust:exact !important;-webkit-print-color-adjust:exact !important}
-  .bar-num{color:#0D1B2A !important;font-size:9.5pt !important}
-  .plat{background:#f8f9fb !important;border-color:#dee2e8 !important;padding:12px !important}
-  .plat-name{color:#4a5568 !important}
-  .plat-count{color:#0D1B2A !important;font-size:16pt !important}
-  .tc{background:rgba(197,48,48,.08) !important;color:#c53030 !important}
-  .tg{background:rgba(192,86,33,.08) !important;color:#c05621 !important}
-  .to{background:rgba(39,103,73,.08) !important;color:#276749 !important}
-  .kw-row{border-bottom-color:#dee2e8 !important;font-size:9.5pt !important}
-  .kw-name{color:#0D1B2A !important}.kw-vol{color:#4a5568 !important}.kw-rel{background:rgba(197,48,48,.08) !important;color:#c53030 !important}
-  .gap-card{border-color:#dee2e8 !important;border-left-color:#c53030 !important;background:#fefefe !important;break-inside:avoid}
-  .gap-num{color:#c53030 !important}.gap-title{color:#0D1B2A !important;font-size:11pt !important}.gap-body{color:#4a5568 !important;font-size:9.5pt !important}.gap-risk{background:rgba(197,48,48,.06) !important;color:#c53030 !important;font-size:9pt !important}
-  .week-block{background:#f8f9fb !important;border-color:#dee2e8 !important;break-inside:avoid;padding:16px !important}
-  .week-b{background:#0D1B2A !important;color:#C9922A !important;border-color:transparent !important;font-size:8pt !important}
-  .week-t{color:#0D1B2A !important;font-size:11pt !important}
-  .action-li{color:#4a5568 !important;border-bottom-color:#dee2e8 !important;font-size:9pt !important}
-  .action-li .arr{color:#b07d1f !important}
-  .deliv{background:rgba(39,103,73,.05) !important;border-color:rgba(39,103,73,.2) !important;font-size:9pt !important}
-  .deliv strong{color:#276749 !important}
-  .svc-tbl th{background:#0D1B2A !important;color:#C9922A !important;font-size:8pt !important;padding:9px 12px !important}
-  .svc-tbl td{color:#4a5568 !important;border-bottom-color:#dee2e8 !important;font-size:9.5pt !important;padding:9px 12px !important}
-  .svc-tbl td:first-child{color:#0D1B2A !important}
-  .svc-roi{color:#276749 !important}
-  .phase-block{background:#f8f9fb !important;border-color:#dee2e8 !important;break-inside:avoid;padding:14px !important}
-  .phase-t{color:#0D1B2A !important;border-bottom-color:#dee2e8 !important;font-size:10pt !important}
-  .r-row{border-bottom-color:#dee2e8 !important;font-size:9pt !important}
-  .r-time{color:#b07d1f !important}.r-out{color:#4a5568 !important}
-  .forecast-box{background:rgba(39,103,73,.05) !important;border-color:rgba(39,103,73,.2) !important;color:#4a5568 !important;font-size:9.5pt !important}
-  .forecast-box strong{color:#276749 !important}
-  .asset-row{border-bottom-color:#dee2e8 !important;color:#4a5568 !important;font-size:9.5pt !important}
-  .at-p{background:rgba(39,103,73,.08) !important;color:#276749 !important}
-  .at-x{background:rgba(197,48,48,.08) !important;color:#c53030 !important}
-  .at-m{background:rgba(192,86,33,.08) !important;color:#c05621 !important}
-  .verdict-box{background:#f8f9fb !important;border-color:#dee2e8 !important;color:#4a5568 !important}
-  .verdict-box strong{color:#0D1B2A !important}
-  .bench-tbl th{background:#0D1B2A !important;color:#C9922A !important;font-size:8pt !important}
-  .bench-tbl td{border-bottom-color:#dee2e8 !important;font-size:9.5pt !important;color:#4a5568 !important}
-  .bench-tbl td:first-child{color:#0D1B2A !important;font-weight:600}
+
+  /* ── Page setup ── */
+  @page {
+    size: A4 portrait;
+    margin: 16mm 18mm 20mm 18mm;
+  }
+  @page :first { margin-top: 12mm; }
+
+  html, body {
+    background: #fff !important;
+    color: #111827 !important;
+    font-size: 9.5pt;
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Hide non-report elements ── */
+  body::before,
+  nav,
+  .action-bar,
+  .input-screen,
+  .loading-screen,
+  .err-box { display: none !important; }
+
+  #report-area { display: block !important; }
+  .report-wrap { max-width: 100%; padding: 0; margin: 0; }
+
+  /* ── Page break helpers ── */
+  .pb-before { break-before: page; }
+  .pb-avoid  { break-inside: avoid; }
+
+  /* ── Masthead ── */
+  .r-masthead {
+    background: #fff !important;
+    border: none !important;
+    border-bottom: 2.5pt solid #111827 !important;
+    border-top: none !important;
+    border-radius: 0 !important;
+    padding: 0 0 14pt !important;
+    margin-bottom: 18pt !important;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    break-after: avoid;
+  }
+  .masthead-logo {
+    width: 36pt;
+    height: 36pt;
+    background: #111827 !important;
+    border-radius: 5pt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 18pt;
+    font-weight: 700;
+    color: #C9922A !important;
+    flex-shrink: 0;
+    margin-left: 16pt;
+  }
+  .r-eyebrow { color: #8B5E1A !important; font-size: 7pt !important; letter-spacing: .15em; }
+  .r-h1      { font-size: 17pt !important; color: #111827 !important; margin-bottom: 8pt !important; }
+  .r-h1 span { color: #8B5E1A !important; }
+  .r-meta    { font-size: 7.5pt !important; color: #4B5563 !important; gap: 14pt !important; }
+  .r-meta strong { color: #111827 !important; }
+  .r-badge   {
+    background: #fff !important;
+    border: 1.5pt solid #B91C1C !important;
+    color: #B91C1C !important;
+    font-size: 6.5pt !important;
+    padding: 3pt 10pt;
+    border-radius: 3pt;
+    margin-top: 8pt;
+  }
+
+  /* ── Score hero ── */
+  .score-hero {
+    background: #f9fafb !important;
+    border: 1pt solid #d1d5db !important;
+    border-radius: 6pt !important;
+    padding: 16pt !important;
+    margin-bottom: 14pt !important;
+    break-inside: avoid;
+  }
+  .score-ring { border-color: #111827 !important; width: 72pt !important; height: 72pt !important; border-width: 3.5pt !important; }
+  .score-big  { color: #111827 !important; font-size: 22pt !important; }
+  .score-denom{ color: #6B7280 !important; }
+  .score-info h2 { font-size: 12pt !important; color: #111827 !important; }
+  .score-info p  { color: #374151 !important; font-size: 8.5pt !important; }
+  .stage-tag  { background: rgba(139,94,26,.08) !important; color: #6B4610 !important; border-color: rgba(139,94,26,.25) !important; font-size: 7pt !important; }
+
+  /* ── Metric boxes ── */
+  .metrics-row { gap: 8pt !important; margin-bottom: 14pt !important; break-inside: avoid; }
+  .m-box { background: #f9fafb !important; border: 1pt solid #d1d5db !important; border-radius: 5pt !important; padding: 10pt !important; }
+  .m-lbl { color: #6B7280 !important; font-size: 6.5pt !important; }
+  .m-val { font-size: 13pt !important; color: #111827 !important; }
+  .m-sub { color: #6B7280 !important; font-size: 7pt !important; }
+
+  /* ── Section cards ── */
+  .s-card {
+    background: #fff !important;
+    border: 1pt solid #d1d5db !important;
+    border-radius: 6pt !important;
+    margin-bottom: 14pt !important;
+    break-inside: avoid;
+    overflow: visible !important;
+  }
+  .s-head {
+    background: #111827 !important;
+    padding: 8pt 12pt !important;
+    break-after: avoid;
+  }
+  .s-title { color: #fff !important; font-size: 7.5pt !important; letter-spacing: .08em; }
+  .s-score { background: rgba(255,255,255,.15) !important; color: #E8B84B !important; border-color: rgba(255,255,255,.2) !important; font-size: 8pt !important; }
+  .s-body  { padding: 12pt !important; }
+
+  /* ── Two column strengths/gaps ── */
+  .two-col { gap: 10pt !important; }
+  .col-grn { background: rgba(22,101,52,.05) !important; border-color: rgba(22,101,52,.2) !important; padding: 10pt !important; border-radius: 4pt !important; }
+  .col-red { background: rgba(185,28,28,.05) !important; border-color: rgba(185,28,28,.2) !important; padding: 10pt !important; border-radius: 4pt !important; }
+  .col-head { font-size: 7pt !important; }
+  .col-item { font-size: 8pt !important; color: #374151 !important; border-bottom-color: rgba(0,0,0,.06) !important; }
+
+  /* ── Platform grid ── */
+  .plat { background: #f9fafb !important; border-color: #d1d5db !important; padding: 9pt !important; }
+  .plat-name  { color: #6B7280 !important; font-size: 6.5pt !important; }
+  .plat-count { color: #111827 !important; font-size: 13pt !important; }
+  .plat-issue { color: #6B7280 !important; font-size: 7pt !important; }
+  .tc { background: rgba(185,28,28,.08) !important; color: #B91C1C !important; }
+  .tg { background: rgba(146,64,14,.08) !important; color: #92400E !important; }
+  .to { background: rgba(22,101,52,.08) !important; color: #166534 !important; }
+  .tp { background: rgba(67,56,202,.08) !important; color: #4338CA !important; }
+
+  /* ── Bar rows ── */
+  .bar-row   { padding: 6pt 0 !important; border-bottom-color: #e5e7eb !important; }
+  .bar-lbl   { color: #111827 !important; font-size: 8.5pt !important; width: 160pt !important; }
+  .bar-track { background: #e5e7eb !important; height: 7pt !important; }
+  .bar-fill  { print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important; }
+  .bar-num   { color: #111827 !important; font-size: 8.5pt !important; }
+  .bar-comment { font-size: 6.5pt !important; color: #9CA3AF !important; }
+
+  /* ── Tables ── */
+  .data-tbl th { background: #111827 !important; color: #E8B84B !important; font-size: 7pt !important; padding: 7pt 10pt !important; }
+  .data-tbl td { border-bottom-color: #e5e7eb !important; font-size: 8.5pt !important; padding: 7pt 10pt !important; color: #374151 !important; }
+  .data-tbl td:first-child { color: #111827 !important; }
+
+  /* ── Keyword rows ── */
+  .kw-row  { border-bottom-color: #e5e7eb !important; font-size: 8.5pt !important; }
+  .kw-name { color: #111827 !important; }
+  .kw-vol, .kw-rank { color: #6B7280 !important; }
+  .rel-high { background: rgba(185,28,28,.08) !important; color: #B91C1C !important; }
+  .rel-med  { background: rgba(146,64,14,.08) !important; color: #92400E !important; }
+  .rel-low  { background: rgba(107,114,128,.08) !important; color: #6B7280 !important; }
+
+  /* ── Gap cards ── */
+  .gap-card  { border-color: #e5e7eb !important; border-left-color: #B91C1C !important; padding: 10pt !important; margin-bottom: 8pt !important; break-inside: avoid; }
+  .gap-num   { color: #B91C1C !important; font-size: 7pt !important; }
+  .gap-title { color: #111827 !important; font-size: 10pt !important; }
+  .gap-body  { color: #374151 !important; font-size: 8pt !important; }
+  .gap-risk  { background: rgba(185,28,28,.05) !important; color: #B91C1C !important; font-size: 7.5pt !important; }
+
+  /* ── Roadmap ── */
+  .phase-block { background: #f9fafb !important; border-color: #d1d5db !important; padding: 12pt !important; break-inside: avoid; }
+  .phase-t     { color: #111827 !important; border-bottom-color: #d1d5db !important; font-size: 9.5pt !important; }
+  .phase-priority { color: #6B7280 !important; }
+  .r-row       { border-bottom-color: #e5e7eb !important; font-size: 8pt !important; }
+  .r-time      { color: #8B5E1A !important; font-size: 7.5pt !important; }
+  .r-action    { color: #111827 !important; }
+  .r-out       { color: #6B7280 !important; font-size: 7.5pt !important; }
+  .forecast-box { background: rgba(22,101,52,.05) !important; border-color: rgba(22,101,52,.2) !important; font-size: 8.5pt !important; color: #374151 !important; }
+  .forecast-box strong { color: #166534 !important; }
+
+  /* ── Content assets ── */
+  .asset-row   { border-bottom-color: #e5e7eb !important; font-size: 8.5pt !important; }
+  .asset-name  { color: #111827 !important; }
+  .asset-detail{ color: #6B7280 !important; font-size: 7.5pt !important; }
+  .at-p { background: rgba(22,101,52,.08) !important; color: #166534 !important; }
+  .at-x { background: rgba(185,28,28,.08) !important; color: #B91C1C !important; }
+  .at-m { background: rgba(146,64,14,.08) !important; color: #92400E !important; }
+
+  /* ── SOV / Paid ── */
+  .sov-row  { border-bottom-color: #e5e7eb !important; font-size: 8.5pt !important; }
+  .sov-cat  { color: #111827 !important; }
+  .paid-row { border-bottom-color: #e5e7eb !important; font-size: 8.5pt !important; }
+  .paid-ch  { color: #111827 !important; }
+  .paid-status { color: #6B7280 !important; }
+  .paid-opp    { color: #8B5E1A !important; }
+
+  /* ── Verdict / bullet list ── */
+  .verdict-box { background: rgba(139,94,26,.05) !important; border-color: rgba(139,94,26,.2) !important; color: #374151 !important; font-size: 8.5pt !important; }
+  .verdict-box strong { color: #8B5E1A !important; }
+  .bullet-list li { color: #374151 !important; border-bottom-color: #e5e7eb !important; font-size: 8.5pt !important; }
+  .bullet-list li .arr { color: #8B5E1A !important; }
+
+  /* ── Colour utilities ── */
+  .val-red { color: #B91C1C !important; }
+  .val-org { color: #92400E !important; }
+  .val-gld { color: #8B5E1A !important; }
+  .val-grn { color: #166534 !important; }
+
+  /* ── Footer strip ── */
+  .report-footer { color: #9CA3AF !important; font-size: 7pt !important; }
+  .report-footer strong { color: #8B5E1A !important; }
+
+  /* ── Force section breaks for long reports ── */
+  .s-card.pb-before { break-before: page; }
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="landing.html" class="nav-logo">
+  <a href="/" class="nav-logo">
     <div class="nav-mark">C</div>
     <div>
       <div class="nav-name">CEREBRÉ MEDIA AFRICA</div>
       <div class="nav-sub">Intelligence Engine</div>
     </div>
   </a>
-  <a href="landing.html" class="nav-back">← Home</a>
+  <a href="/" class="nav-back">← Home</a>
 </nav>
 
-<!-- EMAIL GATE MODAL -->
-<div class="modal-overlay" id="email-modal">
-  <div class="modal-box">
-    <div class="modal-icon">📊</div>
-    <h2>Get Your <em>Free</em> Brand Score</h2>
-    <p>Enter your work email to receive your audit results and a summary report directly in your inbox.</p>
-    <input class="modal-input" type="email" id="gate-email" placeholder="yourname@company.com" />
-    <button class="modal-btn" onclick="confirmEmail()">Run My Free Audit →</button>
-    <p class="modal-note">No spam. Unsubscribe any time.</p>
-  </div>
-</div>
-
-<!-- INPUT SCREEN -->
+<!-- ═══ INPUT SCREEN ═══ -->
 <section class="input-screen" id="input-screen">
   <div class="glow-bg"></div>
-  <div id="trial-badge" class="trial-badge">✓ 2 free audits remaining on this device</div>
-  <div class="eyebrow"><span class="dot-live"></span>AI Brand Intelligence · Claude Sonnet 4</div>
-  <h1>Run Your <em>Free</em><br>Brand Health Audit</h1>
-  <p class="input-sub">Our AI analyses your brand's digital presence and benchmarks you against competitors. Ready in 30 seconds.</p>
+  <h1>Your <em>Complete</em><br>Digital Brand Audit</h1>
+  <p class="input-sub">A board-ready brand health report benchmarked against competitors — delivered to your inbox in under 60 seconds.</p>
+  <div class="value-strip">
+    <div class="vs-item"><span class="tick">✓</span> Social media benchmarks</div>
+    <div class="vs-item"><span class="tick">✓</span> SEO &amp; keyword gap analysis</div>
+    <div class="vs-item"><span class="tick">✓</span> 12-month roadmap</div>
+    <div class="vs-item"><span class="tick">✓</span> Competitor benchmarking</div>
+    <div class="vs-item"><span class="tick">✓</span> Printable PDF report</div>
+  </div>
   <div class="form-card">
     <div class="input-grid">
       <div class="field input-full">
         <label>Company Name *</label>
-        <input type="text" id="company-name" placeholder="e.g. Dangote Group, Access Bank, MTN Nigeria…"/>
+        <input type="text" id="company-name" placeholder="e.g. Access Bank, MTN Nigeria, Dangote Group…"/>
       </div>
       <div class="field input-full">
         <label>Company Website</label>
@@ -379,7 +507,7 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
       </div>
       <div class="field">
         <label>Industry</label>
-        <input type="text" id="industry" placeholder="FMCG, Finance, Telecom…"/>
+        <input type="text" id="industry" placeholder="Finance, FMCG, Telecom…"/>
       </div>
       <div class="field">
         <label>Primary Market</label>
@@ -387,328 +515,81 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
       </div>
       <div class="field input-full">
         <label>Main Competitors (comma-separated)</label>
-        <input type="text" id="competitors" placeholder="e.g. Flour Mills, Olam Group, Nestlé Nigeria"/>
+        <input type="text" id="competitors" placeholder="e.g. Zenith Bank, GTBank, UBA"/>
+      </div>
+      <div class="field input-full">
+        <label>Your Email *</label>
+        <input type="email" id="user-email" placeholder="yourname@company.com"/>
+      </div>
+    </div>
+    <div class="price-box">
+      <div class="price-left">
+        <div class="price-amount">₦15,000</div>
+        <div class="price-label">one-time · full report · instant delivery</div>
+      </div>
+      <div class="price-right">
+        Traditional brand audit: ₦2–5M · 6–8 weeks<br>
+        Cerebré: ₦15,000 · ready in 60 seconds
       </div>
     </div>
     <button class="btn-audit" id="audit-btn" onclick="startAudit()">
       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-      Generate My Free Digital Audit
+      Pay ₦15,000 &amp; Generate My Audit
     </button>
-    <p class="form-note">Free audit · ~30 seconds · No card required · Full report ₦15,000</p>
+    <p class="form-note">🔐 Secure payment via Paystack · Report emailed instantly · 100% satisfaction guarantee</p>
   </div>
   <div class="err-box" id="err-box"></div>
 </section>
 
-<!-- LOADING -->
+<!-- ═══ LOADING ═══ -->
 <section class="loading-screen" id="loading-screen">
   <div class="spinner-ring"></div>
   <div class="loading-h">Cerebré Intelligence at Work</div>
-  <div class="loading-sub" id="loading-sub">Analysing your digital presence…</div>
+  <div class="loading-sub" id="loading-sub">Payment confirmed ✓ — Generating your report…</div>
   <ul class="steps-list" id="steps-list">
     <li class="step-li" id="sl1"><span class="step-pip"></span>Identifying website and digital profiles…</li>
     <li class="step-li" id="sl2"><span class="step-pip"></span>Benchmarking social media presence…</li>
     <li class="step-li" id="sl3"><span class="step-pip"></span>Analysing SEO and keyword gaps…</li>
     <li class="step-li" id="sl4"><span class="step-pip"></span>Scoring against competitors…</li>
     <li class="step-li" id="sl5"><span class="step-pip"></span>Calculating Digital Maturity Score…</li>
-    <li class="step-li" id="sl6"><span class="step-pip"></span>Generating your audit report…</li>
+    <li class="step-li" id="sl6"><span class="step-pip"></span>Compiling your full audit report…</li>
   </ul>
 </section>
 
-<!-- REPORT AREA -->
+<!-- ═══ REPORT ═══ -->
 <div id="report-area"></div>
 
 <script>
 /* ── CONFIG ── */
 const CFG = {
-  SEND_EMAIL_URL:   '/api/send-report',
-  PAYSTACK_KEY:     'pk_test_904b6d2fe98014f2b715f6e3e55c0d28143c3069',
-  PRICE_KOBO:       1500000,
-  BUSINESS_EMAIL:   'triplekalu2@gmail.com',
-  FREE_AUDIT_LIMIT: 2,
-  RESET_DAYS:       7,
+  SEND_EMAIL_URL: '/api/send-report',
+  PAYSTACK_KEY:   'pk_test_904b6d2fe98014f2b715f6e3e55c0d28143c3069',
+  PRICE_KOBO:     1500000,
+  BUSINESS_EMAIL: 'triplekalu2@gmail.com',
 };
 
-/* ── FINGERPRINT & SESSION ── */
-function getFingerprint() {
-  try {
-    const cv = document.createElement('canvas');
-    const ctx = cv.getContext('2d');
-    ctx.textBaseline = 'top';
-    ctx.font = '14px Arial';
-    ctx.fillStyle = '#f60';
-    ctx.fillRect(125, 1, 62, 20);
-    ctx.fillStyle = '#069';
-    ctx.fillText('Cerebré🌍', 2, 15);
-    ctx.fillStyle = 'rgba(102,204,0,0.7)';
-    ctx.fillText('Cerebré🌍', 4, 17);
-    let hash = 0;
-    const data = cv.toDataURL();
-    for (let i = 0; i < data.length; i++) { hash = ((hash << 5) - hash) + data.charCodeAt(i); hash |= 0; }
-    return Math.abs(hash).toString(36);
-  } catch { return 'default'; }
-}
-
-function getSession() {
-  const raw = localStorage.getItem('cbr_session');
-  if (!raw) return null;
-  try { return JSON.parse(raw); } catch { return null; }
-}
-
-function saveSession(data) { localStorage.setItem('cbr_session', JSON.stringify(data)); }
-
-function checkAndUpdateLimit() {
-  const fp = getFingerprint();
-  let session = getSession();
-  const now = Date.now();
-  if (!session || session.fp !== fp) session = { fp, count: 0, email: null, lastReset: now };
-  if ((now - session.lastReset) > CFG.RESET_DAYS * 86400000) { session.count = 0; session.lastReset = now; }
-  saveSession(session);
-  return session;
-}
-
-function incrementUsage() {
-  const session = getSession() || { fp: getFingerprint(), count: 0, lastReset: Date.now() };
-  session.count += 1;
-  saveSession(session);
-}
-
-function getRemainingTrials() {
-  const session = checkAndUpdateLimit();
-  return Math.max(0, CFG.FREE_AUDIT_LIMIT - session.count);
-}
-
-function refreshTrialBadge() {
-  const remaining = getRemainingTrials();
-  const badge = document.getElementById('trial-badge');
-  if (remaining >= 2) {
-    badge.textContent = `✓ ${remaining} free audit${remaining === 1 ? '' : 's'} remaining on this device`;
-    badge.className = 'trial-badge';
-  } else if (remaining === 1) {
-    badge.textContent = `⚠ 1 free audit remaining — after this, the full report is ₦15,000`;
-    badge.className = 'trial-badge warn';
-  } else {
-    badge.textContent = `Your free audits are used up on this device`;
-    badge.className = 'trial-badge empty';
-    showLimitWall();
-  }
-}
-
-function showLimitWall() {
-  const btn = document.getElementById('audit-btn');
-  if (btn) btn.style.display = 'none';
-  if (document.querySelector('.limit-wall')) return; // don't add twice
-  const wall = document.createElement('div');
-  wall.className = 'limit-wall';
-  wall.style.marginTop = '20px';
-  wall.innerHTML = `
-    <h3>🔒 Free Audits Used Up</h3>
-    <p>You've used your ${CFG.FREE_AUDIT_LIMIT} free audits on this device. Upgrade to unlock the full report — including your 30-day action plan, 12-month roadmap, and Cerebré services proposal.</p>
-    <button class="btn-upgrade" onclick="goToPay()">Get Full Report — ₦15,000 →</button>
-    <p style="font-size:12px;color:rgba(184,192,204,.4);margin-top:12px">Or contact us at ${CFG.BUSINESS_EMAIL} for agency plans</p>
-  `;
-  document.querySelector('.form-card').appendChild(wall);
-}
-
-/* ── EMAIL GATE ── */
-let userEmail = '';
-let pendingAudit = false;
-
-function startAudit() {
-  const company = document.getElementById('company-name').value.trim();
-  if (!company) { showErr('Please enter a company name.'); return; }
-  if (getRemainingTrials() <= 0) { showLimitWall(); return; }
-  const session = getSession();
-  if (!session || !session.email) {
-    pendingAudit = true;
-    document.getElementById('email-modal').classList.add('active');
-    setTimeout(() => document.getElementById('gate-email').focus(), 100);
-    return;
-  }
-  userEmail = session.email;
-  runTeaser();
-}
-
-function confirmEmail() {
-  const email = document.getElementById('gate-email').value.trim();
-  if (!email || !email.includes('@') || !email.includes('.')) { alert('Please enter a valid email address.'); return; }
-  userEmail = email;
-  const session = getSession() || { fp: getFingerprint(), count: 0, lastReset: Date.now() };
-  session.email = email;
-  saveSession(session);
-  document.getElementById('email-modal').classList.remove('active');
-  if (pendingAudit) { pendingAudit = false; runTeaser(); }
-}
-
-/* ── API CALL (TEASER) ── */
-async function callTeaserAPI() {
-  const body = {
-    type:        'teaser',
-    company:     currentCompany,
-    website:     document.getElementById('company-website')?.value?.trim() || '',
-    industry:    document.getElementById('industry')?.value?.trim() || '',
-    market:      document.getElementById('market')?.value?.trim() || '',
-    competitors: document.getElementById('competitors')?.value?.trim() || '',
-    email:       userEmail,
-  };
-
-  console.log('[teaser] Requesting audit for:', currentCompany);
-
-  let res;
-  try {
-    res = await fetch('/api/generate', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(body),
-    });
-  } catch (networkErr) {
-    throw new Error('Network error — could not reach the server. Check your internet connection.');
-  }
-
-  const raw = await res.text();
-  console.log('[teaser] Status:', res.status, '| Preview:', raw.slice(0, 150));
-
-  if (!res.ok) {
-    let errMsg = `Server error ${res.status}`;
-    try { errMsg = JSON.parse(raw).error?.message || errMsg; } catch (_) {}
-    if (res.status === 429) throw new Error('rate_limit');
-    if (res.status === 529 || raw.includes('overloaded')) throw new Error('overloaded');
-    throw new Error(errMsg);
-  }
-
-  try {
-    return JSON.parse(raw);
-  } catch (e) {
-    console.error('[teaser] JSON parse failed:', e.message, '| Raw:', raw.slice(0, 300));
-    throw new Error('AI returned invalid data. Please try again.');
-  }
-}
-
-/* ── GENERATE TEASER ── */
 let currentCompany = '';
-let teaserData = null;
-
-async function runTeaser() {
-  currentCompany = document.getElementById('company-name').value.trim();
-  hideErr();
-  showLoading('Analysing your digital presence…');
-  animateSteps(['sl1','sl2','sl3','sl4','sl5','sl6'], 3000);
-
-  try {
-    teaserData = await callTeaserAPI();
-    incrementUsage();
-    refreshTrialBadge();
-    sendFreeEmail(teaserData).catch(e => console.warn('Email send failed (non-critical):', e));
-    renderTeaser(teaserData);
-  } catch(e) {
-    hideLoading();
-    if (e.message === 'rate_limit') {
-      showErr('Too many requests. Please wait a few minutes and try again.');
-    } else if (e.message === 'overloaded') {
-      showErr('AI is busy right now. Wait 30 seconds and try again.');
-    } else {
-      showErr(cleanErr(e.message));
-    }
-  }
-}
-
-/* ── EMAIL SENDING ── */
-async function sendFreeEmail(data) {
-  if (!userEmail || !CFG.SEND_EMAIL_URL) return;
-  await fetch(CFG.SEND_EMAIL_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ type: 'free', email: userEmail, data })
-  });
-}
-
-async function sendFullEmail(data, ref) {
-  if (!userEmail || !CFG.SEND_EMAIL_URL) return;
-  await fetch(CFG.SEND_EMAIL_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ type: 'full', email: userEmail, data, reference: ref })
-  });
-}
-
-/* ── PAYMENT ── */
-function initiatePayment() {
-  if (!userEmail) {
-    const e = prompt('Enter your email to receive your full report:');
-    if (!e || !e.includes('@')) { alert('Valid email required.'); return; }
-    userEmail = e;
-    const s = getSession() || { fp: getFingerprint(), count: 0, lastReset: Date.now() };
-    s.email = e; saveSession(s);
-  }
-  const handler = PaystackPop.setup({
-    key:      CFG.PAYSTACK_KEY,
-    email:    userEmail,
-    amount:   CFG.PRICE_KOBO,
-    currency: 'NGN',
-    ref:      'CBR_' + Date.now() + '_' + Math.floor(Math.random()*999999),
-    metadata: {
-      company: currentCompany,
-      custom_fields: [{ display_name:'Company', variable_name:'company', value: currentCompany }]
-    },
-    callback: r => generateFullReport(r.reference),
-    onClose:  () => {}
-  });
-  handler.openIframe();
-}
-
-function goToPay() { initiatePayment(); }
-
-/* ── GENERATE FULL REPORT ── */
-async function generateFullReport(ref) {
-  if (!currentCompany) currentCompany = document.getElementById('company-name').value.trim();
-  if (!currentCompany) { showErr('Please enter a company name before paying.'); return; }
-
-  document.getElementById('report-area').innerHTML = '';
-  showLoading('Payment confirmed ✓ — Generating your full report…');
-  document.getElementById('loading-sub').textContent = 'Building your complete audit. This takes about 30–60 seconds.';
-
-  try {
-    const res = await fetch('/api/generate', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        type:        'full',
-        company:     currentCompany,
-        website:     document.getElementById('company-website').value.trim(),
-        industry:    document.getElementById('industry').value.trim(),
-        market:      document.getElementById('market').value.trim(),
-        competitors: document.getElementById('competitors').value.trim(),
-        reference:   ref,
-        email:       userEmail,
-      }),
-    });
-
-    const payload = await res.json();
-    if (!res.ok) throw new Error(payload?.error?.message || `Server error ${res.status}`);
-
-    let jt = payload.report || '';
-    jt = jt.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-    const fb = jt.indexOf('{'), lb = jt.lastIndexOf('}');
-    if (fb !== -1 && lb !== -1) jt = jt.slice(fb, lb + 1);
-    const data = JSON.parse(jt);
-
-    renderFull(data);
-    sendFullEmail(data, ref).catch(e => console.warn('Full email failed:', e));
-  } catch(e) {
-    hideLoading();
-    showErr(`Full report failed: ${cleanErr(e.message)}. Please email ${CFG.BUSINESS_EMAIL} with your payment ref: ${ref}`);
-    document.getElementById('input-screen').style.display = 'flex';
-  }
-}
+let userEmail      = '';
 
 /* ── HELPERS ── */
-function sc(s) { return s >= 7 ? '#1DB954' : s >= 4 ? '#FF8C00' : '#E03E3E'; }
-function stCls(s) { return ({critical:'tc',gap:'tg',ok:'to',opportunity:'tp'})[s] || 'tg'; }
+function sc(s)    { return s >= 7 ? '#1DB954' : s >= 4 ? '#FF8C00' : '#E03E3E'; }
+function stCls(s) { return ({critical:'tc', gap:'tg', ok:'to', opportunity:'tp'})[s] || 'tg'; }
+function fmt(n)   { return (n||0).toLocaleString(); }
+function safe(v, fallback='N/A') { return v || fallback; }
+
+function relCls(r) {
+  if (!r) return 'rel-low';
+  const l = r.toLowerCase();
+  if (l === 'high')   return 'rel-high';
+  if (l === 'medium') return 'rel-med';
+  return 'rel-low';
+}
 
 function animateSteps(ids, ms) {
   let i = 0;
   const iv = setInterval(() => {
-    if (i > 0) { const el = document.getElementById(ids[i-1]); if(el) el.className='step-li done'; }
-    if (i < ids.length) { const el = document.getElementById(ids[i]); if(el) el.className='step-li active'; i++; }
+    if (i > 0) { const el = document.getElementById(ids[i-1]); if (el) el.className='step-li done'; }
+    if (i < ids.length) { const el = document.getElementById(ids[i]); if (el) el.className='step-li active'; i++; }
     else clearInterval(iv);
   }, ms);
 }
@@ -719,12 +600,13 @@ function showLoading(msg) {
   document.getElementById('report-area').classList.remove('active');
   document.getElementById('report-area').innerHTML = '';
   if (msg) document.getElementById('loading-sub').textContent = msg;
+  animateSteps(['sl1','sl2','sl3','sl4','sl5','sl6'], 6000);
 }
 
 function hideLoading() {
   document.getElementById('loading-screen').classList.remove('active');
   ['sl1','sl2','sl3','sl4','sl5','sl6'].forEach(id => {
-    const el = document.getElementById(id); if(el) el.className = 'step-li';
+    const el = document.getElementById(id); if (el) el.className = 'step-li';
   });
 }
 
@@ -737,10 +619,11 @@ function showErr(m) {
 function hideErr() { document.getElementById('err-box').classList.remove('active'); }
 
 function cleanErr(m) {
-  if (m.includes('quota') || m.includes('billing')) return 'API quota exceeded — please try again later.';
-  if (m.includes('auth') || m.includes('401')) return 'Authentication error — check API key.';
-  if (m.includes('overloaded') || m.includes('529')) return 'AI is busy. Wait 30 seconds and retry.';
-  if (m.includes('rate_limit')) return 'Too many requests. Please wait a few minutes.';
+  if (!m) return 'Unknown error.';
+  if (m.includes('quota') || m.includes('billing'))  return 'API quota exceeded — please try again later.';
+  if (m.includes('auth') || m.includes('401'))        return 'Authentication error.';
+  if (m.includes('overloaded') || m.includes('529'))  return 'AI is busy. Wait 30 seconds and retry.';
+  if (m.includes('rate_limit'))                       return 'Too many requests. Please wait a few minutes.';
   return m;
 }
 
@@ -748,182 +631,201 @@ function newAudit() {
   document.getElementById('report-area').classList.remove('active');
   document.getElementById('report-area').innerHTML = '';
   document.getElementById('input-screen').style.display = 'flex';
-  hideErr(); refreshTrialBadge(); window.scrollTo(0,0);
+  hideErr(); window.scrollTo(0, 0);
 }
 
-/* ── RENDER TEASER ── */
-function renderTeaser(d) {
-  hideLoading();
-  document.getElementById('input-screen').style.display = 'none';
-  const area = document.getElementById('report-area');
-  area.classList.add('active');
+/* ── VALIDATE & LAUNCH PAYMENT ── */
+function startAudit() {
+  const company = document.getElementById('company-name').value.trim();
+  const email   = document.getElementById('user-email').value.trim();
+  if (!company) { showErr('Please enter a company name.'); return; }
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    showErr('Please enter a valid email address — your report will be sent there.'); return;
+  }
+  hideErr();
+  currentCompany = company;
+  userEmail      = email;
 
-  const S    = d.social_media_audit || {};
-  const P    = S.platforms || {};
-  const bench = S.competitor_benchmarks || [];
-  const seo  = d.seo_audit || {};
-  const kw   = seo.top_missed_keywords || [];
-  const gaps = d.top_3_gaps || [];
-  const E    = d.executive_summary || {};
-
-  area.innerHTML = `
-<div class="report-wrap">
-  <div class="action-bar">
-    <button class="btn-action" onclick="newAudit()">← New Audit</button>
-  </div>
-
-  <div class="r-masthead">
-    <div class="r-eyebrow">Cerebré Media Africa — Free Taster Audit</div>
-    <div class="r-h1">Digital Brand Health: <span>${d.company_name || currentCompany}</span></div>
-    <div class="r-meta">
-      <span><strong>Date:</strong> ${d.report_date || new Date().toLocaleDateString()}</span>
-      <span><strong>Type:</strong> Free Taster Report</span>
-      <span><strong>Delivered to:</strong> ${userEmail || '—'}</span>
-    </div>
-    <div class="r-badge">CONFIDENTIAL</div>
-  </div>
-
-  <div class="score-hero">
-    <div class="score-ring" style="border-color:${sc(d.overall_score||0)}">
-      <div class="score-big" style="color:${sc(d.overall_score||0)}">${(d.overall_score||0).toFixed(1)}</div>
-      <div class="score-denom">/ 10</div>
-    </div>
-    <div class="score-info">
-      <h2>Overall Digital Health Score</h2>
-      <p>${E.overview || ''}</p>
-      <div class="stage-tag">${d.maturity_stage || ''}</div>
-    </div>
-  </div>
-
-  <!-- Social Media -->
-  <div class="s-card">
-    <div class="s-head">
-      <div class="s-title">Social Media Benchmarks</div>
-      <div class="s-score" style="color:${sc(S.overall_score||0)}">${S.overall_score||0}/10</div>
-    </div>
-    <div class="s-body">
-      <div class="plat-grid">
-        ${Object.entries(P).map(([k,p]) => `
-          <div class="plat">
-            <div class="plat-name">${k.replace('_x','').replace('_',' ').toUpperCase()}</div>
-            <div class="plat-count" style="color:${sc(p.score||0)}">${(p.followers||p.subscribers||0).toLocaleString()}</div>
-            <div class="plat-tag ${stCls(p.status)}">${(p.status||'').toUpperCase()}</div>
-          </div>`).join('')}
-      </div>
-      ${bench.length ? `
-        <div style="margin-top:20px">
-          <table class="bench-tbl" style="width:100%;font-size:13px;border-collapse:collapse">
-            <tr>
-              <th style="text-align:left;padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px">Company</th>
-              <th style="padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px;text-align:center">LinkedIn</th>
-              <th style="padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px;text-align:center">Instagram</th>
-              <th style="padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px;text-align:center">Twitter/X</th>
-            </tr>
-            ${bench.map(c => `
-              <tr style="border-bottom:1px solid var(--border)">
-                <td style="padding:9px;font-weight:500">${c.name}</td>
-                <td style="padding:9px;text-align:center;color:var(--smoke)">${(c.linkedin||0).toLocaleString()}</td>
-                <td style="padding:9px;text-align:center;color:var(--smoke)">${(c.instagram||0).toLocaleString()}</td>
-                <td style="padding:9px;text-align:center;color:var(--smoke)">${(c.twitter||0).toLocaleString()}</td>
-              </tr>`).join('')}
-          </table>
-        </div>` : ''}
-    </div>
-  </div>
-
-  <!-- SEO -->
-  <div class="s-card">
-    <div class="s-head">
-      <div class="s-title">SEO & Search Visibility</div>
-      <div class="s-score" style="color:${sc(seo.score||0)}">${seo.score||0}/10</div>
-    </div>
-    <div class="s-body">
-      <div class="metrics-row" style="margin-bottom:18px">
-        <div class="m-box"><div class="m-lbl">Domain Authority</div><div class="m-val ${(seo.score||0)<4?'val-red':'val-gld'}">${seo.domain_authority_estimate||'N/A'}</div></div>
-        <div class="m-box"><div class="m-lbl">Monthly Traffic</div><div class="m-val val-red">${seo.monthly_organic_traffic_estimate||'N/A'}</div></div>
-        <div class="m-box"><div class="m-lbl">SEO Score</div><div class="m-val" style="color:${sc(seo.score||0)}">${seo.score||0}/10</div></div>
-      </div>
-      ${kw.length ? kw.map(k => `
-        <div class="kw-row">
-          <span class="kw-name">${k.keyword}</span>
-          <span class="kw-vol">${k.monthly_searches}/mo</span>
-          <span class="kw-rel">${k.revenue_relevance}</span>
-        </div>`).join('') : ''}
-    </div>
-  </div>
-
-  <!-- Top 3 Gaps -->
-  <div class="s-card">
-    <div class="s-head">
-      <div class="s-title">Top 3 Critical Gaps</div>
-      <div style="font-size:11px;color:var(--red);font-weight:600">3 of 6+ shown</div>
-    </div>
-    <div class="s-body">
-      ${gaps.map(g => `
-        <div class="gap-card">
-          <div class="gap-num">GAP ${g.rank}</div>
-          <div class="gap-title">${g.title}</div>
-          <div class="gap-body">${g.description}</div>
-          ${g.business_risk ? `<div class="gap-risk"><strong>Business Risk:</strong> ${g.business_risk}</div>` : ''}
-        </div>`).join('')}
-    </div>
-  </div>
-
-  <!-- PAYWALL -->
-  <div class="paywall-wrap">
-    <div class="pw-lock">🔒</div>
-    <h3 class="pw-h">More gaps + your complete <em>30-day growth plan</em></h3>
-    <p class="pw-sub">You've seen the problem. The full report shows you exactly how to fix it — with a week-by-week action plan, 12-month roadmap, and a board-ready Cerebré services proposal. Delivered instantly to ${userEmail || 'your inbox'}.</p>
-    <div class="pw-feats">
-      <div class="pw-feat"><span class="tick">✓</span>All strategic gaps with risk ratings</div>
-      <div class="pw-feat"><span class="tick">✓</span>30-day week-by-week action plan</div>
-      <div class="pw-feat"><span class="tick">✓</span>Full content marketing audit</div>
-      <div class="pw-feat"><span class="tick">✓</span>Paid media gap analysis</div>
-      <div class="pw-feat"><span class="tick">✓</span>Digital share of voice breakdown</div>
-      <div class="pw-feat"><span class="tick">✓</span>12-month transformation roadmap</div>
-      <div class="pw-feat"><span class="tick">✓</span>Cerebré services proposal with ROI</div>
-      <div class="pw-feat"><span class="tick">✓</span>Emailed + printable PDF report</div>
-    </div>
-    <div class="pw-price">
-      <div class="pw-amount">₦15,000</div>
-      <div class="pw-per">one-time · instant email delivery</div>
-      <div class="pw-compare">Traditional brand audit: ₦2–5M · 6–8 weeks</div>
-    </div>
-    <button class="btn-unlock" onclick="initiatePayment()">Unlock Full Report — Pay ₦15,000 →</button>
-    <p class="pw-guarantee">🔐 Secure payment via Paystack · Report emailed instantly · 100% satisfaction guarantee</p>
-  </div>
-</div>`;
+  const handler = PaystackPop.setup({
+    key:      CFG.PAYSTACK_KEY,
+    email:    userEmail,
+    amount:   CFG.PRICE_KOBO,
+    currency: 'NGN',
+    ref:      'CBR_' + Date.now() + '_' + Math.floor(Math.random() * 999999),
+    metadata: {
+      company: currentCompany,
+      custom_fields: [{ display_name:'Company', variable_name:'company', value:currentCompany }],
+    },
+    callback: r  => generateFullReport(r.reference),
+    onClose:  () => {},
+  });
+  handler.openIframe();
 }
 
-/* ── RENDER FULL REPORT ── */
+/* ── GENERATE ── */
+async function generateFullReport(ref) {
+  showLoading('Payment confirmed ✓ — Building your full report…');
+  try {
+    const res = await fetch('/api/generate', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        company:     currentCompany,
+        website:     document.getElementById('company-website').value.trim(),
+        industry:    document.getElementById('industry').value.trim(),
+        market:      document.getElementById('market').value.trim(),
+        competitors: document.getElementById('competitors').value.trim(),
+        reference:   ref,
+        email:       userEmail,
+      }),
+    });
+    const payload = await res.json();
+    if (!res.ok) throw new Error(payload?.error?.message || `Server error ${res.status}`);
+
+    let jt = payload.report || '';
+    jt = jt.replace(/```json\n?/g,'').replace(/```\n?/g,'').trim();
+    const fb = jt.indexOf('{'), lb = jt.lastIndexOf('}');
+    if (fb !== -1 && lb !== -1) jt = jt.slice(fb, lb + 1);
+    const data = JSON.parse(jt);
+
+    renderFull(data);
+    sendFullEmail(data, ref).catch(e => console.warn('Email non-critical:', e));
+  } catch(e) {
+    hideLoading();
+    showErr(`Report generation failed: ${cleanErr(e.message)}. Please email ${CFG.BUSINESS_EMAIL} with your payment reference: ${ref}`);
+  }
+}
+
+/* ── EMAIL ── */
+async function sendFullEmail(data, ref) {
+  if (!userEmail || !CFG.SEND_EMAIL_URL) return;
+  await fetch(CFG.SEND_EMAIL_URL, {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: userEmail, data, reference: ref }),
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RENDER — maps EXACTLY to the generate.js JSON schema
+══════════════════════════════════════════════════════════════ */
 function renderFull(d) {
   hideLoading();
   document.getElementById('input-screen').style.display = 'none';
   const area = document.getElementById('report-area');
   area.classList.add('active');
 
-  const M    = d.maturity_index || {};
-  const dims = M.dimensions || [];
-  const S    = d.social_media_audit || {};
-  const P    = S.platforms || {};
-  const bench = S.competitor_benchmarks || [];
-  const gaps = d.top_strategic_gaps || [];
-  const plan = d.thirty_day_action_plan || {};
-  const weeks = plan.weeks || [];
-  const svcs = d.cerebré_services_recommended || [];
-  const road = d.twelve_month_roadmap || {};
-  const seo  = d.seo_audit || {};
-  const kw   = seo.missed_keyword_clusters || [];
-  const cont = d.content_marketing || {};
-  const assets = cont.content_assets || [];
-  const paid = d.paid_media || {};
-  const paidCh = paid.channel_status || [];
-  const sov  = d.share_of_voice || {};
-  const E    = d.executive_summary || {};
-  const hl   = E.headline_numbers || {};
+  /* ── destructure with safe fallbacks ── */
+  const E    = d.executive_summary          || {};
+  const hl   = E.headline_numbers           || {};
+  const M    = d.maturity_index             || {};
+  const dims = M.dimensions                 || [];
+  const mStages = M.maturity_stages         || [];
+  const S    = d.social_media_audit         || {};
+  const P    = S.platforms                  || {};
+  const bench= S.competitor_benchmarks      || [];
+  const seo  = d.seo_audit                  || {};
+  const kw   = seo.missed_keyword_clusters  || [];
+  const uxA  = d.website_ux_audit           || {};
+  const cont = d.content_marketing          || {};
+  const assets= cont.content_assets         || [];
+  const story = cont.untapped_storytelling_assets || [];
+  const sovD = d.digital_share_of_voice     || {};
+  const sovT = sovD.sov_table               || [];
+  const auth = d.digital_authority_trust    || {};
+  const esg  = auth.esg_transparency        || {};
+  const paid = d.paid_media                 || {};
+  const paidCh= paid.channel_status         || [];
+  const gaps = d.top_strategic_gaps         || [];
+  const road = d.twelve_month_roadmap       || {};
 
+  /* ── helper: render a bullet list ── */
+  const bullets = (arr, colour='var(--gold)') =>
+    `<ul class="bullet-list">${(arr||[]).map(s=>`<li><span class="arr" style="color:${colour}">→</span>${s}</li>`).join('')}</ul>`;
+
+  /* ── helper: render platform card ── */
+  const platCard = (key, p) => {
+    const name = key.replace('twitter_x','Twitter/X').replace(/_/g,' ').toUpperCase();
+    const count = fmt(p.followers || p.subscribers || 0);
+    const issues = (p.issues||[]).slice(0,3);
+    return `<div class="plat">
+      <div class="plat-name">${name}</div>
+      <div class="plat-count" style="color:${sc(p.score||0)}">${count}</div>
+      <div class="plat-tag ${stCls(p.status)}">${(p.status||'').toUpperCase()}</div>
+      <div style="font-size:10px;color:var(--smoke);margin-top:4px">Score: ${p.score||0}/10 · ${p.posting_frequency||''}</div>
+      <div class="plat-issues">${issues.map(i=>`<div class="plat-issue">• ${i}</div>`).join('')}</div>
+    </div>`;
+  };
+
+  /* ── helper: competitor benchmark table ── */
+  // Schema: { platform, company, competitor1, competitor2, competitor3, c1_name, c2_name, c3_name }
+  const benchTable = bench.length ? `
+    <div class="mt16">
+      <div class="label-sm">Follower Comparison by Platform</div>
+      <table class="data-tbl">
+        <thead><tr>
+          <th>Platform</th>
+          <th>${d.company_name||'Company'}</th>
+          <th>${bench[0]?.c1_name||'Competitor 1'}</th>
+          <th>${bench[0]?.c2_name||'Competitor 2'}</th>
+          <th>${bench[0]?.c3_name||'Competitor 3'}</th>
+        </tr></thead>
+        <tbody>
+          ${bench.map(b=>`<tr>
+            <td>${b.platform}</td>
+            <td>${fmt(b.company)}</td>
+            <td>${fmt(b.competitor1)}</td>
+            <td>${fmt(b.competitor2)}</td>
+            <td>${fmt(b.competitor3)}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>` : '';
+
+  /* ── helper: UX competitor comparison table ── */
+  const uxComp = (uxA.competitor_comparison||[]).length ? `
+    <div class="mt16">
+      <div class="label-sm">Feature Comparison</div>
+      <table class="data-tbl">
+        <thead><tr>
+          <th>Feature</th>
+          <th>${d.company_name||'Company'}</th>
+          <th>${uxA.competitor2_name||'Competitor 2'}</th>
+          <th>${uxA.competitor3_name||'Competitor 3'}</th>
+        </tr></thead>
+        <tbody>
+          ${(uxA.competitor_comparison).map(r=>`<tr>
+            <td>${r.feature}</td>
+            <td>${r.company}</td>
+            <td>${r.competitor2}</td>
+            <td>${r.competitor3}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>` : '';
+
+  /* ── helper: roadmap phase ── */
+  const phaseBlock = (key) => {
+    const p = road[key] || {};
+    if (!p.title) return '';
+    return `<div class="phase-block">
+      <div class="phase-t">${p.title}<div class="phase-priority">${p.priority||''}</div></div>
+      ${(p.actions||[]).map(a=>`
+        <div class="r-row">
+          <span class="r-time">${a.timeline||''}</span>
+          <span class="r-action">${a.action||''}</span>
+          <span class="r-out">${a.outcome||''}</span>
+        </div>`).join('')}
+    </div>`;
+  };
+
+  /* ════════════════════════════════════════
+     BUILD THE HTML
+  ════════════════════════════════════════ */
   area.innerHTML = `
 <div class="report-wrap">
+
+  <!-- Action bar (screen only) -->
   <div class="action-bar">
     <button class="btn-action gold" onclick="window.print()">
       <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
@@ -936,17 +838,22 @@ function renderFull(d) {
     </div>
   </div>
 
+  <!-- ① MASTHEAD -->
   <div class="r-masthead">
-    <div class="r-eyebrow">Cerebré Media Africa — Strategic Digital Intelligence Division</div>
-    <div class="r-h1">Digital Brand Health Tracker: <span>${d.company_name || ''}</span></div>
-    <div class="r-meta">
-      <span><strong>Date:</strong> ${d.report_date || new Date().toLocaleDateString()}</span>
-      <span><strong>Prepared by:</strong> Cerebré Media Africa</span>
-      <span><strong>Delivered to:</strong> ${userEmail}</span>
+    <div>
+      <div class="r-eyebrow">Cerebré Media Africa — Strategic Digital Intelligence Division</div>
+      <div class="r-h1">Digital Brand Health Tracker: <span>${d.company_name||''}</span></div>
+      <div class="r-meta">
+        <span><strong>Date:</strong> ${d.report_date||new Date().toLocaleDateString()}</span>
+        <span><strong>Prepared by:</strong> ${d.prepared_by||'Cerebré Media Africa'}</span>
+        <span><strong>Delivered to:</strong> ${userEmail}</span>
+      </div>
+      <div class="r-badge">STRICTLY CONFIDENTIAL — EXECUTIVE USE ONLY</div>
     </div>
-    <div class="r-badge">STRICTLY CONFIDENTIAL — EXECUTIVE USE ONLY</div>
+    <div class="masthead-logo">C</div>
   </div>
 
+  <!-- ② SCORE HERO -->
   <div class="score-hero">
     <div class="score-ring" style="border-color:${sc(d.overall_score||0)}">
       <div class="score-big" style="color:${sc(d.overall_score||0)}">${(d.overall_score||0).toFixed(1)}</div>
@@ -954,32 +861,38 @@ function renderFull(d) {
     </div>
     <div class="score-info">
       <h2>Overall Digital Health Score</h2>
-      <p>${E.overview || ''}</p>
-      <div class="stage-tag">${M.stage || d.maturity_stage || ''}</div>
+      <p>${E.overview||''}</p>
+      <div class="stage-tag">${M.stage||d.maturity_stage||''}</div>
     </div>
   </div>
 
+  <!-- ③ HEADLINE METRICS -->
   <div class="metrics-row">
-    <div class="m-box"><div class="m-lbl">Revenue Visibility Loss</div><div class="m-val val-red">${hl.revenue_visibility_loss||'N/A'}</div><div class="m-sub">Estimated annual</div></div>
-    <div class="m-box"><div class="m-lbl">Organic Traffic Lost</div><div class="m-val val-red">${hl.organic_traffic_missed||'N/A'}</div><div class="m-sub">Monthly estimate</div></div>
-    <div class="m-box"><div class="m-lbl">Biggest Follower Gap</div><div class="m-val val-red">${hl.biggest_follower_gap||'N/A'}</div></div>
+    <div class="m-box"><div class="m-lbl">Revenue Visibility Loss</div><div class="m-val val-red">${safe(hl.revenue_visibility_loss)}</div><div class="m-sub">Estimated annual</div></div>
+    <div class="m-box"><div class="m-lbl">Organic Traffic Missed</div><div class="m-val val-red">${safe(hl.organic_traffic_missed)}</div><div class="m-sub">Per month estimate</div></div>
+    <div class="m-box"><div class="m-lbl">Biggest Follower Gap</div><div class="m-val val-org">${safe(hl.biggest_follower_gap)}</div><div class="m-sub">vs top competitor</div></div>
   </div>
 
+  <!-- ④ EXECUTIVE SUMMARY -->
   <div class="s-card">
-    <div class="s-head"><div class="s-title">Executive Summary — Strengths & Critical Gaps</div></div>
-    <div class="s-body" style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-      <div style="background:rgba(29,185,84,.05);border:1px solid rgba(29,185,84,.15);border-radius:8px;padding:18px">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:12px">✓ Strengths Identified</div>
-        ${(E.strengths||[]).map(s=>`<div style="font-size:13px;padding:5px 0;border-bottom:1px solid rgba(29,185,84,.1);color:var(--smoke);display:flex;gap:8px;line-height:1.5"><span style="color:var(--green);flex-shrink:0">•</span>${s}</div>`).join('')}
+    <div class="s-head"><div class="s-title">Executive Summary — Strengths &amp; Critical Gaps</div></div>
+    <div class="s-body">
+      <div class="two-col">
+        <div class="col-grn">
+          <div class="col-head" style="color:var(--green)">✓ Strengths Identified</div>
+          ${(E.strengths||[]).map(s=>`<div class="col-item"><span style="color:var(--green);flex-shrink:0">•</span>${s}</div>`).join('')}
+        </div>
+        <div class="col-red">
+          <div class="col-head" style="color:var(--red)">✗ Critical Gaps Found</div>
+          ${(E.critical_gaps||[]).map(g=>`<div class="col-item"><span style="color:var(--red);flex-shrink:0">•</span>${g}</div>`).join('')}
+        </div>
       </div>
-      <div style="background:rgba(224,62,62,.05);border:1px solid rgba(224,62,62,.15);border-radius:8px;padding:18px">
-        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:12px">✗ Critical Gaps Found</div>
-        ${(E.critical_gaps||[]).map(g=>`<div style="font-size:13px;padding:5px 0;border-bottom:1px solid rgba(224,62,62,.1);color:var(--smoke);display:flex;gap:8px;line-height:1.5"><span style="color:var(--red);flex-shrink:0">•</span>${g}</div>`).join('')}
-      </div>
+      <div class="verdict-box mt16"><strong>Maturity Verdict:</strong> ${E.maturity_verdict||''}</div>
     </div>
   </div>
 
-  <div class="s-card pb">
+  <!-- ⑤ DIGITAL MATURITY INDEX -->
+  <div class="s-card pb-before">
     <div class="s-head">
       <div class="s-title">Digital Maturity Index</div>
       <div class="s-score" style="color:${sc(M.overall_score||0)}">${(M.overall_score||d.overall_score||0).toFixed(1)}/10</div>
@@ -990,131 +903,235 @@ function renderFull(d) {
           <div class="bar-lbl">${dim.name}</div>
           <div class="bar-track"><div class="bar-fill" style="width:${(dim.score||0)*10}%;background:${sc(dim.score||0)}"></div></div>
           <div class="bar-num" style="color:${sc(dim.score||0)}">${dim.score||0}/10</div>
-        </div>`).join('')}
-      <div class="verdict-box" style="margin-top:16px;padding:14px;background:var(--gold-dim);border:1px solid rgba(201,146,42,.2);border-radius:8px;font-size:13px;color:var(--smoke)">
-        <strong style="color:var(--gold2)">Verdict:</strong> ${M.stage_description || ''}
-      </div>
-    </div>
-  </div>
-
-  <div class="s-card">
-    <div class="s-head">
-      <div class="s-title">Social Media Presence Audit</div>
-      <div class="s-score" style="color:${sc(S.overall_score||0)}">${S.overall_score||0}/10</div>
-    </div>
-    <div class="s-body">
-      <div class="plat-grid">
-        ${Object.entries(P).map(([k,p])=>`
-          <div class="plat">
-            <div class="plat-name">${k.replace('_x','').replace('_',' ').toUpperCase()}</div>
-            <div class="plat-count" style="color:${sc(p.score||0)}">${(p.followers||p.subscribers||0).toLocaleString()}</div>
-            <div class="plat-tag ${stCls(p.status)}">${(p.status||'').toUpperCase()}</div>
-            <div style="font-size:10px;color:var(--smoke);margin-top:4px">Score: ${p.score||0}/10</div>
-            ${p.top_issue ? `<div style="font-size:11px;color:rgba(184,192,204,.55);margin-top:4px;line-height:1.4">${p.top_issue}</div>` : ''}
-          </div>`).join('')}
-      </div>
-      ${bench.length ? `
-        <div style="margin-top:20px">
-          <table class="bench-tbl" style="width:100%;font-size:13px;border-collapse:collapse">
-            <tr>
-              <th style="text-align:left;padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px">Competitor</th>
-              <th style="padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px;text-align:center">LinkedIn</th>
-              <th style="padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px;text-align:center">Instagram</th>
-              <th style="padding:9px;background:var(--ink2);color:var(--gold2);font-size:11px;text-align:center">Twitter/X</th>
-            </tr>
-            ${bench.map(c=>`
-              <tr style="border-bottom:1px solid var(--border)">
-                <td style="padding:9px;font-weight:500">${c.name}</td>
-                <td style="padding:9px;text-align:center;color:var(--smoke)">${(c.linkedin||0).toLocaleString()}</td>
-                <td style="padding:9px;text-align:center;color:var(--smoke)">${(c.instagram||0).toLocaleString()}</td>
-                <td style="padding:9px;text-align:center;color:var(--smoke)">${(c.twitter||0).toLocaleString()}</td>
-              </tr>`).join('')}
+        </div>
+        ${dim.comment ? `<div class="bar-comment" style="padding-left:214px;margin-top:-4px;margin-bottom:4px">${dim.comment}</div>` : ''}`).join('')}
+      <div class="verdict-box mt16"><strong>Stage:</strong> ${M.stage||''} — ${M.stage_description||''}</div>
+      ${mStages.length ? `
+        <div class="mt16">
+          <div class="label-sm">Maturity Stage Definitions</div>
+          <table class="data-tbl">
+            <thead><tr><th>Stage</th><th>Label</th><th>Description</th></tr></thead>
+            <tbody>${mStages.map(st=>`<tr>
+              <td>${st.stage}</td>
+              <td><strong>${st.label}</strong></td>
+              <td>${st.description}</td>
+            </tr>`).join('')}</tbody>
           </table>
         </div>` : ''}
     </div>
   </div>
 
+  <!-- ⑥ WEBSITE UX AUDIT -->
   <div class="s-card">
     <div class="s-head">
-      <div class="s-title">SEO & Search Visibility</div>
+      <div class="s-title">Website &amp; UX Audit</div>
+      <div class="s-score" style="color:${sc(uxA.score||0)}">${uxA.score||0}/10</div>
+    </div>
+    <div class="s-body">
+      <div style="font-size:13px;color:var(--smoke);margin-bottom:14px;line-height:1.6">${uxA.overview||''}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px">
+        <div>
+          <div class="label-sm">Architecture Issues</div>
+          ${bullets(uxA.architecture_issues,'var(--red)')}
+        </div>
+        <div>
+          <div class="label-sm">Performance Issues</div>
+          ${bullets(uxA.performance_issues,'var(--orange)')}
+        </div>
+        <div>
+          <div class="label-sm">Conversion Issues</div>
+          ${bullets(uxA.conversion_issues,'var(--red)')}
+        </div>
+      </div>
+      ${uxComp}
+      <div class="verdict-box mt16"><strong>UX Verdict:</strong> ${uxA.ux_score_verdict||''}<br><strong>Opportunity:</strong> ${uxA.ux_opportunity||''}</div>
+    </div>
+  </div>
+
+  <!-- ⑦ SEO AUDIT -->
+  <div class="s-card">
+    <div class="s-head">
+      <div class="s-title">SEO &amp; Search Visibility</div>
       <div class="s-score" style="color:${sc(seo.score||0)}">${seo.score||0}/10</div>
     </div>
     <div class="s-body">
-      <div class="metrics-row" style="margin-bottom:18px">
-        <div class="m-box"><div class="m-lbl">Domain Authority</div><div class="m-val ${(seo.score||0)<4?'val-red':'val-gld'}">${seo.domain_authority_estimate||'N/A'}</div></div>
-        <div class="m-box"><div class="m-lbl">Monthly Traffic</div><div class="m-val val-red">${seo.monthly_organic_traffic_estimate||'N/A'}</div></div>
-        <div class="m-box"><div class="m-lbl">SEO Score</div><div class="m-val" style="color:${sc(seo.score||0)}">${seo.score||0}/10</div></div>
+      <div class="metrics-row" style="margin-bottom:16px">
+        <div class="m-box">
+          <div class="m-lbl">Domain Authority</div>
+          <div class="m-val ${(seo.score||0)<4?'val-red':'val-gld'}">${safe(seo.domain_authority_estimate)}</div>
+          <div class="m-sub">Benchmark: ${safe(seo.competitor_da_benchmark)}</div>
+        </div>
+        <div class="m-box">
+          <div class="m-lbl">Monthly Organic Traffic</div>
+          <div class="m-val val-red">${safe(seo.monthly_organic_traffic_estimate)}</div>
+          <div class="m-sub">Benchmark: ${safe(seo.competitor_traffic_benchmark)}</div>
+        </div>
+        <div class="m-box">
+          <div class="m-lbl">Indexed Pages / Keywords</div>
+          <div class="m-val val-gld">${safe(seo.indexed_pages_estimate)}</div>
+          <div class="m-sub">${safe(seo.ranking_keywords_estimate)} ranking keywords</div>
+        </div>
       </div>
       ${kw.length ? `
-        <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke);margin-bottom:12px">Missed Keyword Opportunities</div>
+        <div class="label-sm">Missed Keyword Opportunities</div>
         ${kw.map(k=>`
           <div class="kw-row">
             <span class="kw-name">${k.keyword}</span>
             <span class="kw-vol">${k.monthly_searches}/mo</span>
-            <span class="kw-rel">${k.revenue_relevance}</span>
+            <span class="kw-rank">Rank: ${k.current_ranking||'Unranked'}</span>
+            <span class="kw-rel ${relCls(k.revenue_relevance)}">${k.revenue_relevance}</span>
           </div>`).join('')}` : ''}
+      ${(seo.content_backlink_gaps||[]).length ? `
+        <div class="mt16">
+          <div class="label-sm">Content &amp; Backlink Gaps</div>
+          ${bullets(seo.content_backlink_gaps)}
+        </div>` : ''}
+      <div class="verdict-box mt16">
+        <strong>SEO Verdict:</strong> ${seo.seo_score_verdict||''}<br>
+        <strong>Missed Opportunity:</strong> ${seo.missed_opportunity_statement||''}
+      </div>
     </div>
   </div>
 
+  <!-- ⑧ SOCIAL MEDIA -->
+  <div class="s-card pb-before">
+    <div class="s-head">
+      <div class="s-title">Social Media Presence Audit</div>
+      <div class="s-score" style="color:${sc(S.overall_score||0)}">${S.overall_score||0}/10</div>
+    </div>
+    <div class="s-body">
+      <div style="font-size:13px;color:var(--smoke);margin-bottom:14px;line-height:1.6">${S.overview||''}</div>
+      <div class="plat-grid">
+        ${Object.entries(P).map(([k,p])=>platCard(k,p)).join('')}
+      </div>
+      ${benchTable}
+      <div class="verdict-box mt16"><strong>Social Verdict:</strong> ${S.social_maturity_verdict||''}</div>
+    </div>
+  </div>
+
+  <!-- ⑨ CONTENT MARKETING -->
   <div class="s-card">
     <div class="s-head">
       <div class="s-title">Content Marketing Maturity</div>
       <div class="s-score" style="color:${sc(cont.score||0)}">${cont.score||0}/10</div>
     </div>
     <div class="s-body">
+      <div style="font-size:13px;color:var(--smoke);margin-bottom:14px;line-height:1.6">${cont.overview||''}</div>
       ${assets.map(a=>`
         <div class="asset-row">
-          <span>${a.asset}</span>
+          <span class="asset-name">${a.asset}</span>
+          <span class="asset-detail">${a.detail||''}</span>
           <span class="a-tag ${a.status==='present'?'at-p':a.status==='partial'?'at-m':'at-x'}">${(a.status||'').toUpperCase()}</span>
         </div>`).join('')}
+      ${story.length ? `
+        <div class="mt16">
+          <div class="label-sm">Untapped Storytelling Assets</div>
+          ${bullets(story,'var(--gold)')}
+        </div>` : ''}
+      <div class="verdict-box mt16"><strong>Content Verdict:</strong> ${cont.content_maturity_verdict||''}</div>
     </div>
   </div>
 
+  <!-- ⑩ DIGITAL SHARE OF VOICE -->
+  <div class="s-card">
+    <div class="s-head"><div class="s-title">Digital Share of Voice</div></div>
+    <div class="s-body">
+      <div style="font-size:13px;color:var(--smoke);margin-bottom:14px;line-height:1.6">${sovD.overview||''}</div>
+      ${sovT.length ? `
+        <table class="data-tbl">
+          <thead><tr>
+            <th>Category</th>
+            <th>${d.company_name||'Company'}</th>
+            <th>${sovT[0]?.c1||'Competitor 1'}</th>
+            <th>${sovT[0]?.c2||'Competitor 2'}</th>
+            <th>${sovT[0]?.c3||'Competitor 3'}</th>
+          </tr></thead>
+          <tbody>${sovT.map(r=>`<tr>
+            <td>${r.category}</td>
+            <td class="val-red">${r.company_pct}</td>
+            <td>${r.competitor1_pct}</td>
+            <td>${r.competitor2_pct}</td>
+            <td>${r.competitor3_pct}</td>
+          </tr>`).join('')}</tbody>
+        </table>` : ''}
+      ${(sovD.brand_perception_risks||[]).length ? `
+        <div class="mt16">
+          <div class="label-sm">Brand Perception Risks</div>
+          ${bullets(sovD.brand_perception_risks,'var(--red)')}
+        </div>` : ''}
+      <div class="verdict-box mt16"><strong>SOV Verdict:</strong> ${sovD.sov_verdict||''}</div>
+    </div>
+  </div>
+
+  <!-- ⑪ DIGITAL AUTHORITY & TRUST -->
   <div class="s-card">
     <div class="s-head">
-      <div class="s-title">Digital Share of Voice</div>
-      <div class="s-score" style="color:${sc(sov.score||0)}">${sov.score||0}/10</div>
+      <div class="s-title">Digital Authority &amp; Trust</div>
+      <div class="s-score" style="color:${sc(auth.score||0)}">${auth.score||0}/10</div>
     </div>
     <div class="s-body">
-      <div class="metrics-row" style="margin-bottom:18px">
-        <div class="m-box"><div class="m-lbl">Your SOV</div><div class="m-val val-red">${sov.company_sov_percent||0}%</div><div class="m-sub">of industry conversation</div></div>
-        <div class="m-box"><div class="m-lbl">Search Visibility</div><div class="m-val" style="font-size:16px">${(sov.breakdown||{}).search||'N/A'}</div></div>
-        <div class="m-box"><div class="m-lbl">Social Engagement</div><div class="m-val" style="font-size:16px">${(sov.breakdown||{}).social||'N/A'}</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px">
+        <div>
+          <div class="label-sm">Backlink Profile</div>
+          <div style="font-size:13px;color:var(--smoke);line-height:1.6">${auth.backlink_profile||''}</div>
+          <div class="mt12 label-sm">Primary Backlink Sources</div>
+          ${bullets(auth.primary_backlink_sources)}
+        </div>
+        <div>
+          <div class="label-sm">Missing Authority Sources</div>
+          ${bullets(auth.missing_authority_sources,'var(--red)')}
+          <div class="mt12 label-sm">Platform Presence</div>
+          <div style="font-size:13px;color:var(--smoke)">Wikipedia: ${auth.wikipedia_status||'N/A'}</div>
+          <div style="font-size:13px;color:var(--smoke);margin-top:4px">${auth.business_intelligence_profiles||''}</div>
+        </div>
       </div>
-      ${(sov.brand_perception_risks||[]).map(r=>`
-        <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--smoke)">
-          <span style="color:var(--red);flex-shrink:0">→</span>${r}
-        </div>`).join('')}
+      ${esg.overview ? `
+        <div style="background:rgba(29,185,84,.04);border:1px solid rgba(29,185,84,.12);border-radius:8px;padding:14px;margin-top:14px">
+          <div class="label-sm" style="color:var(--green);margin-bottom:8px">ESG &amp; Transparency</div>
+          <div style="font-size:13px;color:var(--smoke);margin-bottom:10px">${esg.overview}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div><div class="label-sm">Present</div>${bullets(esg.esg_assets_present,'var(--green)')}</div>
+            <div><div class="label-sm">Gaps</div>${bullets(esg.esg_gaps,'var(--red)')}</div>
+          </div>
+        </div>` : ''}
+      <div class="verdict-box mt16"><strong>Authority Verdict:</strong> ${auth.authority_verdict||''}</div>
     </div>
   </div>
 
+  <!-- ⑫ PAID MEDIA -->
   <div class="s-card">
     <div class="s-head">
       <div class="s-title">Paid Media Visibility</div>
       <div class="s-score" style="color:${sc(paid.score||0)}">${paid.score||0}/10</div>
     </div>
     <div class="s-body">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-        <span style="font-size:14px;font-weight:500">Active Paid Campaigns:</span>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <span style="font-size:14px;font-weight:500">Active Campaigns:</span>
         <span style="padding:4px 14px;border-radius:10px;font-size:11px;font-weight:700;${paid.active_campaigns?'background:rgba(29,185,84,.12);color:var(--green)':'background:rgba(224,62,62,.12);color:var(--red)'}">
           ${paid.active_campaigns ? 'DETECTED' : 'NONE DETECTED'}
         </span>
       </div>
+      <div style="font-size:13px;color:var(--smoke);margin-bottom:14px;line-height:1.6">${paid.overview||''}</div>
       ${paidCh.map(c=>`
-        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;flex-wrap:wrap">
-          <span style="font-weight:500;min-width:180px">${c.channel}</span>
-          <span style="color:var(--smoke)">${c.status}</span>
-          <span style="color:var(--gold2);margin-left:auto">${c.opportunity}</span>
+        <div class="paid-row">
+          <span class="paid-ch">${c.channel}</span>
+          <span class="paid-status">${c.company_status}</span>
+          <span class="paid-opp">→ ${c.opportunity}</span>
         </div>`).join('')}
+      ${(paid.estimated_traffic_loss||[]).length ? `
+        <div class="mt16 label-sm">Estimated Traffic Loss</div>
+        ${bullets(paid.estimated_traffic_loss,'var(--red)')}` : ''}
+      <div class="verdict-box mt16"><strong>Paid Media Verdict:</strong> ${paid.paid_media_verdict||''}</div>
     </div>
   </div>
 
-  <div class="s-card pb">
+  <!-- ⑬ TOP STRATEGIC GAPS -->
+  <div class="s-card pb-before">
     <div class="s-head"><div class="s-title">Top Strategic Gaps — Ranked by Business Impact</div></div>
     <div class="s-body">
       ${gaps.map(g=>`
         <div class="gap-card">
-          <div class="gap-num">GAP ${g.rank}</div>
+          <div class="gap-num">GAP #${g.rank}</div>
           <div class="gap-title">${g.title}</div>
           <div class="gap-body">${g.description}</div>
           ${g.business_risk ? `<div class="gap-risk"><strong>Business Risk:</strong> ${g.business_risk}</div>` : ''}
@@ -1122,73 +1139,28 @@ function renderFull(d) {
     </div>
   </div>
 
-  <div class="s-card pb">
-    <div class="s-head" style="background:linear-gradient(135deg,#0d1b2a,rgba(201,146,42,.3));border-bottom-color:rgba(201,146,42,.25)">
-      <div class="s-title" style="color:var(--gold2)">30-Day Cerebré Media Africa Quick Win Programme</div>
-    </div>
-    <div class="s-body">
-      <div style="padding:14px;background:var(--gold-dim);border:1px solid rgba(201,146,42,.2);border-radius:8px;font-size:13px;color:var(--smoke);margin-bottom:18px">
-        <strong style="color:var(--gold2)">What this means:</strong> ${plan.intro || ''}
-      </div>
-      ${weeks.map(w=>`
-        <div class="week-block">
-          <div class="week-b">WEEK ${w.week}</div>
-          <div class="week-t">${w.theme}</div>
-          ${(w.actions||[]).map(a=>`<div class="action-li"><span class="arr">→</span>${a}</div>`).join('')}
-          <div class="deliv"><strong>Cerebré Deliverable:</strong> ${w.cerebré_deliverable}</div>
-          <div style="margin-top:10px;font-size:12px;color:var(--smoke)"><strong style="color:#fff">Expected Outcome:</strong> ${w.expected_outcome}</div>
-        </div>`).join('')}
-    </div>
-  </div>
-
-  <div class="s-card">
-    <div class="s-head"><div class="s-title">Cerebré Media Africa — Recommended Services</div></div>
-    <div class="s-body" style="padding:0">
-      <table class="svc-tbl">
-        <thead><tr><th>Service</th><th>Why It's Needed</th><th>Expected ROI</th><th>Timeline</th></tr></thead>
-        <tbody>
-          ${svcs.map(s=>`
-            <tr>
-              <td>${s.service}</td>
-              <td>${s.why_needed}</td>
-              <td class="svc-roi">${s.expected_roi}</td>
-              <td>${s.timeline}</td>
-            </tr>`).join('')}
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="s-card pb">
+  <!-- ⑭ 12-MONTH ROADMAP -->
+  <div class="s-card pb-before">
     <div class="s-head"><div class="s-title">12-Month Digital Transformation Roadmap</div></div>
     <div class="s-body">
-      ${['phase1','phase2','phase3'].map(ph => {
-        const p = road[ph] || {};
-        return `<div class="phase-block">
-          <div class="phase-t">${p.title || ph}</div>
-          ${(p.actions||[]).map(a=>`
-            <div class="r-row">
-              <span class="r-time">${a.timeline||''}</span>
-              <span style="flex:1">${a.action}</span>
-              <span class="r-out">${a.outcome||''}</span>
-            </div>`).join('')}
-        </div>`;
-      }).join('')}
-      <div class="forecast-box"><strong>12-Month Forecast:</strong> ${road.forecast || ''}</div>
+      ${phaseBlock('phase1')}
+      ${phaseBlock('phase2')}
+      ${phaseBlock('phase3')}
+      ${road.forecast ? `<div class="forecast-box"><strong>12-Month Forecast:</strong> ${road.forecast}</div>` : ''}
     </div>
   </div>
 
-  <div style="margin-top:32px;padding:24px;border-top:1px solid var(--border);font-size:12px;color:rgba(184,192,204,.4);line-height:1.8;text-align:center">
+  <!-- FOOTER -->
+  <div class="report-footer" style="margin-top:32px;padding:20px 0;border-top:1px solid var(--border);font-size:12px;color:rgba(184,192,204,.4);line-height:1.8;text-align:center">
     <strong style="color:var(--gold2)">Cerebré Media Africa</strong> · Strategic Digital Intelligence Division · cerebre.africa<br>
-    Generated by the Cerebré Intelligence Engine as of ${d.report_date || new Date().toLocaleDateString()}.<br>
-    Figures are directional estimates based on industry benchmarks. <strong style="color:var(--red)">STRICTLY CONFIDENTIAL.</strong>
+    Generated by the Cerebré Intelligence Engine · ${d.report_date||new Date().toLocaleDateString()}<br>
+    Figures are directional estimates based on industry benchmarks and AI analysis.
+    <strong style="color:var(--red)"> STRICTLY CONFIDENTIAL.</strong>
   </div>
+
 </div>`;
 }
-
-/* ── INIT ── */
-checkAndUpdateLimit();
-refreshTrialBadge();
 </script>
 </body>
 </html>
+`;
