@@ -3,9 +3,9 @@ import { Resend }  from 'resend';
 
 const router = Router();
 
-const FROM     = () => process.env.FROM_EMAIL     || 'Cerebré Intelligence Engine <reports@cerebre.africa>';
-const APP_URL  = () => process.env.APP_URL         || 'https://cerebre.africa/app';
-const BIZ_EMAIL= () => process.env.BUSINESS_EMAIL  || '';
+const FROM     = () => process.env.FROM_EMAIL     || 'Cerebré Intelligence Engine <onboarding@resend.dev>';
+const APP_URL  = () => process.env.APP_URL         || 'https://cerebre-bht.onrender.com';
+const BIZ_EMAIL= () => process.env.BUSINESS_EMAIL  || 'cerebreplus@gmail.com';
 
 // ── POST /api/send-report ──
 router.post('/', async (req, res) => {
