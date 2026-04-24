@@ -1,11 +1,27 @@
 import { Router } from 'express';
-import { Resend }  from 'resend';
+import nodemailer from 'nodemailer';
 
 const router = Router();
 
-const FROM     = () => process.env.FROM_EMAIL     || 'Cerebré Intelligence Engine <onboarding@resend.dev>';
-const APP_URL  = () => process.env.APP_URL         || 'https://cerebre-bht.onrender.com';
-const BIZ_EMAIL= () => process.env.BUSINESS_EMAIL  || 'cerebreplus@gmail.com';
+const FROM = () =>
+  process.env.FROM_EMAIL || 'Cerebré Intelligence Engine <no-reply@cerebre.com>';
+
+const APP_URL = () =>
+  process.env.APP_URL || 'https://cerebre-bht.onrender.com';
+
+const BIZ_EMAIL = () =>
+  process.env.BUSINESS_EMAIL || 'cerebreplus@gmail.com';
+
+// ── SMTP Transport ──
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT || 587),
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
 // ── POST /api/send-report ──
 router.post('/', async (req, res) => {
@@ -15,43 +31,48 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'email and data required' });
   }
 
-  // Fail gracefully if Resend not configured
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('[send-report] RESEND_API_KEY not set — skipping send');
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    console.warn('[send-report] SMTP not configured — skipping send');
     return res.status(200).json({ sent: false, reason: 'email not configured' });
   }
 
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    let mailOptions;
 
     if (type === 'free') {
-      await resend.emails.send({
-        from:    FROM(),
-        to:      email,
+      mailOptions = {
+        from: FROM(),
+        to: email,
         subject: `Your Free Brand Audit — ${data.company_name} scored ${(data.overall_score || 0).toFixed(1)}/10`,
-        html:    buildFreeHTML(data),
-      });
+        html: buildFreeHTML(data),
+      };
 
-    } else if (type === 'full') {
-      await resend.emails.send({
-        from:    FROM(),
-        to:      email,
+      await transporter.sendMail(mailOptions);
+    }
+
+    if (type === 'full') {
+      // Client email
+      await transporter.sendMail({
+        from: FROM(),
+        to: email,
         subject: `Your Full Digital Brand Report — ${data.company_name} [Ref: ${reference}]`,
-        html:    buildFullHTML(data, reference),
+        html: buildFullHTML(data, reference),
       });
 
-      // BCC business owner on every paid report
+      // Business notification email
       if (BIZ_EMAIL()) {
-        await resend.emails.send({
-          from:    FROM(),
-          to:      BIZ_EMAIL(),
+        await transporter.sendMail({
+          from: FROM(),
+          to: BIZ_EMAIL(),
           subject: `[PAID] New full report — ${data.company_name} | ${email} | Ref: ${reference}`,
-          html:    `<p style="font-family:Arial,sans-serif;font-size:14px">
-            <strong>Reference:</strong> ${reference}<br>
-            <strong>Client:</strong> ${email}<br>
-            <strong>Company:</strong> ${data.company_name}<br>
-            <strong>Score:</strong> ${(data.overall_score || 0).toFixed(1)}/10
-          </p>`,
+          html: `
+            <p style="font-family:Arial,sans-serif;font-size:14px">
+              <strong>Reference:</strong> ${reference}<br>
+              <strong>Client:</strong> ${email}<br>
+              <strong>Company:</strong> ${data.company_name}<br>
+              <strong>Score:</strong> ${(data.overall_score || 0).toFixed(1)}/10
+            </p>
+          `,
         });
       }
     }
@@ -60,8 +81,7 @@ router.post('/', async (req, res) => {
     return res.status(200).json({ sent: true });
 
   } catch (err) {
-    console.error('[send-report] Resend error:', err);
-    // Return 200 so the front-end non-critical path never surfaces errors
+    console.error('[send-report] SMTP error:', err);
     return res.status(200).json({ sent: false, error: err.message });
   }
 });
