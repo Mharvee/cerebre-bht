@@ -756,7 +756,8 @@ async function generateFullReport(ref) {
     if (fb !== -1 && lb !== -1) jt = jt.slice(fb, lb + 1);
     const data = JSON.parse(jt);
 
-    renderFull(data, ref);
+    renderFull(data);
+    sendReportPdfToEmail(data, ref);
   } catch(e) {
     hideLoading();
     showErr(`Report generation failed: ${cleanErr(e.message)}. Please email ${CFG.BUSINESS_EMAIL} with your payment reference: ${ref}`);
@@ -767,7 +768,7 @@ async function generateFullReport(ref) {
 async function sendReportPdfToEmail(reportData, ref) {
 
   try {
-    const res = await fetch('/api/send-report', {
+    const res = await fetch(CFG.SEND_EMAIL_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -793,7 +794,7 @@ async function sendReportPdfToEmail(reportData, ref) {
 
 
 
-function renderFull(d, ref) {
+function renderFull(d) {
   hideLoading();
   document.getElementById('input-screen').style.display = 'none';
   const area = document.getElementById('report-area');
@@ -1199,8 +1200,6 @@ function renderFull(d, ref) {
   </div>
 
 </div>`;
-
-sendReportPdfToEmail(d, ref);
 }
 </script>
 </body>
