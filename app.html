@@ -756,29 +756,44 @@ async function generateFullReport(ref) {
     if (fb !== -1 && lb !== -1) jt = jt.slice(fb, lb + 1);
     const data = JSON.parse(jt);
 
-    renderFull(data);
-    sendFullEmail(data, ref).catch(e => console.warn('Email non-critical:', e));
+    renderFull(data, ref);
   } catch(e) {
     hideLoading();
     showErr(`Report generation failed: ${cleanErr(e.message)}. Please email ${CFG.BUSINESS_EMAIL} with your payment reference: ${ref}`);
   }
 }
 
-async function sendFullEmail(data, ref) {
-  if (!userEmail || !CFG.SEND_EMAIL_URL) return;
-  await fetch(CFG.SEND_EMAIL_URL, {
-    method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      type: 'full',       
-      email: userEmail,
-      data,
-      reference: ref,
-    }),
-  });
+
+async function sendReportPdfToEmail(reportData, ref) {
+
+  try {
+    const res = await fetch('/api/send-report', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'full',
+        email: userEmail,
+        reportData,             // ← raw JSON, Puppeteer renders it server-side
+        company_name,
+        reference: ref,
+        filename: `${company_name}-digital-brand-report.pdf`,
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || 'Failed to send report email');
+    }
+
+    console.log('Report emailed successfully');
+  } catch (error) {
+    console.error('sendReportPdfToEmail error:', error);
+  }
 }
 
-function renderFull(d) {
+
+
+function renderFull(d, ref) {
   hideLoading();
   document.getElementById('input-screen').style.display = 'none';
   const area = document.getElementById('report-area');
@@ -1184,6 +1199,8 @@ function renderFull(d) {
   </div>
 
 </div>`;
+
+sendReportPdfToEmail(d, ref);
 }
 </script>
 </body>
