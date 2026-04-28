@@ -6,7 +6,12 @@ console.log('[generate] API key prefix:', process.env.ANTHROPIC_API_KEY?.slice(0
 
 
 const router  = Router();
-const client  = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY || '' });
+const client = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+  defaultHeaders: {
+    'anthropic-beta': 'web-search-2025-03-05'
+  }
+});
 
 // ── Sanitise ──────────────────────────────────────────────────────────────────
 function sanitize(str, maxLen = 300) {
@@ -19,19 +24,38 @@ function sanitize(str, maxLen = 300) {
 // counted once in the cache read rather than re-sent on every call.
 const SYSTEM_PROMPT = `You are Cerebre Intelligence Engine — a world-class digital brand strategist with deep expertise in African markets, particularly Nigeria and West Africa.
 
+RESEARCH PROTOCOL (MANDATORY — DO NOT SKIP):
+Before generating any data, you MUST research the company using available tools:
+1. Search the company's official website and product pages
+2. Search their LinkedIn, Instagram, X (Twitter), YouTube, TikTok, Facebook profiles
+3. Search recent news coverage (last 12–18 months)
+4. Search competitor digital presence and social followings
+5. Search SEO signals: domain authority, keyword rankings, organic traffic estimates
+6. Search brand authority signals: Wikipedia, Crunchbase, industry press, ad libraries
+
+ESTIMATION RULES:
+- If a data point is verified from search → use it as-is
+- If a data point is estimated → prefix with "est." (e.g., "est. 12,000")
+- NEVER fabricate precise figures — use ranges when uncertain (e.g., "est. 8,000–15,000")
+- If a platform presence cannot be confirmed → set followers/subscribers to 0 and status to "unconfirmed"
+
 You MUST respond with ONLY valid JSON — no markdown, no code fences, no preamble, no explanation. Pure JSON only.
 
-Output this EXACT schema, fully populated with realistic, specific, research-quality data for the given company. Use your training knowledge to produce accurate estimates — be specific and brutally honest about gaps. Most Nigerian companies score 2–5/10 across digital dimensions.
+Output this EXACT schema, fully populated with realistic, specific, research-quality data for the given company. Be brutally honest — most Nigerian companies score 2–5/10 across digital dimensions.
 
 {
   "company_name": "string",
   "report_date": "string — use EXACTLY the Report Date provided in the user message",
   "prepared_by": "Cerebre Media Africa",
+  "data_confidence": "High|Medium|Low — overall confidence based on data found",
   "overall_score": "number (1 decimal, out of 10)",
   "maturity_stage": "string",
 
   "executive_summary": {
+    "brand_position": "string (1–2 sentences — where this company sits in its market right now)",
     "overview": "string (3–4 sentences, sharp executive summary)",
+    "key_risks": ["string x3"],
+    "key_opportunities": ["string x3"],
     "strengths": ["string x5"],
     "critical_gaps": ["string x5"],
     "headline_numbers": {
@@ -60,9 +84,9 @@ Output this EXACT schema, fully populated with realistic, specific, research-qua
 
   "seo_audit": {
     "score": "number",
-    "domain_authority_estimate": "string",
+    "domain_authority_estimate": "string — prefix with est. if not verified",
     "competitor_da_benchmark": "string",
-    "monthly_organic_traffic_estimate": "string",
+    "monthly_organic_traffic_estimate": "string — prefix with est. if not verified",
     "competitor_traffic_benchmark": "string",
     "indexed_pages_estimate": "string",
     "ranking_keywords_estimate": "string",
@@ -78,12 +102,12 @@ Output this EXACT schema, fully populated with realistic, specific, research-qua
     "overall_score": "number",
     "overview": "string",
     "platforms": {
-      "linkedin":  { "followers": "number", "score": "number", "status": "ok|gap|critical|opportunity", "posting_frequency": "string", "issues": ["string x3"] },
-      "instagram": { "followers": "number", "score": "number", "status": "ok|gap|critical|opportunity", "posting_frequency": "string", "issues": ["string x3"] },
-      "twitter_x": { "followers": "number", "score": "number", "status": "ok|gap|critical|opportunity", "posting_frequency": "string", "issues": ["string x3"] },
-      "facebook":  { "followers": "number", "score": "number", "status": "ok|gap|critical|opportunity", "posting_frequency": "string", "issues": ["string x3"] },
-      "youtube":   { "subscribers": "number", "score": "number", "status": "ok|gap|critical|opportunity", "posting_frequency": "string", "issues": ["string x3"] },
-      "tiktok":    { "followers": "number", "score": "number", "status": "ok|gap|critical|opportunity", "posting_frequency": "string", "issues": ["string x3"] }
+      "linkedin":  { "followers": "number or 0 if unconfirmed", "followers_label": "string — e.g. est. 1,200 or unconfirmed", "score": "number", "status": "ok|gap|critical|opportunity|unconfirmed", "posting_frequency": "string", "engagement_quality": "string", "issues": ["string x3"] },
+      "instagram": { "followers": "number or 0 if unconfirmed", "followers_label": "string", "score": "number", "status": "ok|gap|critical|opportunity|unconfirmed", "posting_frequency": "string", "engagement_quality": "string", "issues": ["string x3"] },
+      "twitter_x": { "followers": "number or 0 if unconfirmed", "followers_label": "string", "score": "number", "status": "ok|gap|critical|opportunity|unconfirmed", "posting_frequency": "string", "engagement_quality": "string", "issues": ["string x3"] },
+      "facebook":  { "followers": "number or 0 if unconfirmed", "followers_label": "string", "score": "number", "status": "ok|gap|critical|opportunity|unconfirmed", "posting_frequency": "string", "engagement_quality": "string", "issues": ["string x3"] },
+      "youtube":   { "subscribers": "number or 0 if unconfirmed", "subscribers_label": "string", "score": "number", "status": "ok|gap|critical|opportunity|unconfirmed", "posting_frequency": "string", "engagement_quality": "string", "issues": ["string x3"] },
+      "tiktok":    { "followers": "number or 0 if unconfirmed", "followers_label": "string", "score": "number", "status": "ok|gap|critical|opportunity|unconfirmed", "posting_frequency": "string", "engagement_quality": "string", "issues": ["string x3"] }
     },
     "competitor_benchmarks": [
       { "platform": "string", "company": "number", "competitor1": "number", "competitor2": "number", "competitor3": "number", "c1_name": "string", "c2_name": "string", "c3_name": "string" }
@@ -97,6 +121,8 @@ Output this EXACT schema, fully populated with realistic, specific, research-qua
     "content_assets": [
       { "asset": "string", "status": "present|partial|absent", "detail": "string" }
     ],
+    "weak_storytelling_areas": ["string x4"],
+    "missing_content_pillars": ["string x4"],
     "untapped_storytelling_assets": ["string x5"],
     "content_maturity_verdict": "string"
   },
@@ -117,6 +143,8 @@ Output this EXACT schema, fully populated with realistic, specific, research-qua
     "missing_authority_sources": ["string x4"],
     "wikipedia_status": "string",
     "business_intelligence_profiles": "string",
+    "pr_presence": "string (assessment of news coverage and media mentions in last 12–18 months)",
+    "industry_credibility": "string (rankings, awards, industry body memberships)",
     "esg_transparency": {
       "overview": "string",
       "esg_assets_present": ["string x3"],
@@ -156,6 +184,40 @@ Output this EXACT schema, fully populated with realistic, specific, research-qua
     { "rank": "number", "title": "string", "description": "string (2–3 sentences)", "business_risk": "string" }
   ],
 
+  "thirty_day_action_plan": {
+    "overview": "string (1–2 sentences on immediate priority)",
+    "weeks": [
+      {
+        "week": "Week 1",
+        "theme": "Fixes",
+        "actions": [
+          { "action": "string", "deliverable": "string", "outcome": "string", "timeline": "string" }
+        ]
+      },
+      {
+        "week": "Week 2",
+        "theme": "Growth",
+        "actions": [
+          { "action": "string", "deliverable": "string", "outcome": "string", "timeline": "string" }
+        ]
+      },
+      {
+        "week": "Week 3",
+        "theme": "Visibility",
+        "actions": [
+          { "action": "string", "deliverable": "string", "outcome": "string", "timeline": "string" }
+        ]
+      },
+      {
+        "week": "Week 4",
+        "theme": "Conversion",
+        "actions": [
+          { "action": "string", "deliverable": "string", "outcome": "string", "timeline": "string" }
+        ]
+      }
+    ]
+  },
+
   "twelve_month_roadmap": {
     "phase1": {
       "title": "Phase 1 — Foundation & Quick Wins (Months 1–3)",
@@ -179,14 +241,35 @@ Output this EXACT schema, fully populated with realistic, specific, research-qua
       ]
     },
     "forecast": "string (projected outcomes after 12 months)"
+  },
+
+  "recommended_services": [
+    {
+      "service": "string (e.g. SEO & Content Strategy)",
+      "description": "string (what Cerebre will do)",
+      "roi_reasoning": "string (specific business case for this company)",
+      "priority": "Immediate|Short-term|Medium-term"
+    }
+  ],
+
+  "final_verdict": {
+    "score_summary": "string (one sharp sentence on the overall score)",
+    "brutal_assessment": "string (3–5 sentences — honest, board-level, no sugarcoating)",
+    "biggest_single_risk": "string (the one thing that could hurt them most if ignored)",
+    "biggest_single_opportunity": "string (the one move that would deliver the most ROI)",
+    "closing_statement": "string (1–2 sentences — what needs to happen now)"
   }
 }
 
 Rules:
+- ALWAYS search before generating — do not rely on training data alone
 - Scores are 1–10 (one decimal)
 - Populate EVERY field — nothing null or empty
 - Include 10 strategic gaps (rank 1–10) and 4–5 roadmap actions per phase
+- Include 5–8 recommended services with ROI reasoning
+- Each week in the 30-day plan must have 3–4 specific actions
 - Use ₦ currency and Nigerian market context throughout
+- Label ALL unverified estimates with "est." prefix
 - Return ONLY the JSON object — nothing else`;
 
 // ── User prompt builder ───────────────────────────────────────────────────────
@@ -202,15 +285,18 @@ function buildPrompt({ company, website, industry, market, competitors, referenc
   return `Generate a complete Digital Brand Health Tracker audit for:
 
 Company:     ${company}
-Website:     ${website || 'Unknown — infer from company name'}
-Industry:    ${industry || 'Infer from company name'}
+Website:     ${website || 'Unknown — search for it using the company name'}
+Industry:    ${industry || 'Unknown — infer from web search'}
 Market:      ${market || 'Nigeria / West Africa'}
 Competitors: ${competitorList.join(', ')}
 Report Date: ${today}
 ${reference ? `Payment Ref: ${reference}` : ''}
 
 Instructions:
-- Use your knowledge of this company and Nigerian market to produce realistic, specific data
+- SEARCH the web first for this company before generating any data
+- Search their website, all social media profiles, news coverage, and competitor benchmarks
+- Label all unverified figures with "est." prefix
+- If a social media profile cannot be found, set followers to 0 and status to "unconfirmed"
 - Populate EVERY field in the schema — do not leave anything null or empty
 - Include 10 strategic gaps (rank 1–10) and 4–5 roadmap actions per phase
 - Output ONLY valid JSON, nothing else`;
@@ -270,17 +356,28 @@ router.post('/', async (req, res) => {
     //   Output JSON    ~3,000 tokens  → ~$0.045
     //   Total per call ≈ $0.05–0.10 depending on cache hit
     const message = await client.messages.create({
-      model:    'claude-sonnet-4-6',
-      max_tokens: 16000,
-      system:     SYSTEM_PROMPT,
-      messages:   [{ role: 'user', content: buildPrompt({ company, website, industry, market, competitors, reference }) }],
-    });
+  model: 'claude-sonnet-4-6',
+  max_tokens: 16000,
+  system: SYSTEM_PROMPT,
+  tools: [
+    {
+      type: "web_search_20250305",
+      name: "web_search",
+      max_uses: 10
+    }
+  ],
+  messages: [
+    { role: 'user', content: buildPrompt({ company, website, industry, market, competitors, reference }) }
+  ],
+});
 
-    const rawText = message.content
-      .filter(b => b.type === 'text')
-      .map(b => b.text)
-      .join('')
-      .trim();
+    // Extract the final JSON text block from the response
+const raw = message.content
+  .filter(block => block.type === 'text')
+  .map(block => block.text)
+  .join('');
+
+const report = JSON.parse(raw);
 
     if (!rawText) throw new Error('Empty response from Anthropic API');
 

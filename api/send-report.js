@@ -55,7 +55,7 @@ router.post('/', async (req, res) => {
       await transporter.sendMail({
         from: FROM(),
         to: email,
-        subject: `Your Full Digital Brand Report — ${data.company_name} [Ref: ${reference}]`,
+        subject: `Your Full Digital Brand Report — ${data.company_name}`,
         html: buildFullHTML(data, reference),
       });
 
