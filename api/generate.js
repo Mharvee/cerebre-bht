@@ -4,13 +4,9 @@ import Anthropic from '@anthropic-ai/sdk';
 console.log('[generate] API key present:', !!process.env.ANTHROPIC_API_KEY);
 console.log('[generate] API key prefix:', process.env.ANTHROPIC_API_KEY?.slice(0, 10));
 
-
-const router  = Router();
+const router = Router();
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
-  defaultHeaders: {
-    'anthropic-beta': 'web-search-2025-03-05'
-  }
 });
 
 // ── Sanitise ──────────────────────────────────────────────────────────────────
@@ -19,9 +15,7 @@ function sanitize(str, maxLen = 300) {
   return String(str).replace(/[<>]/g, '').slice(0, maxLen).trim();
 }
 
-// ── SYSTEM PROMPT (cached by Anthropic — billed once per hour) ────────────────
-// The detailed JSON schema lives here, not in the user message, so it is only
-// counted once in the cache read rather than re-sent on every call.
+// ── SYSTEM PROMPT ─────────────────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are Cerebre Intelligence Engine — a world-class digital brand strategist with deep expertise in African markets, particularly Nigeria and West Africa.
 
 RESEARCH PROTOCOL (MANDATORY — DO NOT SKIP):
@@ -302,10 +296,10 @@ Instructions:
 - Output ONLY valid JSON, nothing else`;
 }
 
-// ── Rate limiting (in-memory, optional Redis layer in checkRateLimit.js) ──────
+// ── Rate limiting ─────────────────────────────────────────────────────────────
 const requestLog = new Map();
-const RATE_LIMIT  = 10;
-const WINDOW_MS   = 60 * 60 * 1000;
+const RATE_LIMIT = 10;
+const WINDOW_MS  = 60 * 60 * 1000;
 
 function checkRateLimit(ip) {
   const now   = Date.now();
@@ -316,7 +310,7 @@ function checkRateLimit(ip) {
   return entry.count <= RATE_LIMIT;
 }
 
-// ── POST /api/generate  (called after Paystack webhook confirms payment) ──────
+// ── POST /api/generate ────────────────────────────────────────────────────────
 router.post('/', async (req, res) => {
   const ip = (req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown')
     .split(',')[0].trim();
@@ -325,12 +319,11 @@ router.post('/', async (req, res) => {
     return res.status(429).json({ error: { message: 'Too many requests. Please wait before trying again.' } });
   }
 
-  // Accept both flat body (new approach) and nested claudeBody envelope (old approach)
-  const body     = req.body || {};
-  const company  = sanitize(body.company || body.company_name);
-  const website  = sanitize(body.website, 500);
-  const industry = sanitize(body.industry);
-  const market   = sanitize(body.market);
+  const body        = req.body || {};
+  const company     = sanitize(body.company || body.company_name);
+  const website     = sanitize(body.website, 500);
+  const industry    = sanitize(body.industry);
+  const market      = sanitize(body.market);
   const competitors = sanitize(body.competitors, 500);
   const reference   = sanitize(body.reference || body.payment_reference, 100);
   const email       = sanitize(body.email, 200);
@@ -345,65 +338,55 @@ router.post('/', async (req, res) => {
     type: 'FULL_REPORT',
   }));
 
-  // Extend response timeout to 5 min for long generation
   res.setTimeout(300_000);
 
   try {
-    // ── Single API call — no web search, no agentic loop ──────────────────────
-    // Cost breakdown at claude-sonnet-4-5 pricing ($3/M input, $15/M output):
-    //   System prompt  ~1,800 tokens  ← cached after first call (~$0.003 cold, ~$0.0003 warm)
-    //   User prompt    ~  200 tokens  → ~$0.0006
-    //   Output JSON    ~3,000 tokens  → ~$0.045
-    //   Total per call ≈ $0.05–0.10 depending on cache hit
     const message = await client.messages.create({
-  model: 'claude-sonnet-4-6',
-  max_tokens: 16000,
-  system: SYSTEM_PROMPT,
-  tools: [
-    {
-      type: "web_search_20250305",
-      name: "web_search",
-      max_uses: 10
-    }
-  ],
-  messages: [
-    { role: 'user', content: buildPrompt({ company, website, industry, market, competitors, reference }) }
-  ],
-});
+      model:      'claude-sonnet-4-6',
+      max_tokens: 16000,
+      system:     SYSTEM_PROMPT,
+      // FIX 4 — force Claude to search before generating
+      tool_choice: { type: 'auto' },
+      tools: [
+        {
+          type:     'web_search_20250305',
+          name:     'web_search',
+          max_uses: 10,
+        },
+      ],
+      messages: [
+        { role: 'user', content: buildPrompt({ company, website, industry, market, competitors, reference }) },
+      ],
+    });
 
-    // Extract the final JSON text block from the response
-const raw = message.content
-  .filter(block => block.type === 'text')
-  .map(block => block.text)
-  .join('');
-
-const report = JSON.parse(raw);
+    // FIX 1 + 2 + 3 — single, correct extraction flow
+    const rawText = message.content
+      .filter(block => block.type === 'text')
+      .map(block => block.text)
+      .join('');
 
     if (!rawText) throw new Error('Empty response from Anthropic API');
 
-    // Extract JSON from response (strip any accidental fences)
+    // Strip any accidental markdown fences
     let cleaned = rawText.replace(/```json\n?/g, '').replace(/```/g, '').trim();
     const fb = cleaned.indexOf('{');
     const lb = cleaned.lastIndexOf('}');
     if (fb === -1 || lb === -1) {
-  console.error('[generate] No JSON braces found. Raw text was:', rawText.slice(0, 500));
-  throw new Error('No valid JSON object in response');
-}
-cleaned = cleaned.slice(fb, lb + 1);
+      console.error('[generate] No JSON braces found. Raw:', rawText.slice(0, 500));
+      throw new Error('No valid JSON object in response');
+    }
+    cleaned = cleaned.slice(fb, lb + 1);
 
-console.log('[generate] Attempting JSON parse, length:', cleaned.length);
-let parsed;
-try {
-  parsed = JSON.parse(cleaned);
-} catch(parseErr) {
-  // Try to recover truncated JSON by finding the last complete top-level field
-  console.error('[generate] JSON truncated at:', parseErr.message);
-  throw new Error('Report was too large and got cut off. Try again — it usually works on retry.');
-}
+    let parsed;
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch (parseErr) {
+      console.error('[generate] JSON parse failed:', parseErr.message);
+      throw new Error('Report was too large and got cut off. Please try again.');
+    }
 
     console.log(`[generate] ✓ Report for "${company}" | input=${message.usage?.input_tokens} output=${message.usage?.output_tokens}`);
 
-    // Return in the same envelope the frontend expects
     return res.status(200).json({ report: JSON.stringify(parsed, null, 2) });
 
   } catch (err) {
@@ -411,9 +394,7 @@ try {
       message: err.message,
       status:  err.status,
       type:    err.type,
-      raw:     err.message,
     });
-    console.error('[generate] full error:', err);
 
     let msg    = 'Service error — please try again.';
     let status = 500;
@@ -424,7 +405,7 @@ try {
       msg = 'Anthropic API quota exceeded.'; status = 402;
     } else if (err.status === 429) {
       msg = 'API rate limit hit — please retry in 60 seconds.'; status = 429;
-    } else if (err.message?.includes('JSON')) {
+    } else if (err.message?.includes('JSON') || err.message?.includes('cut off')) {
       msg = 'Failed to parse AI response — please try again.';
     }
 

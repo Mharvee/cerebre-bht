@@ -6,7 +6,7 @@
 <title>Cerebre Intelligence Engine — Digital Brand Health Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 <style>
@@ -30,17 +30,16 @@ html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--ink);color:#fff;min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
 
-/* NAV */
-nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(8,12,20,.92);backdrop-filter:blur(20px)}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-mark{width:32px;height:32px;background:var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--ink);flex-shrink:0}
-.nav-name{font-size:13px;font-weight:600;letter-spacing:.05em;color:#fff}
-.nav-sub{font-size:10px;color:var(--gold);letter-spacing:.1em}
+nav{position:sticky;top:0;z-index:200;padding:12px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:rgba(8,12,20,.92);backdrop-filter:blur(20px)}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo-img{height:40px;width:auto;display:block}
+.nav-tagline{display:flex;flex-direction:column;justify-content:center;border-left:1px solid rgba(255,255,255,.12);padding-left:12px;margin-left:4px}
+.nav-name{font-size:11px;font-weight:600;letter-spacing:.06em;color:rgba(255,255,255,.7);text-transform:uppercase}
+.nav-sub{font-size:9px;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;margin-top:1px}
 .nav-back{color:var(--smoke);font-size:13px;text-decoration:none;transition:color .2s}
 .nav-back:hover{color:#fff}
 
-/* INPUT SCREEN */
-.input-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 61px);padding:60px 24px;position:relative}
+.input-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 65px);padding:60px 24px;position:relative}
 .glow-bg{position:absolute;width:700px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(201,146,42,.08) 0%,transparent 70%);top:40%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--gold-dim);border:1px solid rgba(201,146,42,.3);border-radius:20px;padding:5px 16px;font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--gold2);text-transform:uppercase;margin-bottom:24px}
 .dot-live{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s ease-in-out infinite}
@@ -69,8 +68,7 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .err-box{background:rgba(224,62,62,.1);border:1px solid rgba(224,62,62,.3);border-radius:10px;padding:14px 18px;font-size:13px;color:var(--red);display:none;margin-top:12px;max-width:640px}
 .err-box.active{display:block}
 
-/* LOADING */
-.loading-screen{display:none;min-height:calc(100vh - 61px);flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center}
+.loading-screen{display:none;min-height:calc(100vh - 65px);flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center}
 .loading-screen.active{display:flex}
 .spinner-ring{width:64px;height:64px;border-radius:50%;border:3px solid rgba(255,255,255,.06);border-top-color:var(--gold);animation:spin .9s linear infinite;margin:0 auto 28px}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -84,7 +82,6 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .step-li.done .step-pip{background:var(--green)}
 .step-li.active .step-pip{background:var(--gold);animation:blink 1s ease-in-out infinite}
 
-/* REPORT — SCREEN */
 #report-area{display:none}
 #report-area.active{display:block}
 .report-wrap{max-width:960px;margin:0 auto;padding:48px 40px 80px}
@@ -94,8 +91,9 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .btn-action.gold{background:var(--gold);color:var(--ink);border-color:var(--gold)}
 .btn-action.gold:hover{background:var(--gold2);border-color:var(--gold2)}
 
-/* masthead */
 .r-masthead{background:var(--ink2);border:1px solid var(--border);border-radius:16px;padding:36px;margin-bottom:28px;border-top:3px solid var(--gold)}
+.r-masthead-inner{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+.r-masthead-logo{height:48px;width:auto;flex-shrink:0;opacity:.95}
 .r-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
 .r-h1{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:14px;line-height:1.2}
 .r-h1 span{color:var(--gold2)}
@@ -103,7 +101,6 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .r-meta strong{color:#fff}
 .r-badge{display:inline-block;background:rgba(224,62,62,.15);border:1px solid rgba(224,62,62,.35);color:var(--red);padding:3px 12px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.1em;margin-top:12px}
 
-/* score hero */
 .score-hero{background:var(--ink2);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:24px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
 .score-ring{width:100px;height:100px;border-radius:50%;border:5px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
 .score-big{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--gold2);line-height:1}
@@ -112,21 +109,18 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .score-info p{font-size:13px;color:var(--smoke);line-height:1.6;max-width:560px}
 .stage-tag{display:inline-block;background:var(--gold-dim);color:var(--gold2);border:1px solid rgba(201,146,42,.25);border-radius:20px;font-size:11px;font-weight:600;padding:3px 14px;margin-top:10px}
 
-/* metric row */
 .metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
 .m-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px}
 .m-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke);margin-bottom:8px}
 .m-val{font-size:20px;font-weight:700;line-height:1.2}
 .m-sub{font-size:11px;color:var(--smoke);margin-top:6px}
 
-/* section cards */
 .s-card{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:22px;overflow:hidden}
 .s-head{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.02)}
 .s-title{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .s-score{padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;background:var(--ink2);border:1px solid var(--border)}
 .s-body{padding:22px}
 
-/* two-col layout for strengths/gaps */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .col-grn{background:rgba(29,185,84,.05);border:1px solid rgba(29,185,84,.15);border-radius:8px;padding:18px}
 .col-red{background:rgba(224,62,62,.05);border:1px solid rgba(224,62,62,.15);border-radius:8px;padding:18px}
@@ -134,7 +128,6 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .col-item{font-size:13px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);color:var(--smoke);display:flex;gap:8px;line-height:1.5}
 .col-item:last-child{border-bottom:none}
 
-/* platform grid */
 .plat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .plat{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:14px}
 .plat-name{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--smoke);margin-bottom:6px}
@@ -147,7 +140,6 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .to{background:rgba(29,185,84,.12);color:var(--green)}
 .tp{background:rgba(100,100,255,.12);color:#8888ff}
 
-/* bar rows */
 .bar-row{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--border)}
 .bar-row:last-child{border-bottom:none}
 .bar-lbl{width:200px;font-size:13px;color:var(--smoke);flex-shrink:0}
@@ -156,14 +148,12 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .bar-num{width:50px;text-align:right;font-size:13px;font-weight:700;flex-shrink:0}
 .bar-comment{font-size:11px;color:rgba(184,192,204,.4);margin-top:2px}
 
-/* tables */
 .data-tbl{width:100%;border-collapse:collapse;font-size:13px}
 .data-tbl th{background:var(--ink2);color:var(--gold2);padding:10px 14px;text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border)}
 .data-tbl td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--smoke);vertical-align:top}
 .data-tbl tr:last-child td{border-bottom:none}
 .data-tbl td:first-child{color:#fff;font-weight:500}
 
-/* keyword rows */
 .kw-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;gap:12px;flex-wrap:wrap}
 .kw-row:last-child{border-bottom:none}
 .kw-name{flex:1;color:#fff;min-width:160px}
@@ -174,7 +164,6 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .rel-med{background:rgba(255,140,0,.12);color:var(--orange)}
 .rel-low{background:rgba(184,192,204,.1);color:var(--smoke)}
 
-/* gap cards */
 .gap-card{border:1px solid rgba(224,62,62,.2);border-left:3px solid var(--red);border-radius:8px;padding:16px;margin-bottom:12px}
 .gap-card:last-child{margin-bottom:0}
 .gap-num{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:4px}
@@ -182,7 +171,6 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .gap-body{font-size:13px;color:var(--smoke);line-height:1.7}
 .gap-risk{margin-top:10px;font-size:12px;background:rgba(224,62,62,.07);border-radius:6px;padding:8px 12px;color:rgba(224,62,62,.9)}
 
-/* roadmap */
 .phase-block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px}
 .phase-t{font-size:14px;font-weight:600;color:var(--gold2);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
 .phase-priority{font-size:11px;color:var(--smoke);margin-top:4px;font-weight:400}
@@ -194,7 +182,30 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .forecast-box{background:rgba(29,185,84,.05);border:1px solid rgba(29,185,84,.18);border-radius:10px;padding:18px;font-size:13px;color:var(--smoke);line-height:1.7;margin-top:16px}
 .forecast-box strong{color:var(--green)}
 
-/* content assets */
+/* 30-day plan week cards */
+.week-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px}
+.week-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.week-label{font-size:13px;font-weight:700;color:var(--gold2)}
+.week-theme{font-size:11px;color:var(--smoke);background:var(--gold-dim);border:1px solid rgba(201,146,42,.2);border-radius:10px;padding:2px 10px}
+.week-action-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;flex-wrap:wrap;align-items:flex-start}
+.week-action-row:last-child{border-bottom:none}
+.week-action-text{flex:1;color:#fff;min-width:140px}
+.week-deliverable{color:var(--smoke);font-size:12px;min-width:120px;font-style:italic}
+.week-outcome{color:var(--green);font-size:12px;min-width:120px}
+.week-timeline{color:var(--gold);font-size:11px;font-weight:600;min-width:60px;flex-shrink:0}
+
+/* recommended services */
+.svc-card{border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:12px;background:rgba(255,255,255,.02)}
+.svc-card:last-child{margin-bottom:0}
+.svc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:12px;flex-wrap:wrap}
+.svc-name{font-size:14px;font-weight:600;color:#fff}
+.svc-priority{font-size:10px;font-weight:700;padding:2px 10px;border-radius:8px}
+.svc-priority-immediate{background:rgba(224,62,62,.12);color:var(--red)}
+.svc-priority-short{background:rgba(255,140,0,.12);color:var(--orange)}
+.svc-priority-medium{background:rgba(29,185,84,.1);color:var(--green)}
+.svc-desc{font-size:13px;color:var(--smoke);line-height:1.6;margin-bottom:8px}
+.svc-roi{font-size:12px;color:var(--gold2);background:var(--gold-dim);border-radius:6px;padding:8px 12px}
+
 .asset-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;gap:12px}
 .asset-row:last-child{border-bottom:none}
 .asset-name{color:#fff;flex:1}
@@ -204,30 +215,35 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .at-x{background:rgba(224,62,62,.1);color:var(--red)}
 .at-m{background:rgba(255,140,0,.1);color:var(--orange)}
 
-/* SOV table */
 .sov-row{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;align-items:center;flex-wrap:wrap}
 .sov-row:last-child{border-bottom:none}
 .sov-cat{min-width:160px;color:#fff;font-weight:500}
 .sov-pct{min-width:70px;font-weight:700}
 
-/* paid media */
 .paid-row{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);font-size:13px;flex-wrap:wrap;align-items:flex-start}
 .paid-row:last-child{border-bottom:none}
 .paid-ch{min-width:160px;color:#fff;font-weight:500}
 .paid-status{flex:1;color:var(--smoke)}
 .paid-opp{color:var(--gold2);font-size:12px;min-width:160px}
 
-/* verdict boxes */
 .verdict-box{margin-top:16px;padding:14px;background:var(--gold-dim);border:1px solid rgba(201,146,42,.2);border-radius:8px;font-size:13px;color:var(--smoke);line-height:1.7}
 .verdict-box strong{color:var(--gold2)}
 
-/* list bullets */
 .bullet-list{margin:0;padding:0;list-style:none}
 .bullet-list li{font-size:13px;padding:5px 0;border-bottom:1px solid var(--border);color:var(--smoke);display:flex;gap:8px;line-height:1.5}
 .bullet-list li:last-child{border-bottom:none}
 .bullet-list li .arr{color:var(--gold);flex-shrink:0}
 
-/* util */
+/* final verdict */
+.final-box{background:var(--ink2);border:1px solid rgba(201,146,42,.25);border-radius:14px;padding:28px;margin-bottom:22px}
+.final-box .final-score{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold2);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.final-box .final-assess{font-size:13px;color:var(--smoke);line-height:1.8;margin-bottom:14px}
+.final-box .final-row{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.final-box .final-row:last-child{border-bottom:none}
+.final-box .final-lbl{font-size:11px;font-weight:700;color:var(--gold);min-width:180px;flex-shrink:0;text-transform:uppercase;letter-spacing:.06em}
+.final-box .final-val{color:#fff;flex:1;line-height:1.6}
+.final-box .final-close{margin-top:14px;padding:14px;background:var(--gold-dim);border:1px solid rgba(201,146,42,.2);border-radius:8px;font-size:14px;color:#fff;line-height:1.6;font-style:italic}
+
 .val-red{color:var(--red)}
 .val-org{color:var(--orange)}
 .val-gld{color:var(--gold2)}
@@ -237,7 +253,8 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 .label-sm{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--smoke);margin-bottom:10px}
 
 @media(max-width:700px){
-  nav{padding:14px 20px}
+  nav{padding:12px 20px}
+  .nav-logo-img{height:32px}
   .report-wrap{padding:32px 20px 60px}
   .metrics-row,.plat-grid,.two-col{grid-template-columns:1fr}
   .score-hero{flex-direction:column;gap:16px}
@@ -248,221 +265,83 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 }
 </style>
 
-<!-- ═══════════════════════════════════════════════════════════
-     PRINT CSS — clean A4 professional layout
-═══════════════════════════════════════════════════════════ -->
 <style>
 @media print {
-  /* ── Reset colours for white paper ── */
-  :root{
-    --ink:#fff;--ink2:#f4f5f7;--ink3:#eef0f3;
-    --border:#d1d5db;--card:#f9fafb;--smoke:#374151;
-    --gold:#8B5E1A;--gold2:#6B4610;--gold-dim:rgba(139,94,26,.07);
-    --red:#B91C1C;--green:#166534;--orange:#92400E;
-  }
-
-  /* ── Page setup ── */
-  @page {
-    size: A4 portrait;
-    margin: 16mm 18mm 20mm 18mm;
-  }
-  @page :first { margin-top: 12mm; }
-
-  html, body {
-    background: #fff !important;
-    color: #111827 !important;
-    font-size: 9.5pt;
-    line-height: 1.5;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  /* ── Hide non-report elements ── */
-  body::before,
-  nav,
-  .action-bar,
-  .input-screen,
-  .loading-screen,
-  .err-box { display: none !important; }
-
-  #report-area { display: block !important; }
-  .report-wrap { max-width: 100%; padding: 0; margin: 0; }
-
-  /* ── Page break helpers ── */
-  .pb-before { break-before: page; }
-  .pb-avoid  { break-inside: avoid; }
-
-  /* ── Masthead ── */
-  .r-masthead {
-    background: #fff !important;
-    border: none !important;
-    border-bottom: 2.5pt solid #111827 !important;
-    border-top: none !important;
-    border-radius: 0 !important;
-    padding: 0 0 14pt !important;
-    margin-bottom: 18pt !important;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    break-after: avoid;
-  }
-  /* REPLACE the masthead-logo print rule with this */
-.masthead-logo {
-  width: auto;
-  height: 60px;
-  background: transparent !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-left: 16pt;
-}
-  .r-eyebrow { color: #8B5E1A !important; font-size: 7pt !important; letter-spacing: .15em; }
-  .r-h1      { font-size: 17pt !important; color: #111827 !important; margin-bottom: 8pt !important; }
-  .r-h1 span { color: #8B5E1A !important; }
-  .r-meta    { font-size: 7.5pt !important; color: #4B5563 !important; gap: 14pt !important; }
-  .r-meta strong { color: #111827 !important; }
-  .r-badge   {
-    background: #fff !important;
-    border: 1.5pt solid #B91C1C !important;
-    color: #B91C1C !important;
-    font-size: 6.5pt !important;
-    padding: 3pt 10pt;
-    border-radius: 3pt;
-    margin-top: 8pt;
-  }
-
-  /* ── Score hero ── */
-  .score-hero {
-    background: #f9fafb !important;
-    border: 1pt solid #d1d5db !important;
-    border-radius: 6pt !important;
-    padding: 16pt !important;
-    margin-bottom: 14pt !important;
-    break-inside: avoid;
-  }
-  .score-ring { border-color: #111827 !important; width: 72pt !important; height: 72pt !important; border-width: 3.5pt !important; }
-  .score-big  { color: #111827 !important; font-size: 22pt !important; }
-  .score-denom{ color: #6B7280 !important; }
-  .score-info h2 { font-size: 12pt !important; color: #111827 !important; }
-  .score-info p  { color: #374151 !important; font-size: 8.5pt !important; }
-  .stage-tag  { background: rgba(139,94,26,.08) !important; color: #6B4610 !important; border-color: rgba(139,94,26,.25) !important; font-size: 7pt !important; }
-
-  /* ── Metric boxes ── */
-  .metrics-row { gap: 8pt !important; margin-bottom: 14pt !important; break-inside: avoid; }
-  .m-box { background: #f9fafb !important; border: 1pt solid #d1d5db !important; border-radius: 5pt !important; padding: 10pt !important; }
-  .m-lbl { color: #6B7280 !important; font-size: 6.5pt !important; }
-  .m-val { font-size: 13pt !important; color: #111827 !important; }
-  .m-sub { color: #6B7280 !important; font-size: 7pt !important; }
-
-  /* ── Section cards ── */
-  .s-card {
-    background: #fff !important;
-    border: 1pt solid #d1d5db !important;
-    border-radius: 6pt !important;
-    margin-bottom: 14pt !important;
-    break-inside: avoid;
-    overflow: visible !important;
-  }
-  .s-head {
-    background: #111827 !important;
-    padding: 8pt 12pt !important;
-    break-after: avoid;
-  }
-  .s-title { color: #fff !important; font-size: 7.5pt !important; letter-spacing: .08em; }
-  .s-score { background: rgba(255,255,255,.15) !important; color: #E8B84B !important; border-color: rgba(255,255,255,.2) !important; font-size: 8pt !important; }
-  .s-body  { padding: 12pt !important; }
-
-  /* ── Two column strengths/gaps ── */
-  .two-col { gap: 10pt !important; }
-  .col-grn { background: rgba(22,101,52,.05) !important; border-color: rgba(22,101,52,.2) !important; padding: 10pt !important; border-radius: 4pt !important; }
-  .col-red { background: rgba(185,28,28,.05) !important; border-color: rgba(185,28,28,.2) !important; padding: 10pt !important; border-radius: 4pt !important; }
-  .col-head { font-size: 7pt !important; }
-  .col-item { font-size: 8pt !important; color: #374151 !important; border-bottom-color: rgba(0,0,0,.06) !important; }
-
-  /* ── Platform grid ── */
-  .plat { background: #f9fafb !important; border-color: #d1d5db !important; padding: 9pt !important; }
-  .plat-name  { color: #6B7280 !important; font-size: 6.5pt !important; }
-  .plat-count { color: #111827 !important; font-size: 13pt !important; }
-  .plat-issue { color: #6B7280 !important; font-size: 7pt !important; }
-  .tc { background: rgba(185,28,28,.08) !important; color: #B91C1C !important; }
-  .tg { background: rgba(146,64,14,.08) !important; color: #92400E !important; }
-  .to { background: rgba(22,101,52,.08) !important; color: #166534 !important; }
-  .tp { background: rgba(67,56,202,.08) !important; color: #4338CA !important; }
-
-  /* ── Bar rows ── */
-  .bar-row   { padding: 6pt 0 !important; border-bottom-color: #e5e7eb !important; }
-  .bar-lbl   { color: #111827 !important; font-size: 8.5pt !important; width: 160pt !important; }
-  .bar-track { background: #e5e7eb !important; height: 7pt !important; }
-  .bar-fill  { print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important; }
-  .bar-num   { color: #111827 !important; font-size: 8.5pt !important; }
-  .bar-comment { font-size: 6.5pt !important; color: #9CA3AF !important; }
-
-  /* ── Tables ── */
-  .data-tbl th { background: #111827 !important; color: #E8B84B !important; font-size: 7pt !important; padding: 7pt 10pt !important; }
-  .data-tbl td { border-bottom-color: #e5e7eb !important; font-size: 8.5pt !important; padding: 7pt 10pt !important; color: #374151 !important; }
-  .data-tbl td:first-child { color: #111827 !important; }
-
-  /* ── Keyword rows ── */
-  .kw-row  { border-bottom-color: #e5e7eb !important; font-size: 8.5pt !important; }
-  .kw-name { color: #111827 !important; }
-  .kw-vol, .kw-rank { color: #6B7280 !important; }
-  .rel-high { background: rgba(185,28,28,.08) !important; color: #B91C1C !important; }
-  .rel-med  { background: rgba(146,64,14,.08) !important; color: #92400E !important; }
-  .rel-low  { background: rgba(107,114,128,.08) !important; color: #6B7280 !important; }
-
-  /* ── Gap cards ── */
-  .gap-card  { border-color: #e5e7eb !important; border-left-color: #B91C1C !important; padding: 10pt !important; margin-bottom: 8pt !important; break-inside: avoid; }
-  .gap-num   { color: #B91C1C !important; font-size: 7pt !important; }
-  .gap-title { color: #111827 !important; font-size: 10pt !important; }
-  .gap-body  { color: #374151 !important; font-size: 8pt !important; }
-  .gap-risk  { background: rgba(185,28,28,.05) !important; color: #B91C1C !important; font-size: 7.5pt !important; }
-
-  /* ── Roadmap ── */
-  .phase-block { background: #f9fafb !important; border-color: #d1d5db !important; padding: 12pt !important; break-inside: avoid; }
-  .phase-t     { color: #111827 !important; border-bottom-color: #d1d5db !important; font-size: 9.5pt !important; }
-  .phase-priority { color: #6B7280 !important; }
-  .r-row       { border-bottom-color: #e5e7eb !important; font-size: 8pt !important; }
-  .r-time      { color: #8B5E1A !important; font-size: 7.5pt !important; }
-  .r-action    { color: #111827 !important; }
-  .r-out       { color: #6B7280 !important; font-size: 7.5pt !important; }
-  .forecast-box { background: rgba(22,101,52,.05) !important; border-color: rgba(22,101,52,.2) !important; font-size: 8.5pt !important; color: #374151 !important; }
-  .forecast-box strong { color: #166534 !important; }
-
-  /* ── Content assets ── */
-  .asset-row   { border-bottom-color: #e5e7eb !important; font-size: 8.5pt !important; }
-  .asset-name  { color: #111827 !important; }
-  .asset-detail{ color: #6B7280 !important; font-size: 7.5pt !important; }
-  .at-p { background: rgba(22,101,52,.08) !important; color: #166534 !important; }
-  .at-x { background: rgba(185,28,28,.08) !important; color: #B91C1C !important; }
-  .at-m { background: rgba(146,64,14,.08) !important; color: #92400E !important; }
-
-  /* ── SOV / Paid ── */
-  .sov-row  { border-bottom-color: #e5e7eb !important; font-size: 8.5pt !important; }
-  .sov-cat  { color: #111827 !important; }
-  .paid-row { border-bottom-color: #e5e7eb !important; font-size: 8.5pt !important; }
-  .paid-ch  { color: #111827 !important; }
-  .paid-status { color: #6B7280 !important; }
-  .paid-opp    { color: #8B5E1A !important; }
-
-  /* ── Verdict / bullet list ── */
-  .verdict-box { background: rgba(139,94,26,.05) !important; border-color: rgba(139,94,26,.2) !important; color: #374151 !important; font-size: 8.5pt !important; }
-  .verdict-box strong { color: #8B5E1A !important; }
-  .bullet-list li { color: #374151 !important; border-bottom-color: #e5e7eb !important; font-size: 8.5pt !important; }
-  .bullet-list li .arr { color: #8B5E1A !important; }
-
-  /* ── Colour utilities ── */
-  .val-red { color: #B91C1C !important; }
-  .val-org { color: #92400E !important; }
-  .val-gld { color: #8B5E1A !important; }
-  .val-grn { color: #166534 !important; }
-
-  /* ── Footer strip ── */
-  .report-footer { color: #9CA3AF !important; font-size: 7pt !important; }
-  .report-footer strong { color: #8B5E1A !important; }
-
-  /* ── Force section breaks for long reports ── */
-  .s-card.pb-before { break-before: page; }
+  @page { size:A4 portrait; margin:14mm 16mm 18mm 16mm; }
+  @page :first { margin-top:10mm; }
+  html,body{background:#ffffff!important;color:#111827!important;font-size:9pt;line-height:1.55;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body::before,nav,.action-bar,.input-screen,.loading-screen,.err-box{display:none!important}
+  #report-area{display:block!important}
+  .report-wrap{max-width:100%;padding:0;margin:0}
+  .pb-before{break-before:page}
+  .pb-avoid{break-inside:avoid}
+  .r-masthead{background:#ffffff!important;border:none!important;border-bottom:2pt solid #111827!important;border-top:none!important;border-radius:0!important;padding:0 0 12pt!important;margin-bottom:20pt!important;break-after:avoid}
+  .r-masthead-inner{display:flex!important;align-items:center!important;justify-content:space-between!important}
+  .r-eyebrow{color:#92400E!important;font-size:7pt!important;letter-spacing:.15em;margin-bottom:6pt!important}
+  .r-h1{font-size:16pt!important;color:#111827!important;margin-bottom:8pt!important;line-height:1.2!important}
+  .r-h1 span{color:#92400E!important}
+  .r-meta{font-size:7.5pt!important;color:#4B5563!important;gap:12pt!important}
+  .r-meta strong{color:#111827!important}
+  .r-badge{background:#fff!important;border:1.5pt solid #B91C1C!important;color:#B91C1C!important;font-size:6.5pt!important;padding:2pt 9pt;border-radius:2pt;margin-top:8pt;display:inline-block}
+  .score-hero{background:#F9FAFB!important;border:0.75pt solid #D1D5DB!important;border-radius:6pt!important;padding:14pt!important;margin-bottom:12pt!important;break-inside:avoid;display:flex!important;align-items:center!important;gap:20pt!important}
+  .score-ring{width:68pt!important;height:68pt!important;border-width:4pt!important;flex-shrink:0!important}
+  .score-big{font-size:20pt!important}
+  .score-denom{color:#6B7280!important;font-size:8pt!important}
+  .score-info h2{font-size:11pt!important;color:#111827!important}
+  .score-info p{color:#374151!important;font-size:8pt!important;line-height:1.5!important}
+  .stage-tag{background:rgba(146,64,14,.07)!important;color:#6B4610!important;border-color:rgba(146,64,14,.2)!important;font-size:7pt!important}
+  .metrics-row{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:8pt!important;margin-bottom:12pt!important;break-inside:avoid}
+  .m-box{background:#F9FAFB!important;border:0.75pt solid #D1D5DB!important;border-radius:4pt!important;padding:9pt!important}
+  .m-lbl{color:#6B7280!important;font-size:6.5pt!important;margin-bottom:5pt!important}
+  .m-val{font-size:13pt!important;color:#111827!important}
+  .m-sub{color:#6B7280!important;font-size:6.5pt!important}
+  .s-card{background:#ffffff!important;border:0.75pt solid #D1D5DB!important;border-radius:5pt!important;margin-bottom:12pt!important;break-inside:avoid;overflow:visible!important;page-break-inside:avoid}
+  .s-head{background:#111827!important;padding:7pt 11pt!important;break-after:avoid;display:flex!important;align-items:center!important;justify-content:space-between!important}
+  .s-title{color:#ffffff!important;font-size:7.5pt!important;letter-spacing:.07em}
+  .s-score{background:rgba(255,255,255,.12)!important;color:#E8B84B!important;border-color:rgba(255,255,255,.15)!important;font-size:7.5pt!important;padding:2pt 9pt!important;border-radius:10pt!important}
+  .s-body{padding:11pt!important}
+  .gap-card{border-color:#E5E7EB!important;border-left:2.5pt solid #B91C1C!important;padding:9pt!important;margin-bottom:7pt!important;break-inside:avoid;border-radius:3pt!important}
+  .gap-num{color:#B91C1C!important;font-size:6.5pt!important}
+  .gap-title{color:#111827!important;font-size:9.5pt!important;margin-bottom:5pt!important}
+  .gap-body{color:#374151!important;font-size:7.5pt!important}
+  .gap-risk{background:rgba(185,28,28,.04)!important;color:#B91C1C!important;font-size:7pt!important;margin-top:7pt!important}
+  .val-red{color:#B91C1C!important}
+  .val-org{color:#92400E!important}
+  .val-gld{color:#8B5E1A!important}
+  .val-grn{color:#166534!important}
+  .verdict-box{background:rgba(146,64,14,.04)!important;border-color:rgba(146,64,14,.18)!important;color:#374151!important;font-size:8pt!important;padding:9pt!important}
+  .verdict-box strong{color:#92400E!important}
+  .bullet-list li{color:#374151!important;border-bottom-color:#E5E7EB!important;font-size:8pt!important;padding:3pt 0!important}
+  .bullet-list li .arr{color:#92400E!important}
+  .data-tbl th{background:#111827!important;color:#E8B84B!important;font-size:6.5pt!important;padding:6pt 9pt!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .data-tbl td{border-bottom-color:#E5E7EB!important;font-size:8pt!important;padding:6pt 9pt!important;color:#374151!important}
+  .data-tbl td:first-child{color:#111827!important;font-weight:600!important}
+  .phase-block{background:#F9FAFB!important;border:0.75pt solid #D1D5DB!important;padding:10pt!important;border-radius:4pt!important;break-inside:avoid;margin-bottom:8pt!important}
+  .phase-t{color:#111827!important;border-bottom-color:#D1D5DB!important;font-size:9pt!important;margin-bottom:9pt!important;padding-bottom:7pt!important}
+  .r-row{border-bottom-color:#E5E7EB!important;font-size:7.5pt!important;padding:5pt 0!important}
+  .r-time{color:#92400E!important;font-size:7pt!important;min-width:70pt!important}
+  .r-action{color:#111827!important}
+  .r-out{color:#6B7280!important;font-size:7pt!important}
+  .forecast-box{background:rgba(22,101,52,.04)!important;border-color:rgba(22,101,52,.18)!important;font-size:8pt!important;color:#374151!important;margin-top:10pt!important;padding:10pt!important}
+  .forecast-box strong{color:#166534!important}
+  .report-footer{color:#9CA3AF!important;font-size:6.5pt!important;border-top-color:#D1D5DB!important;margin-top:20pt!important;padding:10pt 0!important}
+  .report-footer strong{color:#92400E!important}
+  .week-card{background:#F9FAFB!important;border:0.75pt solid #D1D5DB!important;padding:10pt!important;border-radius:4pt!important;break-inside:avoid;margin-bottom:8pt!important}
+  .week-label{color:#111827!important;font-size:9pt!important}
+  .week-action-text{color:#111827!important;font-size:7.5pt!important}
+  .week-deliverable{color:#6B7280!important;font-size:7pt!important}
+  .week-outcome{color:#166534!important;font-size:7pt!important}
+  .week-timeline{color:#92400E!important;font-size:7pt!important}
+  .svc-card{background:#F9FAFB!important;border:0.75pt solid #D1D5DB!important;break-inside:avoid}
+  .svc-name{color:#111827!important;font-size:9pt!important}
+  .svc-desc{color:#374151!important;font-size:7.5pt!important}
+  .svc-roi{color:#92400E!important;font-size:7pt!important;background:rgba(146,64,14,.04)!important;border-radius:3pt!important}
+  .final-box{background:#F9FAFB!important;border:0.75pt solid #D1D5DB!important;break-inside:avoid}
+  .final-score{color:#8B5E1A!important;font-size:11pt!important}
+  .final-assess{color:#374151!important;font-size:8pt!important}
+  .final-lbl{color:#92400E!important;font-size:7pt!important}
+  .final-val{color:#111827!important;font-size:8pt!important}
+  .final-close{background:rgba(146,64,14,.04)!important;border-color:rgba(146,64,14,.18)!important;color:#374151!important;font-size:8pt!important}
 }
 </style>
 </head>
@@ -470,10 +349,10 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 
 <nav>
   <a href="/" class="nav-logo">
-  <img src="CMA logo.png" alt="Cerebre Media Africa" style="height:60px;width:auto;object-fit:contain;">
-    <div>
-      <div class="nav-name">CEREBRE MEDIA AFRICA</div>
-      <div class="nav-sub">Intelligence Engine</div>
+    <img src="CMA logo.png" alt="Cerebre Media Africa" style="height:60px;width:auto;object-fit:contain;">
+    <div class="nav-tagline">
+      <div class="nav-name">Intelligence Engine</div>
+      <div class="nav-sub">Digital Brand Tracker</div>
     </div>
   </a>
   <a href="/" class="nav-back">← Home</a>
@@ -520,17 +399,17 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
     </div>
     <div class="price-box">
       <div class="price-left">
-        <div class="price-amount">₦15,000</div>
+        <div class="price-amount">₦30,000</div>
         <div class="price-label">one-time · full report · instant delivery</div>
       </div>
       <div class="price-right">
         Traditional brand audit: ₦2–5M · 6–8 weeks<br>
-        Cerebre: ₦15,000 · ready in 60 seconds
+        Cerebre: ₦30,000 · ready in 60 seconds
       </div>
     </div>
     <button class="btn-audit" id="audit-btn" onclick="startAudit()">
       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-      Pay ₦15,000 &amp; Generate My Audit
+      Pay ₦30,000 &amp; Generate My Audit
     </button>
     <p class="form-note">🔐 Secure payment via Paystack · Report emailed instantly · 100% satisfaction guarantee</p>
   </div>
@@ -556,29 +435,33 @@ nav{position:sticky;top:0;z-index:200;padding:14px 40px;display:flex;align-items
 <div id="report-area"></div>
 
 <script>
-/* ── CONFIG ── */
 const CFG = {
   SEND_EMAIL_URL: '/api/send-report',
   PAYSTACK_KEY:   'pk_test_904b6d2fe98014f2b715f6e3e55c0d28143c3069',
-  PRICE_KOBO:     1500000,
-  BUSINESS_EMAIL: 'triplekalu2@gmail.com',
+  PRICE_KOBO:     3000000,
+  BUSINESS_EMAIL: 'cerebreplus@gmail.com',
 };
 
 let currentCompany = '';
 let userEmail      = '';
 
-/* ── HELPERS ── */
 function sc(s)    { return s >= 7 ? '#1DB954' : s >= 4 ? '#FF8C00' : '#E03E3E'; }
 function stCls(s) { return ({critical:'tc', gap:'tg', ok:'to', opportunity:'tp'})[s] || 'tg'; }
 function fmt(n)   { return (n||0).toLocaleString(); }
 function safe(v, fallback='N/A') { return v || fallback; }
-
 function relCls(r) {
   if (!r) return 'rel-low';
   const l = r.toLowerCase();
   if (l === 'high')   return 'rel-high';
   if (l === 'medium') return 'rel-med';
   return 'rel-low';
+}
+function priCls(p) {
+  if (!p) return '';
+  const l = p.toLowerCase();
+  if (l === 'immediate')   return 'svc-priority-immediate';
+  if (l.includes('short')) return 'svc-priority-short';
+  return 'svc-priority-medium';
 }
 
 function animateSteps(ids, ms) {
@@ -598,22 +481,18 @@ function showLoading(msg) {
   if (msg) document.getElementById('loading-sub').textContent = msg;
   animateSteps(['sl1','sl2','sl3','sl4','sl5','sl6'], 6000);
 }
-
 function hideLoading() {
   document.getElementById('loading-screen').classList.remove('active');
   ['sl1','sl2','sl3','sl4','sl5','sl6'].forEach(id => {
     const el = document.getElementById(id); if (el) el.className = 'step-li';
   });
 }
-
 function showErr(m) {
   const el = document.getElementById('err-box');
   el.textContent = m; el.classList.add('active');
   document.getElementById('input-screen').style.display = 'flex';
 }
-
 function hideErr() { document.getElementById('err-box').classList.remove('active'); }
-
 function cleanErr(m) {
   if (!m) return 'Unknown error.';
   if (m.includes('quota') || m.includes('billing'))  return 'API quota exceeded — please try again later.';
@@ -622,7 +501,6 @@ function cleanErr(m) {
   if (m.includes('rate_limit'))                       return 'Too many requests. Please wait a few minutes.';
   return m;
 }
-
 function newAudit() {
   document.getElementById('report-area').classList.remove('active');
   document.getElementById('report-area').innerHTML = '';
@@ -630,7 +508,6 @@ function newAudit() {
   hideErr(); window.scrollTo(0, 0);
 }
 
-/* ── VALIDATE & LAUNCH PAYMENT ── */
 function startAudit() {
   const company = document.getElementById('company-name').value.trim();
   const email   = document.getElementById('user-email').value.trim();
@@ -658,7 +535,6 @@ function startAudit() {
   handler.openIframe();
 }
 
-/* ── GENERATE ── */
 async function generateFullReport(ref) {
   showLoading('Payment confirmed ✓ — Building your full report…');
   try {
@@ -685,64 +561,78 @@ async function generateFullReport(ref) {
     const data = JSON.parse(jt);
 
     renderFull(data);
-    sendFullEmail(data, ref).catch(e => console.warn('Email non-critical:', e));
+    // FIX 1 — use currentCompany instead of undefined company_name
+    sendReportPdfToEmail(data, ref);
   } catch(e) {
     hideLoading();
     showErr(`Report generation failed: ${cleanErr(e.message)}. Please email ${CFG.BUSINESS_EMAIL} with your payment reference: ${ref}`);
   }
 }
 
-/* ── EMAIL ── */
-async function sendFullEmail(data, ref) {
-  if (!userEmail || !CFG.SEND_EMAIL_URL) return;
-  await fetch(CFG.SEND_EMAIL_URL, {
-    method:  'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: userEmail, data, reference: ref }),
-  });
+async function sendReportPdfToEmail(reportData, ref) {
+  try {
+    const res = await fetch(CFG.SEND_EMAIL_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type:         'full',
+        email:        userEmail,
+        reportData,
+        company_name: currentCompany,        // FIX 1 — was undefined `company_name`
+        reference:    ref,
+        filename:     `${currentCompany}-digital-brand-report.pdf`,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || 'Failed to send report email');
+    }
+    console.log('Report emailed successfully');
+  } catch (error) {
+    console.error('sendReportPdfToEmail error:', error);
+  }
 }
 
-/* ══════════════════════════════════════════════════════════════
-   RENDER — maps EXACTLY to the generate.js JSON schema
-══════════════════════════════════════════════════════════════ */
 function renderFull(d) {
   hideLoading();
   document.getElementById('input-screen').style.display = 'none';
   const area = document.getElementById('report-area');
   area.classList.add('active');
 
-  /* ── destructure with safe fallbacks ── */
-  const E    = d.executive_summary          || {};
-  const hl   = E.headline_numbers           || {};
-  const M    = d.maturity_index             || {};
-  const dims = M.dimensions                 || [];
-  const mStages = M.maturity_stages         || [];
-  const S    = d.social_media_audit         || {};
-  const P    = S.platforms                  || {};
-  const bench= S.competitor_benchmarks      || [];
-  const seo  = d.seo_audit                  || {};
-  const kw   = seo.missed_keyword_clusters  || [];
-  const uxA  = d.website_ux_audit           || {};
-  const cont = d.content_marketing          || {};
-  const assets= cont.content_assets         || [];
-  const story = cont.untapped_storytelling_assets || [];
-  const sovD = d.digital_share_of_voice     || {};
-  const sovT = sovD.sov_table               || [];
-  const auth = d.digital_authority_trust    || {};
-  const esg  = auth.esg_transparency        || {};
-  const paid = d.paid_media                 || {};
-  const paidCh= paid.channel_status         || [];
-  const gaps = d.top_strategic_gaps         || [];
-  const road = d.twelve_month_roadmap       || {};
+  const E      = d.executive_summary          || {};
+  const hl     = E.headline_numbers           || {};
+  const M      = d.maturity_index             || {};
+  const dims   = M.dimensions                 || [];
+  const mStages= M.maturity_stages            || [];
+  const S      = d.social_media_audit         || {};
+  const P      = S.platforms                  || {};
+  const bench  = S.competitor_benchmarks      || [];
+  const seo    = d.seo_audit                  || {};
+  const kw     = seo.missed_keyword_clusters  || [];
+  const uxA    = d.website_ux_audit           || {};
+  const cont   = d.content_marketing          || {};
+  const assets = cont.content_assets          || [];
+  const story  = cont.untapped_storytelling_assets || [];
+  const sovD   = d.digital_share_of_voice     || {};
+  const sovT   = sovD.sov_table               || [];
+  const auth   = d.digital_authority_trust    || {};
+  const esg    = auth.esg_transparency        || {};
+  const paid   = d.paid_media                 || {};
+  const paidCh = paid.channel_status          || [];
+  const gaps   = d.top_strategic_gaps         || [];
+  const road   = d.twelve_month_roadmap       || {};
+  // FIX 2 & 3 — now extracted
+  const plan   = d.thirty_day_action_plan     || {};
+  const planWks= plan.weeks                   || [];
+  const svcs   = d.recommended_services       || [];
+  const fv     = d.final_verdict              || {};
 
-  /* ── helper: render a bullet list ── */
   const bullets = (arr, colour='var(--gold)') =>
     `<ul class="bullet-list">${(arr||[]).map(s=>`<li><span class="arr" style="color:${colour}">→</span>${s}</li>`).join('')}</ul>`;
 
-  /* ── helper: render platform card ── */
   const platCard = (key, p) => {
-    const name = key.replace('twitter_x','Twitter/X').replace(/_/g,' ').toUpperCase();
-    const count = fmt(p.followers || p.subscribers || 0);
+    const name   = key.replace('twitter_x','Twitter/X').replace(/_/g,' ').toUpperCase();
+    const count  = fmt(p.followers || p.subscribers || 0);
     const issues = (p.issues||[]).slice(0,3);
     return `<div class="plat">
       <div class="plat-name">${name}</div>
@@ -753,8 +643,6 @@ function renderFull(d) {
     </div>`;
   };
 
-  /* ── helper: competitor benchmark table ── */
-  // Schema: { platform, company, competitor1, competitor2, competitor3, c1_name, c2_name, c3_name }
   const benchTable = bench.length ? `
     <div class="mt16">
       <div class="label-sm">Follower Comparison by Platform</div>
@@ -766,19 +654,16 @@ function renderFull(d) {
           <th>${bench[0]?.c2_name||'Competitor 2'}</th>
           <th>${bench[0]?.c3_name||'Competitor 3'}</th>
         </tr></thead>
-        <tbody>
-          ${bench.map(b=>`<tr>
-            <td>${b.platform}</td>
-            <td>${fmt(b.company)}</td>
-            <td>${fmt(b.competitor1)}</td>
-            <td>${fmt(b.competitor2)}</td>
-            <td>${fmt(b.competitor3)}</td>
-          </tr>`).join('')}
-        </tbody>
+        <tbody>${bench.map(b=>`<tr>
+          <td>${b.platform}</td>
+          <td>${fmt(b.company)}</td>
+          <td>${fmt(b.competitor1)}</td>
+          <td>${fmt(b.competitor2)}</td>
+          <td>${fmt(b.competitor3)}</td>
+        </tr>`).join('')}</tbody>
       </table>
     </div>` : '';
 
-  /* ── helper: UX competitor comparison table ── */
   const uxComp = (uxA.competitor_comparison||[]).length ? `
     <div class="mt16">
       <div class="label-sm">Feature Comparison</div>
@@ -789,18 +674,15 @@ function renderFull(d) {
           <th>${uxA.competitor2_name||'Competitor 2'}</th>
           <th>${uxA.competitor3_name||'Competitor 3'}</th>
         </tr></thead>
-        <tbody>
-          ${(uxA.competitor_comparison).map(r=>`<tr>
-            <td>${r.feature}</td>
-            <td>${r.company}</td>
-            <td>${r.competitor2}</td>
-            <td>${r.competitor3}</td>
-          </tr>`).join('')}
-        </tbody>
+        <tbody>${(uxA.competitor_comparison).map(r=>`<tr>
+          <td>${r.feature}</td>
+          <td>${r.company}</td>
+          <td>${r.competitor2}</td>
+          <td>${r.competitor3}</td>
+        </tr>`).join('')}</tbody>
       </table>
     </div>` : '';
 
-  /* ── helper: roadmap phase ── */
   const phaseBlock = (key) => {
     const p = road[key] || {};
     if (!p.title) return '';
@@ -815,13 +697,36 @@ function renderFull(d) {
     </div>`;
   };
 
-  /* ════════════════════════════════════════
-     BUILD THE HTML
-  ════════════════════════════════════════ */
+  // FIX 2 — 30-day action plan renderer
+  const weekBlock = (w) => `
+    <div class="week-card">
+      <div class="week-head">
+        <span class="week-label">${w.week||''}</span>
+        <span class="week-theme">${w.theme||''}</span>
+      </div>
+      ${(w.actions||[]).map(a=>`
+        <div class="week-action-row">
+          <span class="week-timeline">${a.timeline||''}</span>
+          <span class="week-action-text">${a.action||''}</span>
+          <span class="week-deliverable">${a.deliverable||''}</span>
+          <span class="week-outcome">${a.outcome||''}</span>
+        </div>`).join('')}
+    </div>`;
+
+  // FIX 3 — recommended services renderer
+  const svcCard = (s) => `
+    <div class="svc-card">
+      <div class="svc-head">
+        <span class="svc-name">${s.service||''}</span>
+        <span class="svc-priority ${priCls(s.priority)}">${s.priority||''}</span>
+      </div>
+      <div class="svc-desc">${s.description||''}</div>
+      <div class="svc-roi"><strong style="color:var(--gold)">ROI Case:</strong> ${s.roi_reasoning||''}</div>
+    </div>`;
+
   area.innerHTML = `
 <div class="report-wrap">
 
-  <!-- Action bar (screen only) -->
   <div class="action-bar">
     <button class="btn-action gold" onclick="window.print()">
       <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
@@ -834,24 +739,24 @@ function renderFull(d) {
     </div>
   </div>
 
-  <!-- ① MASTHEAD -->
+  <!-- MASTHEAD -->
   <div class="r-masthead">
-    <div>
-      <div class="r-eyebrow">Cerebre Media Africa — Strategic Digital Intelligence Division</div>
-      <div class="r-h1">Digital Brand Health Tracker: <span>${d.company_name||''}</span></div>
-      <div class="r-meta">
-        <span><strong>Date:</strong> ${d.report_date||new Date().toLocaleDateString()}</span>
-        <span><strong>Prepared by:</strong> ${d.prepared_by||'Cerebre Media Africa'}</span>
-        <span><strong>Delivered to:</strong> ${userEmail}</span>
+    <div class="r-masthead-inner">
+      <div>
+        <div class="r-eyebrow">Cerebre Media Africa — Strategic Digital Intelligence Division</div>
+        <div class="r-h1">Digital Brand Health Tracker: <span>${d.company_name||''}</span></div>
+        <div class="r-meta">
+          <span><strong>Date:</strong> ${d.report_date||new Date().toLocaleDateString()}</span>
+          <span><strong>Prepared by:</strong> ${d.prepared_by||'Cerebre Media Africa'}</span>
+          <span><strong>Delivered to:</strong> ${userEmail}</span>
+        </div>
+        <div class="r-badge">STRICTLY CONFIDENTIAL — EXECUTIVE USE ONLY</div>
       </div>
-      <div class="r-badge">STRICTLY CONFIDENTIAL — EXECUTIVE USE ONLY</div>
+      <img src="Cerebre Plus 1.png" class="r-masthead-logo" alt="Cerebre Media Africa">
     </div>
-    <div class="masthead-logo" style="background:transparent;padding:0">
-  <img src="Cerebre Plus 1.png" alt="CMA" style="width:auto;height:60px;object-fit:contain;">
-</div>
   </div>
 
-  <!-- ② SCORE HERO -->
+  <!-- SCORE HERO -->
   <div class="score-hero">
     <div class="score-ring" style="border-color:${sc(d.overall_score||0)}">
       <div class="score-big" style="color:${sc(d.overall_score||0)}">${(d.overall_score||0).toFixed(1)}</div>
@@ -864,14 +769,14 @@ function renderFull(d) {
     </div>
   </div>
 
-  <!-- ③ HEADLINE METRICS -->
+  <!-- HEADLINE METRICS -->
   <div class="metrics-row">
     <div class="m-box"><div class="m-lbl">Revenue Visibility Loss</div><div class="m-val val-red">${safe(hl.revenue_visibility_loss)}</div><div class="m-sub">Estimated annual</div></div>
     <div class="m-box"><div class="m-lbl">Organic Traffic Missed</div><div class="m-val val-red">${safe(hl.organic_traffic_missed)}</div><div class="m-sub">Per month estimate</div></div>
     <div class="m-box"><div class="m-lbl">Biggest Follower Gap</div><div class="m-val val-org">${safe(hl.biggest_follower_gap)}</div><div class="m-sub">vs top competitor</div></div>
   </div>
 
-  <!-- ④ EXECUTIVE SUMMARY -->
+  <!-- EXECUTIVE SUMMARY -->
   <div class="s-card">
     <div class="s-head"><div class="s-title">Executive Summary — Strengths &amp; Critical Gaps</div></div>
     <div class="s-body">
@@ -889,7 +794,7 @@ function renderFull(d) {
     </div>
   </div>
 
-  <!-- ⑤ DIGITAL MATURITY INDEX -->
+  <!-- DIGITAL MATURITY INDEX -->
   <div class="s-card pb-before">
     <div class="s-head">
       <div class="s-title">Digital Maturity Index</div>
@@ -919,7 +824,7 @@ function renderFull(d) {
     </div>
   </div>
 
-  <!-- ⑥ WEBSITE UX AUDIT -->
+  <!-- WEBSITE UX AUDIT -->
   <div class="s-card">
     <div class="s-head">
       <div class="s-title">Website &amp; UX Audit</div>
@@ -928,25 +833,16 @@ function renderFull(d) {
     <div class="s-body">
       <div style="font-size:13px;color:var(--smoke);margin-bottom:14px;line-height:1.6">${uxA.overview||''}</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px">
-        <div>
-          <div class="label-sm">Architecture Issues</div>
-          ${bullets(uxA.architecture_issues,'var(--red)')}
-        </div>
-        <div>
-          <div class="label-sm">Performance Issues</div>
-          ${bullets(uxA.performance_issues,'var(--orange)')}
-        </div>
-        <div>
-          <div class="label-sm">Conversion Issues</div>
-          ${bullets(uxA.conversion_issues,'var(--red)')}
-        </div>
+        <div><div class="label-sm">Architecture Issues</div>${bullets(uxA.architecture_issues,'var(--red)')}</div>
+        <div><div class="label-sm">Performance Issues</div>${bullets(uxA.performance_issues,'var(--orange)')}</div>
+        <div><div class="label-sm">Conversion Issues</div>${bullets(uxA.conversion_issues,'var(--red)')}</div>
       </div>
       ${uxComp}
       <div class="verdict-box mt16"><strong>UX Verdict:</strong> ${uxA.ux_score_verdict||''}<br><strong>Opportunity:</strong> ${uxA.ux_opportunity||''}</div>
     </div>
   </div>
 
-  <!-- ⑦ SEO AUDIT -->
+  <!-- SEO AUDIT -->
   <div class="s-card">
     <div class="s-head">
       <div class="s-title">SEO &amp; Search Visibility</div>
@@ -970,20 +866,14 @@ function renderFull(d) {
           <div class="m-sub">${safe(seo.ranking_keywords_estimate)} ranking keywords</div>
         </div>
       </div>
-      ${kw.length ? `
-        <div class="label-sm">Missed Keyword Opportunities</div>
-        ${kw.map(k=>`
-          <div class="kw-row">
-            <span class="kw-name">${k.keyword}</span>
-            <span class="kw-vol">${k.monthly_searches}/mo</span>
-            <span class="kw-rank">Rank: ${k.current_ranking||'Unranked'}</span>
-            <span class="kw-rel ${relCls(k.revenue_relevance)}">${k.revenue_relevance}</span>
-          </div>`).join('')}` : ''}
-      ${(seo.content_backlink_gaps||[]).length ? `
-        <div class="mt16">
-          <div class="label-sm">Content &amp; Backlink Gaps</div>
-          ${bullets(seo.content_backlink_gaps)}
-        </div>` : ''}
+      ${kw.length ? `<div class="label-sm">Missed Keyword Opportunities</div>
+        ${kw.map(k=>`<div class="kw-row">
+          <span class="kw-name">${k.keyword}</span>
+          <span class="kw-vol">${k.monthly_searches}/mo</span>
+          <span class="kw-rank">Rank: ${k.current_ranking||'Unranked'}</span>
+          <span class="kw-rel ${relCls(k.revenue_relevance)}">${k.revenue_relevance}</span>
+        </div>`).join('')}` : ''}
+      ${(seo.content_backlink_gaps||[]).length ? `<div class="mt16"><div class="label-sm">Content &amp; Backlink Gaps</div>${bullets(seo.content_backlink_gaps)}</div>` : ''}
       <div class="verdict-box mt16">
         <strong>SEO Verdict:</strong> ${seo.seo_score_verdict||''}<br>
         <strong>Missed Opportunity:</strong> ${seo.missed_opportunity_statement||''}
@@ -991,7 +881,7 @@ function renderFull(d) {
     </div>
   </div>
 
-  <!-- ⑧ SOCIAL MEDIA -->
+  <!-- SOCIAL MEDIA -->
   <div class="s-card pb-before">
     <div class="s-head">
       <div class="s-title">Social Media Presence Audit</div>
@@ -999,15 +889,13 @@ function renderFull(d) {
     </div>
     <div class="s-body">
       <div style="font-size:13px;color:var(--smoke);margin-bottom:14px;line-height:1.6">${S.overview||''}</div>
-      <div class="plat-grid">
-        ${Object.entries(P).map(([k,p])=>platCard(k,p)).join('')}
-      </div>
+      <div class="plat-grid">${Object.entries(P).map(([k,p])=>platCard(k,p)).join('')}</div>
       ${benchTable}
       <div class="verdict-box mt16"><strong>Social Verdict:</strong> ${S.social_maturity_verdict||''}</div>
     </div>
   </div>
 
-  <!-- ⑨ CONTENT MARKETING -->
+  <!-- CONTENT MARKETING -->
   <div class="s-card">
     <div class="s-head">
       <div class="s-title">Content Marketing Maturity</div>
@@ -1015,53 +903,43 @@ function renderFull(d) {
     </div>
     <div class="s-body">
       <div style="font-size:13px;color:var(--smoke);margin-bottom:14px;line-height:1.6">${cont.overview||''}</div>
-      ${assets.map(a=>`
-        <div class="asset-row">
-          <span class="asset-name">${a.asset}</span>
-          <span class="asset-detail">${a.detail||''}</span>
-          <span class="a-tag ${a.status==='present'?'at-p':a.status==='partial'?'at-m':'at-x'}">${(a.status||'').toUpperCase()}</span>
-        </div>`).join('')}
-      ${story.length ? `
-        <div class="mt16">
-          <div class="label-sm">Untapped Storytelling Assets</div>
-          ${bullets(story,'var(--gold)')}
-        </div>` : ''}
+      ${assets.map(a=>`<div class="asset-row">
+        <span class="asset-name">${a.asset}</span>
+        <span class="asset-detail">${a.detail||''}</span>
+        <span class="a-tag ${a.status==='present'?'at-p':a.status==='partial'?'at-m':'at-x'}">${(a.status||'').toUpperCase()}</span>
+      </div>`).join('')}
+      ${story.length ? `<div class="mt16"><div class="label-sm">Untapped Storytelling Assets</div>${bullets(story,'var(--gold)')}</div>` : ''}
       <div class="verdict-box mt16"><strong>Content Verdict:</strong> ${cont.content_maturity_verdict||''}</div>
     </div>
   </div>
 
-  <!-- ⑩ DIGITAL SHARE OF VOICE -->
+  <!-- SHARE OF VOICE -->
   <div class="s-card">
     <div class="s-head"><div class="s-title">Digital Share of Voice</div></div>
     <div class="s-body">
       <div style="font-size:13px;color:var(--smoke);margin-bottom:14px;line-height:1.6">${sovD.overview||''}</div>
-      ${sovT.length ? `
-        <table class="data-tbl">
-          <thead><tr>
-            <th>Category</th>
-            <th>${d.company_name||'Company'}</th>
-            <th>${sovT[0]?.c1||'Competitor 1'}</th>
-            <th>${sovT[0]?.c2||'Competitor 2'}</th>
-            <th>${sovT[0]?.c3||'Competitor 3'}</th>
-          </tr></thead>
-          <tbody>${sovT.map(r=>`<tr>
-            <td>${r.category}</td>
-            <td class="val-red">${r.company_pct}</td>
-            <td>${r.competitor1_pct}</td>
-            <td>${r.competitor2_pct}</td>
-            <td>${r.competitor3_pct}</td>
-          </tr>`).join('')}</tbody>
-        </table>` : ''}
-      ${(sovD.brand_perception_risks||[]).length ? `
-        <div class="mt16">
-          <div class="label-sm">Brand Perception Risks</div>
-          ${bullets(sovD.brand_perception_risks,'var(--red)')}
-        </div>` : ''}
+      ${sovT.length ? `<table class="data-tbl">
+        <thead><tr>
+          <th>Category</th>
+          <th>${d.company_name||'Company'}</th>
+          <th>${sovT[0]?.c1||'Competitor 1'}</th>
+          <th>${sovT[0]?.c2||'Competitor 2'}</th>
+          <th>${sovT[0]?.c3||'Competitor 3'}</th>
+        </tr></thead>
+        <tbody>${sovT.map(r=>`<tr>
+          <td>${r.category}</td>
+          <td class="val-red">${r.company_pct}</td>
+          <td>${r.competitor1_pct}</td>
+          <td>${r.competitor2_pct}</td>
+          <td>${r.competitor3_pct}</td>
+        </tr>`).join('')}</tbody>
+      </table>` : ''}
+      ${(sovD.brand_perception_risks||[]).length ? `<div class="mt16"><div class="label-sm">Brand Perception Risks</div>${bullets(sovD.brand_perception_risks,'var(--red)')}</div>` : ''}
       <div class="verdict-box mt16"><strong>SOV Verdict:</strong> ${sovD.sov_verdict||''}</div>
     </div>
   </div>
 
-  <!-- ⑪ DIGITAL AUTHORITY & TRUST -->
+  <!-- DIGITAL AUTHORITY -->
   <div class="s-card">
     <div class="s-head">
       <div class="s-title">Digital Authority &amp; Trust</div>
@@ -1072,31 +950,28 @@ function renderFull(d) {
         <div>
           <div class="label-sm">Backlink Profile</div>
           <div style="font-size:13px;color:var(--smoke);line-height:1.6">${auth.backlink_profile||''}</div>
-          <div class="mt12 label-sm">Primary Backlink Sources</div>
-          ${bullets(auth.primary_backlink_sources)}
+          <div class="mt12 label-sm">Primary Backlink Sources</div>${bullets(auth.primary_backlink_sources)}
         </div>
         <div>
-          <div class="label-sm">Missing Authority Sources</div>
-          ${bullets(auth.missing_authority_sources,'var(--red)')}
+          <div class="label-sm">Missing Authority Sources</div>${bullets(auth.missing_authority_sources,'var(--red)')}
           <div class="mt12 label-sm">Platform Presence</div>
           <div style="font-size:13px;color:var(--smoke)">Wikipedia: ${auth.wikipedia_status||'N/A'}</div>
           <div style="font-size:13px;color:var(--smoke);margin-top:4px">${auth.business_intelligence_profiles||''}</div>
         </div>
       </div>
-      ${esg.overview ? `
-        <div style="background:rgba(29,185,84,.04);border:1px solid rgba(29,185,84,.12);border-radius:8px;padding:14px;margin-top:14px">
-          <div class="label-sm" style="color:var(--green);margin-bottom:8px">ESG &amp; Transparency</div>
-          <div style="font-size:13px;color:var(--smoke);margin-bottom:10px">${esg.overview}</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-            <div><div class="label-sm">Present</div>${bullets(esg.esg_assets_present,'var(--green)')}</div>
-            <div><div class="label-sm">Gaps</div>${bullets(esg.esg_gaps,'var(--red)')}</div>
-          </div>
-        </div>` : ''}
+      ${esg.overview ? `<div style="background:rgba(29,185,84,.04);border:1px solid rgba(29,185,84,.12);border-radius:8px;padding:14px;margin-top:14px">
+        <div class="label-sm" style="color:var(--green);margin-bottom:8px">ESG &amp; Transparency</div>
+        <div style="font-size:13px;color:var(--smoke);margin-bottom:10px">${esg.overview}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div><div class="label-sm">Present</div>${bullets(esg.esg_assets_present,'var(--green)')}</div>
+          <div><div class="label-sm">Gaps</div>${bullets(esg.esg_gaps,'var(--red)')}</div>
+        </div>
+      </div>` : ''}
       <div class="verdict-box mt16"><strong>Authority Verdict:</strong> ${auth.authority_verdict||''}</div>
     </div>
   </div>
 
-  <!-- ⑫ PAID MEDIA -->
+  <!-- PAID MEDIA -->
   <div class="s-card">
     <div class="s-head">
       <div class="s-title">Paid Media Visibility</div>
@@ -1110,34 +985,39 @@ function renderFull(d) {
         </span>
       </div>
       <div style="font-size:13px;color:var(--smoke);margin-bottom:14px;line-height:1.6">${paid.overview||''}</div>
-      ${paidCh.map(c=>`
-        <div class="paid-row">
-          <span class="paid-ch">${c.channel}</span>
-          <span class="paid-status">${c.company_status}</span>
-          <span class="paid-opp">→ ${c.opportunity}</span>
-        </div>`).join('')}
-      ${(paid.estimated_traffic_loss||[]).length ? `
-        <div class="mt16 label-sm">Estimated Traffic Loss</div>
-        ${bullets(paid.estimated_traffic_loss,'var(--red)')}` : ''}
+      ${paidCh.map(c=>`<div class="paid-row">
+        <span class="paid-ch">${c.channel}</span>
+        <span class="paid-status">${c.company_status}</span>
+        <span class="paid-opp">→ ${c.opportunity}</span>
+      </div>`).join('')}
+      ${(paid.estimated_traffic_loss||[]).length ? `<div class="mt16 label-sm">Estimated Traffic Loss</div>${bullets(paid.estimated_traffic_loss,'var(--red)')}` : ''}
       <div class="verdict-box mt16"><strong>Paid Media Verdict:</strong> ${paid.paid_media_verdict||''}</div>
     </div>
   </div>
 
-  <!-- ⑬ TOP STRATEGIC GAPS -->
+  <!-- TOP STRATEGIC GAPS -->
   <div class="s-card pb-before">
     <div class="s-head"><div class="s-title">Top Strategic Gaps — Ranked by Business Impact</div></div>
     <div class="s-body">
-      ${gaps.map(g=>`
-        <div class="gap-card">
-          <div class="gap-num">GAP #${g.rank}</div>
-          <div class="gap-title">${g.title}</div>
-          <div class="gap-body">${g.description}</div>
-          ${g.business_risk ? `<div class="gap-risk"><strong>Business Risk:</strong> ${g.business_risk}</div>` : ''}
-        </div>`).join('')}
+      ${gaps.map(g=>`<div class="gap-card">
+        <div class="gap-num">GAP #${g.rank}</div>
+        <div class="gap-title">${g.title}</div>
+        <div class="gap-body">${g.description}</div>
+        ${g.business_risk ? `<div class="gap-risk"><strong>Business Risk:</strong> ${g.business_risk}</div>` : ''}
+      </div>`).join('')}
     </div>
   </div>
 
-  <!-- ⑭ 12-MONTH ROADMAP -->
+  <!-- FIX 2 — 30-DAY ACTION PLAN -->
+  <div class="s-card pb-before">
+    <div class="s-head"><div class="s-title">30-Day Quick-Win Action Plan</div></div>
+    <div class="s-body">
+      ${plan.overview ? `<div style="font-size:13px;color:var(--smoke);margin-bottom:16px;line-height:1.6">${plan.overview}</div>` : ''}
+      ${planWks.map(w => weekBlock(w)).join('')}
+    </div>
+  </div>
+
+  <!-- 12-MONTH ROADMAP -->
   <div class="s-card pb-before">
     <div class="s-head"><div class="s-title">12-Month Digital Transformation Roadmap</div></div>
     <div class="s-body">
@@ -1147,6 +1027,28 @@ function renderFull(d) {
       ${road.forecast ? `<div class="forecast-box"><strong>12-Month Forecast:</strong> ${road.forecast}</div>` : ''}
     </div>
   </div>
+
+  <!-- FIX 3 — RECOMMENDED SERVICES -->
+  ${svcs.length ? `<div class="s-card">
+    <div class="s-head"><div class="s-title">Recommended Cerebre Services</div></div>
+    <div class="s-body">
+      ${svcs.map(s => svcCard(s)).join('')}
+    </div>
+  </div>` : ''}
+
+  <!-- FINAL VERDICT -->
+  ${fv.brutal_assessment ? `<div class="s-card pb-before">
+    <div class="s-head"><div class="s-title">Final Verdict</div></div>
+    <div class="s-body">
+      <div class="final-box">
+        <div class="final-score">${fv.score_summary||''}</div>
+        <div class="final-assess">${fv.brutal_assessment||''}</div>
+        <div class="final-row"><span class="final-lbl">Biggest Risk</span><span class="final-val val-red">${fv.biggest_single_risk||''}</span></div>
+        <div class="final-row"><span class="final-lbl">Biggest Opportunity</span><span class="final-val val-grn">${fv.biggest_single_opportunity||''}</span></div>
+        ${fv.closing_statement ? `<div class="final-close">${fv.closing_statement}</div>` : ''}
+      </div>
+    </div>
+  </div>` : ''}
 
   <!-- FOOTER -->
   <div class="report-footer" style="margin-top:32px;padding:20px 0;border-top:1px solid var(--border);font-size:12px;color:rgba(184,192,204,.4);line-height:1.8;text-align:center">
@@ -1161,4 +1063,3 @@ function renderFull(d) {
 </script>
 </body>
 </html>
-`;
